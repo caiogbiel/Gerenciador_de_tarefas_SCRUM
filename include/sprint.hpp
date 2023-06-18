@@ -14,12 +14,4 @@ public:
     ~sprint();
 };
 
-sprint::sprint(/* args */)
-{
-}
-
-sprint::~sprint()
-{
-}
-
 #endif
