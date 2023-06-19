@@ -238,3 +238,43 @@ a uma apresentação.
 A Sprint Review é o penúltimo evento da Sprint e tem um Timebox com prazo máximo de
 quatro horas para uma Sprint de um mês. Para Sprints mais curtas, o evento geralmente é
 mais curto
+
+### Algoritmos de ordenacao utilizados:
+
+-Selection Sort:
+• Ideia geral:
+– Dado um vetor de entrada v[N]
+• Selecione o 1º menor elemento e coloque-o na 1ª posição
+• Selecione o 2º menor elemento e coloque-o na 2ª posição
+• ...
+• Selecione o N-ésimo menor elemento e coloque-o na
+N-ésima posição
+Complexidade pior e melhor caso O(n^2).
+
+-Quick Sort:
+Ordenação por partição
+• Estratégia “Dividir para conquistar”:
+• Para ordenar um vetor v[e...d] é necessário:
+– Dividir:
+• Particionar o vetor v[e...d] ao redor do valor v[p] em dois sub-
+vetores (possivelmente vazios) v[e...p-i] e v[p+1, d] tais que:
+– Todo elemento em v[e...p-1] é menor que v[p]
+– Todo elemento em v[p+1, d] é maior que v[p]
+– Conquistar:
+• Os dois sub-vetores v[e...p-1] e v[p+1...d] são ordenados por
+chamadas recursivas
+Complexidade pior caso Θ(n^2) e melhor caso Θ(n*log2n)
+
+-Merge Sort:
+Ordenação por intercalação
+• Estratégia “Dividir para conquistar”:
+– Dividir:
+• Dividir o vetor ao meio sucessivamente, até chegar a um vetor de
+tamanho 1
+– Conquistar:
+• Intercalar vetores de tamanho 1, formando vetores de tamanho 2
+• Intercalar vetores de tamanho 2, formando vetores de tamanho 4
+• Intercalar vetores de tamanho 4, formando vetores de tamanho 8
+• ...
+• Intercalar vetores de tamanho n/2, formando vetor de tamanho n
+Complexidade pior e melhor caso Θ(n* log2 n)

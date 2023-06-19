@@ -11,8 +11,7 @@ private:
     std::string nivelPrioridade;
 
 public:
-    Tarefa(const std::string& titulo, const std::string& descricao);
-    std::string getTitulo() const;
+    Tarefa(const int& id, const std::string& descricao);
     std::string getDescricao() const;
     bool estaConcluida() const;
     void marcarComoConcluida();
