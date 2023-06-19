@@ -278,3 +278,5 @@ tamanho 1
 • ...
 • Intercalar vetores de tamanho n/2, formando vetor de tamanho n
 Complexidade pior e melhor caso Θ(n* log2 n)
+
+Algoritmos e TADS utilizados colocados no arquivo "utilidades.cpp"
