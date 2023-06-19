@@ -8,10 +8,14 @@
 class sprint
 {
 private:
-    /* data */
+    int id;
+    std::string dateStart;
+    std::string dateFinal
 public:
     sprint(/* args */);
     ~sprint();
+    void start(std::string dateStart);
+    void final(std::string dateFinal);
 };
 
 #endif
