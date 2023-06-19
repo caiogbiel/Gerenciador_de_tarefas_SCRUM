@@ -238,7 +238,80 @@ namespace sorters
 {
 #ifndef SORTERS_HPP
 #define SORTERS_HPP
+//selection sort
+template<typename T>
+void selectionSort(T arr[], int size) {
+    for (int i = 0; i < size - 1; i++) {
+        int minIndex = i;
 
+        for (int j = i + 1; j < size; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex != i) {
+            std::swap(arr[i], arr[minIndex]);
+        }
+    }
+}
+
+//quick sort
+template<typename T>
+int partition(T arr[], int low, int high) {
+    T pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            std::swap(arr[i], arr[j]);
+        }
+    }
+
+    std::swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+template<typename T>
+void quickSort(T arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+//merge sort
+template<typename T>
+void mergeSort(T arr[], int start, int end) {
+    if (start >= end)
+        return;
+
+    int mid = start + (end - start) / 2;
+    mergeSort(arr, start, mid);
+    mergeSort(arr, mid + 1, end);
+
+    int left = start, right = mid + 1;
+    T temp[end - start + 1];
+    int index = 0;
+
+    while (left <= mid && right <= end) {
+        if (arr[left] <= arr[right])
+            temp[index++] = arr[left++];
+        else
+            temp[index++] = arr[right++];
+    }
+
+    while (left <= mid)
+        temp[index++] = arr[left++];
+
+    while (right <= end)
+        temp[index++] = arr[right++];
+
+    for (int i = start; i <= end; i++)
+        arr[i] = temp[i - start];
+}
 #endif
 } // namespace sorters
 
