@@ -246,6 +246,22 @@ namespace searchers
 {
 #ifndef SEARCHERS_HPP
 #define SEARCHERS_HPP
+    template <typename T>
+    T* binary_search(T*& vector, int start, int end, T value) {
+        int mid = (end + start) / 2;
 
+        if (end - start == 0 && vector[end] != value) {
+            return nullptr;
+        }
+
+        if (vector[mid] < value) {
+            return binary_search(vector, mid + 1, end, value);
+        }
+        if (vector[mid] > value) {
+            return binary_search(vector, start, mid - 1, value);
+        }
+
+        return &vector[mid];
+    }
 #endif
 } // namespace searchers
