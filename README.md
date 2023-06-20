@@ -280,3 +280,7 @@ tamanho 1
 Complexidade pior e melhor caso Θ(n* log2 n)
 
 Algoritmos e TADS utilizados colocados no arquivo "utilidades.cpp"
+
+### Diagrama de classes UML:
+![image](https://github.com/caiogbiel/Gerenciador_de_tarefas_SCRUM/assets/130727060/2bc20760-b248-4d68-8154-52456d18475d)
+
