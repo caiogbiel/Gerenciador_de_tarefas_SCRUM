@@ -4,7 +4,8 @@
 class scrum_team
 {
 private:
-    /* data */
+    adts::Lista<membros> participantes;
+
 public:
     scrum_team(/* args */);
     ~scrum_team();
