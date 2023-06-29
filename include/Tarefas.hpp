@@ -10,14 +10,13 @@ private:
     Status_Evento status;
     tm inicio;
     tm fim;
-    
+    std::vector<Membros> participantes;
+    ScrumTeam time;  
 
 public:
-    Tarefa(const int& id, const std::string& descricao);
-    std::string getDescricao() const;
-    bool estaConcluida() const;
-    void marcarComoConcluida();
-    void marcarComoEmDesenvolvimento();
+    void inciar();
+    void encerrar();
+    void adicionarParticipantes(Membros participante)
 };
 
 #endif
