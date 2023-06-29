@@ -5,14 +5,14 @@
 #include "Tarefas.hpp"
 #include "./include/sprint.hpp"
 
-class ListaTarefas
+class GerenciadorDeTarefas
 {
 private:
-    std::vector<Tarefa> tarefas;
+    std::vector<Evento> evento;
     sprint Sprint;
 
 public:
-    void adicionarTarefa(Tarefa tarefa);
+    void adicionarEvento(Tarefa tarefa);
     void removerTarefa(Tarefa tarefa);
     void iniciarSprint(sprint Sprint);
     void finalizarSprint() const;
