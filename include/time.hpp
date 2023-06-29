@@ -4,7 +4,7 @@
 class scrum_team
 {
 private:
-    std::Lista<membros> participantes;
+    adts::Lista<membros> participantes;
 
 public:
     scrum_team(/* args */);
