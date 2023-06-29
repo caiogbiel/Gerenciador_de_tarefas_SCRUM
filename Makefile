@@ -1,6 +1,6 @@
 PROGRAM = GerenciadorSCRUM.exe
 CC = g++
-CFLAGS = -O0 -Wall -Ansi -pedantic
+CFLAGS = -O0 -Wall -Ansi -pedantic -fsanitize=address -g
 OBJS = #adicionar arquivos objeto: projeto.o etc
 
 all: $(OBJS)

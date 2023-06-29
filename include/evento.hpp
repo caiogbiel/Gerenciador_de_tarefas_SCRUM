@@ -26,7 +26,23 @@ public:
     bool adicionarParticipantes(membros participante);
     bool removerParticipantes(membros participante);
     tm duracao();
-    // fazer os gets e sets
+    // GETTERS
+    std::string GetNome();
+    eventos_sprint GetTipo();
+    status_evento GetStatus();
+    prioridade GetPrioridade();
+    tm GetInicio();
+    tm GetFim();
+    adts::Lista<membros> GetParticipantes() const;
+    scrum_team GetTime();
+    // SETTERS
+    void SetNome(std::string nome);
+    void SetTipo(eventos_sprint tipo);
+    void SetStatus(status_evento status);
+    void SetPrioridade(prioridade prioridade);
+    void SetInicio(tm inicio);
+    void SetFim(tm fim);
+    void SetTime(scrum_team time);
 };
 
 #endif
