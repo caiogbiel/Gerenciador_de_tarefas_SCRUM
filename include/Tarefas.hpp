@@ -3,12 +3,14 @@
 
 #include <string>
 
-class Tarefa {
+class Evento {
 private:
-    int id;
-    std::string descricao;
-    std::string status;
-    std::string nivelPrioridade;
+    std::string nome;
+    Eventos_sprint tipo;
+    Status_Evento status;
+    tm inicio;
+    tm fim;
+    
 
 public:
     Tarefa(const int& id, const std::string& descricao);
