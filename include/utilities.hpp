@@ -55,7 +55,7 @@ namespace adts
 
 #pragma region List
     // front = inicio | back = fim
-    template <class T>
+    template <typename T>
     class Lista
     {
     private:
@@ -171,56 +171,67 @@ namespace adts
 #pragma endregion
 
 #pragma region Queue
-    template <typename T> class Queue {
+    template <typename T>
+    class Queue
+    {
     private:
         int _size = 0;
-        Uni_Node<T>* _first = nullptr;
-        Uni_Node<T>* _last = nullptr;
+        Uni_Node<T> *_first = nullptr;
+        Uni_Node<T> *_last = nullptr;
 
     public:
         Queue() {}
-        Queue(T value) {
+        Queue(T value)
+        {
             _first = new Uni_Node<T>(value);
             _last = _first;
             _size++;
         }
         int size() { return _size; }
-        void print() {
-            Uni_Node<T>* aux = _first;
-            while (aux != nullptr) {
+        void print()
+        {
+            Uni_Node<T> *aux = _first;
+            while (aux != nullptr)
+            {
                 cout << aux->value << " ";
                 aux = aux->next;
             }
             cout << "\n";
         }
-        const T& front() const { return _first->value; }
-        const T& back() const { return _last->value; }
+        const T &front() const { return _first->value; }
+        const T &back() const { return _last->value; }
         bool empty() const { return (_first == nullptr) ? true : false; }
-        void push(T value) {
-            Uni_Node<T>* new_node = new Uni_Node<T>(value);
+        void push(T value)
+        {
+            Uni_Node<T> *new_node = new Uni_Node<T>(value);
 
-            if (empty()) {
+            if (empty())
+            {
                 _first = new_node;
                 _last = _first;
             }
-            else {
+            else
+            {
                 _last->next = new_node;
                 _last = new_node;
             }
             _size++;
         }
-        void pop() {
-            if (empty()) {
+        void pop()
+        {
+            if (empty())
+            {
                 std::cerr << "Fila ja esta vazia\n";
                 return;
             }
-            if (_first->next == nullptr) {
+            if (_first->next == nullptr)
+            {
                 delete _first;
                 _first = nullptr;
                 _size--;
                 return;
             }
-            Uni_Node<T>* aux = _first->next;
+            Uni_Node<T> *aux = _first->next;
 
             delete _first;
             _first = nullptr;
@@ -238,80 +249,92 @@ namespace sorters
 {
 #ifndef SORTERS_HPP
 #define SORTERS_HPP
-//selection sort
-template<typename T>
-void selectionSort(T arr[], int size) {
-    for (int i = 0; i < size - 1; i++) {
-        int minIndex = i;
+    // selection sort
+    template <typename T>
+    void selectionSort(T arr[], int size)
+    {
+        for (int i = 0; i < size - 1; i++)
+        {
+            int minIndex = i;
 
-        for (int j = i + 1; j < size; j++) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
+            for (int j = i + 1; j < size; j++)
+            {
+                if (arr[j] < arr[minIndex])
+                {
+                    minIndex = j;
+                }
+            }
+
+            if (minIndex != i)
+            {
+                std::swap(arr[i], arr[minIndex]);
+            }
+        }
+    }
+
+    // quick sort
+    template <typename T>
+    int partition(T arr[], int low, int high)
+    {
+        T pivot = arr[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (arr[j] <= pivot)
+            {
+                i++;
+                std::swap(arr[i], arr[j]);
             }
         }
 
-        if (minIndex != i) {
-            std::swap(arr[i], arr[minIndex]);
-        }
-    }
-}
+        std::swap(arr[i + 1], arr[high]);
+        return i + 1;
+    }
 
-//quick sort
-template<typename T>
-int partition(T arr[], int low, int high) {
-    T pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (arr[j] <= pivot) {
-            i++;
-            std::swap(arr[i], arr[j]);
+    template <typename T>
+    void quickSort(T arr[], int low, int high)
+    {
+        if (low < high)
+        {
+            int pi = partition(arr, low, high);
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
         }
     }
 
-    std::swap(arr[i + 1], arr[high]);
-    return i + 1;
-}
+    // merge sort
+    template <typename T>
+    void mergeSort(T arr[], int start, int end)
+    {
+        if (start >= end)
+            return;
 
-template<typename T>
-void quickSort(T arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
+        int mid = start + (end - start) / 2;
+        mergeSort(arr, start, mid);
+        mergeSort(arr, mid + 1, end);
 
-//merge sort
-template<typename T>
-void mergeSort(T arr[], int start, int end) {
-    if (start >= end)
-        return;
+        int left = start, right = mid + 1;
+        T temp[end - start + 1];
+        int index = 0;
 
-    int mid = start + (end - start) / 2;
-    mergeSort(arr, start, mid);
-    mergeSort(arr, mid + 1, end);
+        while (left <= mid && right <= end)
+        {
+            if (arr[left] <= arr[right])
+                temp[index++] = arr[left++];
+            else
+                temp[index++] = arr[right++];
+        }
 
-    int left = start, right = mid + 1;
-    T temp[end - start + 1];
-    int index = 0;
-
-    while (left <= mid && right <= end) {
-        if (arr[left] <= arr[right])
+        while (left <= mid)
             temp[index++] = arr[left++];
-        else
+
+        while (right <= end)
             temp[index++] = arr[right++];
+
+        for (int i = start; i <= end; i++)
+            arr[i] = temp[i - start];
     }
-
-    while (left <= mid)
-        temp[index++] = arr[left++];
-
-    while (right <= end)
-        temp[index++] = arr[right++];
-
-    for (int i = start; i <= end; i++)
-        arr[i] = temp[i - start];
-}
 #endif
 } // namespace sorters
 
@@ -320,17 +343,21 @@ namespace searchers
 #ifndef SEARCHERS_HPP
 #define SEARCHERS_HPP
     template <typename T>
-    T* binary_search(T*& vector, int start, int end, T value) {
+    T *binary_search(T *&vector, int start, int end, T value)
+    {
         int mid = (end + start) / 2;
 
-        if (end - start == 0 && vector[end] != value) {
+        if (end - start == 0 && vector[end] != value)
+        {
             return nullptr;
         }
 
-        if (vector[mid] < value) {
+        if (vector[mid] < value)
+        {
             return binary_search(vector, mid + 1, end, value);
         }
-        if (vector[mid] > value) {
+        if (vector[mid] > value)
+        {
             return binary_search(vector, start, mid - 1, value);
         }
 
