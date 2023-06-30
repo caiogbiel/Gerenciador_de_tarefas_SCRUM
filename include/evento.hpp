@@ -3,9 +3,9 @@
 #include <iostream>
 #include <string>
 #include <ctime>
-#include ".\enums.hpp"
-#include ".\time.hpp"
-#include ".\utilities.hpp"
+#include "./enums.hpp"
+#include "./time.hpp"
+#include "./utilities.hpp"
 
 class evento
 {
