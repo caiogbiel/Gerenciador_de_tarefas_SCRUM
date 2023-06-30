@@ -17,15 +17,33 @@ evento::~evento()
 }
 void evento::iniciar()
 {
+    this->status = andamento;
 }
 void evento::encerrar()
 {
+    this->status = finalizado;
 }
-bool evento::adicionarParticipantes(membros partipante)
+bool evento::adicionarParticipantes(membros participante)
 {
+    // ordenar participantes
+    // procurar se existe
+    if (participantes.find(participante))
+    {
+        this->participantes.push_front(participante);
+        return true;
+    }
+    return false;
 }
 bool evento::removerParticipantes(membros participante)
 {
+    // ordenar participantes
+    // procurar se existe
+    if (participantes.find(participante))
+    {
+        participantes.remove(participante);
+        return true;
+    }
+    return false;
 }
 tm evento::duracao()
 {
@@ -70,29 +88,29 @@ scrum_team evento::GetTime()
 
 void evento::SetNome(std::string nome)
 {
-    this->nome;
+    this->nome = nome;
 }
 void evento::SetTipo(eventos_sprint tipo)
 {
-    this->tipo;
+    this->tipo = tipo;
 }
 void evento::SetStatus(status_evento status)
 {
-    this->status;
+    this->status = status;
 }
-void evento::SetPrioridade(prioridade prioridade)
+void evento::SetPrioridade(prioridade prio)
 {
-    this->prio;
+    this->prio = prio;
 }
 void evento::SetInicio(tm inicio)
 {
-    this->inicio;
+    this->inicio = inicio;
 }
 void evento::SetFim(tm fim)
 {
-    this->fim;
+    this->fim = fim;
 }
 void evento::SetTime(scrum_team time)
 {
-    this->time;
+    this->time = time;
 }

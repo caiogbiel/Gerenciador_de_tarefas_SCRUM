@@ -7,6 +7,38 @@
 #include "./enums.hpp"
 #include "./utilities.hpp"
 
+class membros
+{
+private:
+    std::string nome;
+    tm dataDeNascimento;
+    std::string email;
+    tm HorasTrabalhadas;
+    permissao nivelDePermissao;
+    adts::Lista<eventos_sprint> eventos;
+
+public:
+    membros(/* args */){};
+    ~membros(){};
+    bool operator==(membros &b) const;
+
+    // GETTERS
+    std::string getNome();
+    tm getDataDeNascimento();
+    std::string getEmail();
+    tm getHorasTrabalhadas();
+    permissao getNivelDePermissao();
+    adts::Lista<eventos_sprint> getEventos();
+
+    // SETTERS
+    void setNome(std::string nome);
+    void setDataDeNascimento(tm dataDeNascimento);
+    void setEmail(std::string email);
+    void setHorasTrabalhadas(tm HorasTrabalhadas);
+    void setNivelDePermissao(permissao nivelDePermissao);
+    void setEventos(eventos_sprint eventos);
+};
+
 class scrum_team
 {
 private:
@@ -18,51 +50,19 @@ public:
     scrum_team(/* args */);
     ~scrum_team();
 
-    void addParticipante (membros membros);
-    void removeParticipante (membros membros);
+    void addParticipante(membros membros);
+    void removeParticipante(membros membros);
     membros operator[](int indice);
     membros &operator[](int indice) const;
 
-    //GETTERS
+    // GETTERS
     adts::Lista<membros> getParticipantes();
     int getQuantidade();
     adts::Lista<eventos_sprint> getEventos();
 
-    //SETTERS
+    // SETTERS
     void setEquipe(membros equipe);
     void setQuantidade(int quantidade);
     void setEventos(eventos_sprint eventos);
 };
-
-class membros
-{
-private:
-    std::string nome;
-    tm dataDeNascimento;
-    std::string email;
-    tm HorasTrabalhadas;
-    permissao nivelDePermissao;
-    adts::Lista<eventos_sprint> eventos;
-public:
-    membros(/* args */);
-    ~membros();
-
-    //GETTERS
-    std::string getNome();
-    tm getDataDeNascimento();
-    std::string getEmail();
-    tm getHorasTrabalhadas();
-    permissao getNivelDePermissao();
-    adts::Lista<eventos_sprint> getEventos();
-
-    //SETTERS
-    void setNome(std::string nome);
-    void setDataDeNascimento(tm dataDeNascimento);
-    void setEmail(std::string email);
-    void setHorasTrabalhadas(tm HorasTrabalhadas);
-    void setNivelDePermissao(permissao nivelDePermissao);
-    void setEventos(eventos_sprint eventos);
-
-};
-
 #endif

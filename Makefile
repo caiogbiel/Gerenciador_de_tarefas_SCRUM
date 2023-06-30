@@ -1,19 +1,22 @@
-PROGRAM = GerenciadorSCRUM.exe
-CC = g++
+PROGRAM = ./bin/GerenciadorSCRUM.exe
+CC = clang++
 CFLAGS = -O0 -Wall -Ansi -pedantic -fsanitize=address -g
-OBJS = #adicionar arquivos objeto: projeto.o etc
+OBJS = ./build/evento.o ./build/gerenciador.o
+ODIR = build
+CDIR = src
+# DEPS = include
 
-all: $(OBJS)
-	$(CC) $(CFLAGS) -o $(PROGRAM) $(OBJS)
+$(PROGRAM): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
 
-#projeto.o:
-#	$(CC) -c projeto.cpp
+$(ODIR)/%.o: $(CDIR)/%.cpp #$(DEPS)/%.hpp
+	$(CC) -c -o $@ $<
 
 unixC: 
-	rm -f *.o *.exe
+	rm -f ./build/*.o ./bin/*.exe
 
 c:
-	del *.o *.exe
+	del .\build\*.o .\bin\*.exe
 
-run: c all
+run: c $(PROGRAM) 
 	$(PROGRAM)

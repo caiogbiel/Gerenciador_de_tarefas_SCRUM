@@ -137,6 +137,29 @@ namespace adts
             delete aux->next;
             aux->next = nullptr;
         }
+        bool remove(T value)
+        {
+            Duo_Node<T> *aux = start;
+            while (aux)
+            {
+                if (aux->value == value)
+                {
+                    if (aux->previous)
+                    {
+                        aux->previous->next = aux->next;
+                    }
+                    if (aux->next)
+                    {
+                        aux->next->previous = aux->previous;
+                    }
+                    delete aux;
+                    aux = nullptr;
+                    return true;
+                }
+                aux = aux->next;
+            }
+            return false;
+        }
         void clear()
         {
             int count = size();
@@ -160,6 +183,22 @@ namespace adts
                 }
             }
             return count;
+        }
+        bool find(T value)
+        {
+            Duo_Node<T> *aux = start;
+            if (aux)
+            {
+                while (aux->next)
+                {
+                    if (aux->value == value)
+                    {
+                        return true;
+                    }
+                    aux = aux->next;
+                }
+            }
+            return false;
         }
         void print()
         {
@@ -197,10 +236,10 @@ namespace adts
             Uni_Node<T> *aux = _first;
             while (aux != nullptr)
             {
-                cout << aux->value << " ";
+                std::cout << aux->value << " ";
                 aux = aux->next;
             }
-            cout << "\n";
+            std::cout << "\n";
         }
         const T &front() const { return _first->value; }
         const T &back() const { return _last->value; }
