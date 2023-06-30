@@ -29,11 +29,9 @@ public:
     tm getHorasTrabalhadas();
     permissao getNivelDePermissao();
     adts::Lista<eventos_sprint> getEventos();
-<<<<<<< HEAD
-    == == == =
 
-                 // SETTERS
-        void setNome(std::string nome);
+    // SETTERS
+    void setNome(std::string nome);
     void setDataDeNascimento(tm dataDeNascimento);
     void setEmail(std::string email);
     void setHorasTrabalhadas(tm HorasTrabalhadas);
