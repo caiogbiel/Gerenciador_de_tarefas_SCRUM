@@ -62,6 +62,10 @@ namespace adts
         Duo_Node<T> *start;
 
     public:
+        Lista()
+        {
+            start = nullptr;
+        }
         Lista(T initial)
         {
             start = new Duo_Node<T>;
