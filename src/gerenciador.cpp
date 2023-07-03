@@ -1,19 +1,27 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <chrono>
+#include "../include/date.h"
 #include "../include/evento.hpp"
 #include "../include/enums.hpp"
 #include "../include/utilities.hpp"
 
+using namespace date;
+using namespace std::chrono;
+
 int main()
 {
-    time_t inicio = time(NULL);
-    tm *inicio_tm;
-    inicio_tm = localtime(&inicio);
-    tm fim;
-    fim.tm_hour = inicio_tm->tm_hour + 2;
-    adts::Lista<membros> lista;
-    scrum_team team;
+    std::cout << "PROGRAMA INICIOU\n";
 
-    evento teste = evento("Planejamento", planning, *inicio_tm, fim, lista, team);
+    geren_time::tempo inicio = geren_time::tempo::agora();
+    geren_time::tempo fim = inicio + 2;
+
+    std::cout << "VAI CRIAR EVENTO\n";
+    std::cout << inicio << "\n"
+              << fim << "\n"
+              << std::endl;
+
+    std::cout << "CRIOU EVENTO\n";
+    std::cout << "PROGRAMA TERMINOU\n";
 }

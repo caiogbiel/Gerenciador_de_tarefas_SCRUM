@@ -1,12 +1,16 @@
 /**
  * Muitas classes aqui são templates, portanto, por praticidade, serão implementadas neste arquivo mesmo
  */
+#ifndef UTILITIES_HPP
+#define UTILITIES_HPP
+#include <iostream>
+#include <chrono>
+#include "./date.h"
 
 namespace adts
 {
 #ifndef ADTS_HPP
 #define ADTS_HPP
-#include <iostream>
 #pragma region Nodes
     template <typename U>
     struct Duo_Node
@@ -408,3 +412,44 @@ namespace searchers
     }
 #endif
 } // namespace searchers
+
+namespace geren_time
+{
+#ifndef GEREN_TIME
+#define GEREN_TIME
+    class tempo
+    {
+    private:
+        date::year_month_day _ano_mes_dia;
+        std::chrono::hours _hora;
+        std::chrono::minutes _minutos;
+
+    public:
+        tempo() : _ano_mes_dia(date::year(1900), date::month(1), date::day(1)), _hora(0), _minutos(0) {}
+        tempo(int ano, int mes, int dia) : _ano_mes_dia(date::year(ano), date::month(mes), date::day(dia)), _hora(0), _minutos(0) {}
+        tempo(int ano, int mes, int dia, int hora, int minuto) : _ano_mes_dia(date::year(ano), date::month(mes), date::day(dia)), _hora(hora), _minutos(minuto) {}
+        friend tempo operator+(tempo &t, int dias);
+        friend tempo operator-(tempo &t, int dias);
+        tempo &operator+=(int dias);
+        tempo &operator-=(int dias);
+        static tempo agora();
+        void SetAno(int ano);
+        void SetMes(int mes);
+        void SetDia(int dia);
+        void SetHora(int hora);
+        void SetMinuto(int minuto);
+        date::year GetAno();
+        date::month GetMes();
+        date::day GetDia();
+        std::chrono::hours GetHora();
+        std::chrono::minutes GetMinuto();
+        friend std::ostream &
+        operator<<(std::ostream &o, const tempo &t)
+        {
+            o << t._ano_mes_dia.day() << "/" << t._ano_mes_dia.month() << "/" << t._ano_mes_dia.year() << " " << t._hora.count() << ":" << t._minutos.count() << std::endl;
+            return o;
+        }
+    };
+#endif
+}
+#endif

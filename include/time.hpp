@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <ctime>
-#include "./evento.hpp"
+// #include "./evento.hpp"
 #include "./enums.hpp"
 #include "./utilities.hpp"
 
@@ -18,25 +18,25 @@ private:
     adts::Lista<eventos_sprint> eventos;
 
 public:
-    membros(/* args */){};
-    ~membros(){};
-    bool operator==(membros &b) const;
+    membros();
+    ~membros();
+    bool operator==(const membros &b);
 
-    // GETTERS
-    std::string getNome();
-    tm getDataDeNascimento();
-    std::string getEmail();
-    tm getHorasTrabalhadas();
-    permissao getNivelDePermissao();
-    adts::Lista<eventos_sprint> getEventos();
+    //     // GETTERS
+    //     std::string getNome();
+    //     tm getDataDeNascimento();
+    //     std::string getEmail();
+    //     tm getHorasTrabalhadas();
+    //     permissao getNivelDePermissao();
+    //     adts::Lista<eventos_sprint> getEventos();
 
-    // SETTERS
-    void setNome(std::string nome);
-    void setDataDeNascimento(tm dataDeNascimento);
-    void setEmail(std::string email);
-    void setHorasTrabalhadas(tm HorasTrabalhadas);
-    void setNivelDePermissao(permissao nivelDePermissao);
-    void setEventos(eventos_sprint eventos);
+    //     // SETTERS
+    //     void setNome(std::string nome);
+    //     void setDataDeNascimento(tm dataDeNascimento);
+    //     void setEmail(std::string email);
+    //     void setHorasTrabalhadas(tm HorasTrabalhadas);
+    //     void setNivelDePermissao(permissao nivelDePermissao);
+    //     void setEventos(eventos_sprint eventos);
 };
 
 class scrum_team
@@ -47,22 +47,22 @@ private:
     adts::Lista<eventos_sprint> eventos;
 
 public:
-    scrum_team(/* args */);
+    scrum_team();
     ~scrum_team();
 
-    void addParticipante(membros membros);
-    void removeParticipante(membros membros);
-    membros operator[](int indice);
-    membros &operator[](int indice) const;
+    // void addParticipante(membros membros);
+    // void removeParticipante(membros membros);
+    // membros operator[](int indice);
+    // membros &operator[](int indice) const;
 
-    // GETTERS
-    adts::Lista<membros> getParticipantes();
-    int getQuantidade();
-    adts::Lista<eventos_sprint> getEventos();
+    // // GETTERS
+    // adts::Lista<membros> getParticipantes();
+    // int getQuantidade();
+    // adts::Lista<eventos_sprint> getEventos();
 
-    // SETTERS
-    void setEquipe(membros equipe);
-    void setQuantidade(int quantidade);
-    void setEventos(eventos_sprint eventos);
+    // // SETTERS
+    // void setEquipe(membros equipe);
+    // void setQuantidade(int quantidade);
+    // void setEventos(eventos_sprint eventos);
 };
 #endif

@@ -1,4 +1,5 @@
 #include "../include/evento.hpp"
+#include "../include/time.hpp"
 #include "../include/utilities.hpp"
 
 evento::evento(std::string _nome, eventos_sprint _tipo, tm _inicio, tm _fim, adts::Lista<membros> _part, scrum_team _time)
@@ -47,6 +48,9 @@ bool evento::removerParticipantes(membros participante)
 }
 tm evento::duracao()
 {
+    tm test;
+    test.tm_hour = 2;
+    return test;
 }
 
 // GETTERS//
