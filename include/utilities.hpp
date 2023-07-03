@@ -4,6 +4,7 @@
 #ifndef UTILITIES_HPP
 #define UTILITIES_HPP
 #include <iostream>
+#include <iomanip>
 #include <chrono>
 #include "./date.h"
 
@@ -446,7 +447,7 @@ namespace geren_time
         friend std::ostream &
         operator<<(std::ostream &o, const tempo &t)
         {
-            o << t._ano_mes_dia.day() << "/" << t._ano_mes_dia.month() << "/" << t._ano_mes_dia.year() << " " << t._hora.count() << ":" << t._minutos.count() << std::endl;
+            o << t._ano_mes_dia.day() << "/" << t._ano_mes_dia.month() << "/" << t._ano_mes_dia.year() << " " << std::setw(2) << std::setfill('0') << t._hora.count() << ":" << std::setw(2) << std::setfill('0') << t._minutos.count() << std::endl;
             return o;
         }
     };

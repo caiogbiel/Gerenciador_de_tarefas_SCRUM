@@ -3,25 +3,27 @@
 geren_time::tempo geren_time::operator+(tempo &t, int dias)
 {
     auto data = date::year_month_day(date::sys_days(t._ano_mes_dia) + date::days(dias));
-    tempo novo_tempo = tempo(int(data.year()), unsigned(data.month()), unsigned(data.day()));
+    tempo novo_tempo = tempo(int(data.year()), unsigned(data.month()), unsigned(data.day()), t.GetHora().count(), t.GetMinuto().count());
     return novo_tempo;
 }
 
 geren_time::tempo geren_time::operator-(tempo &t, int dias)
 {
     auto data = date::year_month_day(date::sys_days(t._ano_mes_dia) - date::days(dias));
-    tempo novo_tempo = tempo(int(data.year()), unsigned(data.month()), unsigned(data.day()));
+    tempo novo_tempo = tempo(int(data.year()), unsigned(data.month()), unsigned(data.day()), t.GetHora().count(), t.GetMinuto().count());
     return novo_tempo;
 }
 
 geren_time::tempo &geren_time::tempo::operator+=(int dias)
 {
-    return *this + dias;
+    *this = *this + dias;
+    return *this;
 }
 
 geren_time::tempo &geren_time::tempo::operator-=(int dias)
 {
-    return *this - dias;
+    *this = *this - dias;
+    return *this;
 }
 
 geren_time::tempo geren_time::tempo::agora()
