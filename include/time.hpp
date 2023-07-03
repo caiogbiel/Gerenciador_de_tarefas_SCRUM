@@ -50,7 +50,7 @@ public:
     scrum_team();
     ~scrum_team();
 
-    // void addParticipante(membros membros);
+     void addParticipante(membros membros);
     // void removeParticipante(membros membros);
     // membros operator[](int indice);
     // membros &operator[](int indice) const;
