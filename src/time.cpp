@@ -26,7 +26,7 @@ scrum_team::scrum_team()
 scrum_team::~scrum_team()
 {
 
-void scrumTeam::addParticipante(const std::string& nome, const tm& dataDeNascimento, const std::string& email,
+void scrum_team::addParticipante(const std::string& nome, const tm& dataDeNascimento, const std::string& email,
 const tm& HorasTrabalhadas, permissao nivelDePermissao, const std::list<eventos_sprint>& eventos) {
         membro novoMembro;
         novoMembro.nome = nome;
