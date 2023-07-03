@@ -2,7 +2,7 @@
 #include "../include/time.hpp"
 #include "../include/utilities.hpp"
 
-evento::evento(std::string _nome, eventos_sprint _tipo, tm _inicio, tm _fim, adts::Lista<membros> _part, scrum_team _time)
+evento::evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team _time)
 {
     this->nome = _nome;
     this->tipo = _tipo;
@@ -46,11 +46,10 @@ bool evento::removerParticipantes(membros participante)
     }
     return false;
 }
-tm evento::duracao()
+// AGUARDANDO IMPLEMENTAÇÂO DE OPERATOR-(TEMPO, TEMPO)
+geren_tempo::tempo evento::duracao()
 {
-    tm test;
-    test.tm_hour = 2;
-    return test;
+    return inicio - fim;
 }
 
 // GETTERS//
@@ -71,11 +70,11 @@ prioridade evento::GetPrioridade()
 {
     return this->prio;
 }
-tm evento::GetInicio()
+geren_tempo::tempo evento::GetInicio()
 {
     return this->inicio;
 }
-tm evento::GetFim()
+geren_tempo::tempo evento::GetFim()
 {
     return this->fim;
 }
@@ -106,11 +105,11 @@ void evento::SetPrioridade(prioridade prio)
 {
     this->prio = prio;
 }
-void evento::SetInicio(tm inicio)
+void evento::SetInicio(geren_tempo::tempo inicio)
 {
     this->inicio = inicio;
 }
-void evento::SetFim(tm fim)
+void evento::SetFim(geren_tempo::tempo fim)
 {
     this->fim = fim;
 }

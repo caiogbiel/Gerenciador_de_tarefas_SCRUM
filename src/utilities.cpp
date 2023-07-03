@@ -1,34 +1,44 @@
 #include "../include/utilities.hpp"
 
-geren_time::tempo geren_time::operator+(tempo &t, int dias)
+geren_tempo::tempo geren_tempo::operator+(geren_tempo::tempo &t, int dias)
 {
     auto data = date::year_month_day(date::sys_days(t._ano_mes_dia) + date::days(dias));
     tempo novo_tempo = tempo(int(data.year()), unsigned(data.month()), unsigned(data.day()), t.GetHora().count(), t.GetMinuto().count());
     return novo_tempo;
 }
 
-geren_time::tempo geren_time::operator-(tempo &t, int dias)
+geren_tempo::tempo geren_tempo::operator-(geren_tempo::tempo &t, int dias)
 {
     auto data = date::year_month_day(date::sys_days(t._ano_mes_dia) - date::days(dias));
     tempo novo_tempo = tempo(int(data.year()), unsigned(data.month()), unsigned(data.day()), t.GetHora().count(), t.GetMinuto().count());
     return novo_tempo;
 }
 
-geren_time::tempo &geren_time::tempo::operator+=(int dias)
+// PENDENTE
+geren_tempo::tempo geren_tempo::operator+(geren_tempo::tempo &t1, geren_tempo::tempo &t2)
+{
+    // date::sys_time<std::chrono::minutes>(date::sys_days(t2._ano_mes_dia) + date::sys_days(t2._ano_mes_dia));
+}
+// PENDENTE
+geren_tempo::tempo geren_tempo::operator-(geren_tempo::tempo &t1, geren_tempo::tempo &t2)
+{
+}
+
+geren_tempo::tempo &geren_tempo::tempo::operator+=(int dias)
 {
     *this = *this + dias;
     return *this;
 }
 
-geren_time::tempo &geren_time::tempo::operator-=(int dias)
+geren_tempo::tempo &geren_tempo::tempo::operator-=(int dias)
 {
     *this = *this - dias;
     return *this;
 }
 
-geren_time::tempo geren_time::tempo::agora()
+geren_tempo::tempo geren_tempo::tempo::agora()
 {
-    geren_time::tempo temp;
+    geren_tempo::tempo temp;
     auto _agora = std::chrono::system_clock::now();
     temp._ano_mes_dia = date::year_month_day(floor<date::days>(_agora));
 
@@ -42,45 +52,45 @@ geren_time::tempo geren_time::tempo::agora()
     return temp;
 }
 
-void geren_time::tempo::SetAno(int ano)
+void geren_tempo::tempo::SetAno(int ano)
 {
 
     _ano_mes_dia = date::year_month_day(date::year(ano), _ano_mes_dia.month(), _ano_mes_dia.day());
 }
-void geren_time::tempo::SetMes(int mes)
+void geren_tempo::tempo::SetMes(int mes)
 {
     _ano_mes_dia = date::year_month_day(_ano_mes_dia.year(), date::month(mes), _ano_mes_dia.day());
 }
-void geren_time::tempo::SetDia(int dia)
+void geren_tempo::tempo::SetDia(int dia)
 {
     _ano_mes_dia = date::year_month_day(_ano_mes_dia.year(), _ano_mes_dia.month(), date::day(dia));
 }
-void geren_time::tempo::SetHora(int hora)
+void geren_tempo::tempo::SetHora(int hora)
 {
     _hora = std::chrono::hours(hora);
 }
-void geren_time::tempo::SetMinuto(int minuto)
+void geren_tempo::tempo::SetMinuto(int minuto)
 {
     _minutos = std::chrono::minutes(minuto);
 }
 
-date::year geren_time::tempo::GetAno()
+date::year geren_tempo::tempo::GetAno()
 {
     return _ano_mes_dia.year();
 }
-date::month geren_time::tempo::GetMes()
+date::month geren_tempo::tempo::GetMes()
 {
     return _ano_mes_dia.month();
 }
-date::day geren_time::tempo::GetDia()
+date::day geren_tempo::tempo::GetDia()
 {
     return _ano_mes_dia.day();
 }
-std::chrono::hours geren_time::tempo::GetHora()
+std::chrono::hours geren_tempo::tempo::GetHora()
 {
     return _hora;
 }
-std::chrono::minutes geren_time::tempo::GetMinuto()
+std::chrono::minutes geren_tempo::tempo::GetMinuto()
 {
     return _minutos;
 }

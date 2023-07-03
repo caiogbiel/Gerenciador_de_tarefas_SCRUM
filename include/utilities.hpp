@@ -414,10 +414,14 @@ namespace searchers
 #endif
 } // namespace searchers
 
-namespace geren_time
+namespace geren_tempo
 {
-#ifndef GEREN_TIME
-#define GEREN_TIME
+#ifndef GEREN_TEMPO
+#define GEREN_TEMPO
+    /**
+     * @brief Representa uma data, com ano, mes, dia, hora e minuto. Requer "date.h"
+     *
+     */
     class tempo
     {
     private:
@@ -431,6 +435,8 @@ namespace geren_time
         tempo(int ano, int mes, int dia, int hora, int minuto) : _ano_mes_dia(date::year(ano), date::month(mes), date::day(dia)), _hora(hora), _minutos(minuto) {}
         friend tempo operator+(tempo &t, int dias);
         friend tempo operator-(tempo &t, int dias);
+        friend tempo operator+(tempo &t1, tempo &t2);
+        friend tempo operator-(tempo &t1, tempo &t2);
         tempo &operator+=(int dias);
         tempo &operator-=(int dias);
         static tempo agora();
