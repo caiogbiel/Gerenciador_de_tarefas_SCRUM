@@ -15,14 +15,41 @@ geren_tempo::tempo geren_tempo::operator-(geren_tempo::tempo &t, int dias)
 }
 
 // PENDENTE
-geren_tempo::tempo geren_tempo::operator+(geren_tempo::tempo &t1, geren_tempo::tempo &t2)
-{
-    // date::sys_time<std::chrono::minutes>(date::sys_days(t2._ano_mes_dia) + date::sys_days(t2._ano_mes_dia));
-}
-// PENDENTE
-geren_tempo::tempo geren_tempo::operator-(geren_tempo::tempo &t1, geren_tempo::tempo &t2)
-{
-}
+// geren_tempo::tempo geren_tempo::operator+(geren_tempo::tempo &t1, geren_tempo::tempo &t2)
+// {
+//     // date::sys_time<std::chrono::minutes>(date::sys_days(t2._ano_mes_dia) + date::sys_days(t2._ano_mes_dia));
+//     int novo_ano = int(t1.GetAno()) + int(t2.GetAno());
+
+//     date::year_month_day novo = date::year_month_day();
+// }
+// // PENDENTE
+// geren_tempo::tempo geren_tempo::operator-(geren_tempo::tempo &t1, geren_tempo::tempo &t2)
+// {
+//     int novo_ano = int(t1.GetAno()) - int(t2.GetAno());
+//     unsigned novo_mes = unsigned(t1.GetMes()) - unsigned(t2.GetMes());
+//     unsigned novo_dia = unsigned(t1.GetDia()) - unsigned(t2.GetDia());
+//     int nova_hora = t1.GetHora().count() - t2.GetHora().count();
+//     int novo_minuto = t1.GetMinuto().count() - t2.GetMinuto().count();
+
+//     //data_em_segundos = (hora1 * 60) + (hora2 * 60) + minuto1 + minuto2
+
+//     unsigned long long data_em_segundos = (31536000 * int(t1.GetAno())) - (31536000 * int(t2.GetAno())) + (t1.GetMes()) + (86400 * unsigned(t1.GetDia())) - (86400 * unsigned(t1.GetDia())) +;
+
+//     geren_tempo::tempo novo = geren_tempo::tempo(0,0,0);
+//     if(novo_ano < 0) {
+//         return novo;
+//     }
+//     if (novo_minuto < 0)
+//     {
+//         novo.SetMinuto((60 - novo_minuto) + t1.GetMinuto().count());
+//         nova_hora--;
+//     }
+//     if(nova_hora < 0){
+//         novo.SetHora((24 - nova_hora) + t1.GetHora().count());
+//         novo_dia--;
+//     }
+//     auto temp = date::year_month_day(novo_ano, novo_mes, novo_dia);
+// }
 
 geren_tempo::tempo &geren_tempo::tempo::operator+=(int dias)
 {

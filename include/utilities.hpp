@@ -435,8 +435,8 @@ namespace geren_tempo
         tempo(int ano, int mes, int dia, int hora, int minuto) : _ano_mes_dia(date::year(ano), date::month(mes), date::day(dia)), _hora(hora), _minutos(minuto) {}
         friend tempo operator+(tempo &t, int dias);
         friend tempo operator-(tempo &t, int dias);
-        friend tempo operator+(tempo &t1, tempo &t2);
-        friend tempo operator-(tempo &t1, tempo &t2);
+        // friend tempo operator+(tempo &t1, tempo &t2);
+        // friend tempo operator-(tempo &t1, tempo &t2);
         tempo &operator+=(int dias);
         tempo &operator-=(int dias);
         static tempo agora();

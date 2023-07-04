@@ -50,8 +50,8 @@ public:
     scrum_team();
     ~scrum_team();
 
-     void addParticipante(const membros& novoMembro);
-    // void removeParticipante(membros membros);
+    bool addParticipante(membros novoMembro);
+    bool removeParticipante(membros membros);
     // membros operator[](int indice);
     // membros &operator[](int indice) const;
 

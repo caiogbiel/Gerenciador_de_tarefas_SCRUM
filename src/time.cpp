@@ -25,15 +25,24 @@ scrum_team::scrum_team()
 
 scrum_team::~scrum_team()
 {
+}
 
-void scrum_team::addParticipante(const membros& novoMembro) {
-        membros novoMembro;
-        novoMembro.nome = nome;
-        novoMembro.dataDeNascimento = dataDeNascimento;
-        novoMembro.email = email;
-        novoMembro.HorasTrabalhadas = HorasTrabalhadas;
-        novoMembro.nivelDePermissao = nivelDePermissao;
-        novoMembro.eventos = eventos;
+bool scrum_team::addParticipante(membros novoMembro)
+{
+    if (!participantes.find(novoMembro))
+    {
+        this->participantes.push_front(novoMembro);
+        return true;
+    }
+    return false;
+}
 
-        membros.push_back(novoMembro);
+bool scrum_team::removeParticipante(membros participante)
+{
+    if (participantes.find(participante))
+    {
+        participantes.remove(participante);
+        return true;
+    }
+    return false;
 }
