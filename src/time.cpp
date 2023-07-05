@@ -47,3 +47,11 @@ bool scrum_team::removeParticipante(membros participante)
     }
     return false;
 }
+membros scrum_team::operator[](int indice)
+{
+    // if(indice >= 0 && indice < quantidade)
+    // {
+
+    // }
+    throw std::runtime_error("Indice nao foi encontrado");
+}
