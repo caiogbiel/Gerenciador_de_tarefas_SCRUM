@@ -2,7 +2,7 @@
 #include "../include/time.hpp"
 #include "../include/utilities.hpp"
 
-evento::evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team _time)
+evento::evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team _time, prioridade _prio)
 {
     this->nome = _nome;
     this->tipo = _tipo;
@@ -11,6 +11,7 @@ evento::evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inic
     this->fim = _fim;
     this->participantes = _part;
     this->time = _time;
+    this->prio = _prio;
 }
 evento::~evento()
 {
@@ -19,15 +20,15 @@ evento::~evento()
 void evento::iniciar()
 {
     this->status = andamento;
+    this->SetInicio(geren_tempo::tempo::agora());
 }
 void evento::encerrar()
 {
     this->status = finalizado;
+    this->SetFim(geren_tempo::tempo::agora());
 }
 bool evento::adicionarParticipantes(membros participante)
 {
-    // ordenar participantes
-    // procurar se existe
     if (participantes.find(participante))
     {
         this->participantes.push_front(participante);
@@ -37,8 +38,6 @@ bool evento::adicionarParticipantes(membros participante)
 }
 bool evento::removerParticipantes(membros participante)
 {
-    // ordenar participantes
-    // procurar se existe
     if (participantes.find(participante))
     {
         participantes.remove(participante);
@@ -105,10 +104,10 @@ void evento::SetStatus(status_evento status)
 {
     this->status = status;
 }
-void evento::SetPrioridade(prioridade prio)
-{
-    this->prio = prio;
-}
+// void evento::SetPrioridade(prioridade prio)
+// {
+//     this->prio = prio;
+// }
 void evento::SetInicio(geren_tempo::tempo inicio)
 {
     this->inicio = inicio;

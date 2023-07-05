@@ -19,7 +19,7 @@ private:
     scrum_team time;
 
 public:
-    evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team _time);
+    evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team _time, prioridade _prio);
     ~evento();
     void iniciar();
     void encerrar();
@@ -39,7 +39,7 @@ public:
     void SetNome(std::string nome);
     void SetTipo(eventos_sprint tipo);
     void SetStatus(status_evento status);
-    void SetPrioridade(prioridade prioridade);
+    // void SetPrioridade(prioridade prioridade);
     void SetInicio(geren_tempo::tempo inicio);
     void SetFim(geren_tempo::tempo fim);
     void SetTime(scrum_team time);

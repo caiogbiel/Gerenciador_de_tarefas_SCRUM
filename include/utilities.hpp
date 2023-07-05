@@ -19,7 +19,7 @@ namespace adts
         U value;
         Duo_Node<U> *previous;
         Duo_Node<U> *next;
-        Duo_Node()
+        Duo_Node() : value()
         {
             previous = nullptr;
             next = nullptr;
@@ -84,7 +84,7 @@ namespace adts
         }
         void push_front(T value)
         {
-            Duo_Node<T> *new_node = new Duo_Node<T>;
+            Duo_Node<T> *new_node = new Duo_Node<T>();
             if (new_node)
             {
                 new_node->next = start;
@@ -97,32 +97,46 @@ namespace adts
             }
             std::cerr << "Memoria insuficiente para inclusao de um novo valor\n";
         }
+        /**
+         * @bug A lista não tem referência pro novo nó
+         */
         void push_back(T value)
         {
-            Duo_Node<T> *new_node = new Duo_Node<T>;
+            Duo_Node<T> *new_node = new Duo_Node<T>();
             if (new_node)
             {
-                new_node->next = nullptr;
-                new_node->previous = nullptr;
                 new_node->value = value;
 
-                Duo_Node<T> *temp = start;
-                while (temp->next != nullptr)
+                if (start)
                 {
-                    temp = temp->next;
+                    Duo_Node<T> *temp = start;
+                    while (temp->next != nullptr)
+                    {
+                        temp = temp->next;
+                    }
+                    new_node->previous = temp;
+                    // temp->next = new_node;
+                    new_node->previous->next = new_node;
                 }
-
-                new_node->previous = temp;
-                temp->next = new_node;
+                else
+                {
+                    start = new_node;
+                }
                 return;
             }
             std::cerr << "Memoria insuficiente para inclusao de um novo valor\n";
         }
+        /**
+         * @bug Esta dando double free
+         */
         void pop_front()
         {
-            Duo_Node<T> *aux = start->next;
-            delete start;
-            start = aux;
+            if (start)
+            {
+                Duo_Node<T> *aux = start->next;
+                delete start;
+                start = aux;
+            }
         }
         void pop_back()
         {
@@ -170,7 +184,7 @@ namespace adts
             int count = size();
             for (int i = 1; i <= count; i++)
             {
-                pop_front();
+                pop_back();
             }
         }
         int size()
@@ -210,10 +224,10 @@ namespace adts
             Duo_Node<T> *temp = start;
             while (temp != nullptr)
             {
-                std::cout << temp->value << " ";
+                std::cout << temp->value << "\n";
+
                 temp = temp->next;
             }
-            std::cout << std::endl;
         }
     };
 #pragma endregion
@@ -439,7 +453,7 @@ namespace geren_tempo
         // friend tempo operator-(tempo &t1, tempo &t2);
         tempo &operator+=(int dias);
         tempo &operator-=(int dias);
-        static tempo agora();
+        static tempo agora(int fuso_horario = 0);
         void SetAno(int ano);
         void SetMes(int mes);
         void SetDia(int dia);
@@ -453,7 +467,7 @@ namespace geren_tempo
         friend std::ostream &
         operator<<(std::ostream &o, const tempo &t)
         {
-            o << t._ano_mes_dia.day() << "/" << t._ano_mes_dia.month() << "/" << t._ano_mes_dia.year() << " " << std::setw(2) << std::setfill('0') << t._hora.count() << ":" << std::setw(2) << std::setfill('0') << t._minutos.count() << std::endl;
+            o << t._ano_mes_dia.day() << "/" << t._ano_mes_dia.month() << "/" << t._ano_mes_dia.year() << " " << std::setw(2) << std::setfill('0') << t._hora.count() << ":" << std::setw(2) << std::setfill('0') << t._minutos.count();
             return o;
         }
     };

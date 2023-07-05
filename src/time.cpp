@@ -1,13 +1,5 @@
 #include "../include/time.hpp"
 
-membros::membros()
-{
-}
-
-membros::~membros()
-{
-}
-
 bool membros::operator==(const membros &b)
 {
     bool is_equal = true;
@@ -18,20 +10,29 @@ bool membros::operator==(const membros &b)
     is_equal &= this->dataDeNascimento.tm_mon == b.dataDeNascimento.tm_mon;
     return is_equal;
 }
+// GETTERS
 
-scrum_team::scrum_team()
+permissao membros::getNivelDePermissao()
 {
+    return this->nivel_de_permissao;
 }
 
-scrum_team::~scrum_team()
+// SETTERS
+
+void membros::setNome(std::string nome)
 {
+    this->nome = nome;
+}
+void membros::setNivelDePermissao(permissao nivel_de_Permissao)
+{
+    this->nivel_de_permissao = nivel_de_Permissao;
 }
 
 bool scrum_team::addParticipante(membros novoMembro)
 {
-    if (!participantes.find(novoMembro))
+    if (!_participantes.find(novoMembro))
     {
-        this->participantes.push_front(novoMembro);
+        this->_participantes.push_front(novoMembro);
         return true;
     }
     return false;
@@ -39,9 +40,9 @@ bool scrum_team::addParticipante(membros novoMembro)
 
 bool scrum_team::removeParticipante(membros participante)
 {
-    if (participantes.find(participante))
+    if (_participantes.find(participante))
     {
-        participantes.remove(participante);
+        _participantes.remove(participante);
         return true;
     }
     return false;

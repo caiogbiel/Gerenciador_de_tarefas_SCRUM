@@ -1,5 +1,6 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
+#include <iostream>
 
 enum prioridade
 {
@@ -30,5 +31,7 @@ enum permissao
     developer,
     scrum_master
 };
+
+std::string permissao_para_string(permissao p);
 
 #endif
