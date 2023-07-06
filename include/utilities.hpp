@@ -232,8 +232,12 @@ namespace adts
             }
         }
 
-        friend membros scrum_team::operator[](int indice);
+        Duo_Node<T> *getStart() const
+        {
+            return start;
+        }
 
+        friend membros scrum_team::operator[](int indice);
     };
 #pragma endregion
 

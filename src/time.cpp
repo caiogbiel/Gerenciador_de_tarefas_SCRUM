@@ -1,6 +1,7 @@
 #include "../include/time.hpp"
-#includde "../include/utilities.hpp"
+#include "../include/utilities.hpp"
 
+#pragma region Membros
 bool membros::operator==(const membros &b)
 {
     bool is_equal = true;
@@ -28,7 +29,8 @@ void membros::setNivelDePermissao(permissao nivel_de_Permissao)
 {
     this->nivel_de_permissao = nivel_de_Permissao;
 }
-
+#pragma endregion
+#pragma region SCRUM_MASTER
 bool scrum_team::addParticipante(membros novoMembro)
 {
     if (!_participantes.find(novoMembro))
@@ -50,14 +52,33 @@ bool scrum_team::removeParticipante(membros participante)
 }
 membros scrum_team::operator[](int indice)
 {
-    if(indice >= 0 && indice < quantidade)
+    if (indice >= 0 && indice < _quantidade)
     {
         int current = 0;
-        if(indice == 0)
+        adts::Duo_Node<membros> *aux = _participantes.getStart();
+        while (aux != nullptr)
         {
-        return participante.start;
+            if (indice == current)
+            {
+                return aux->value;
+            }
+            aux = aux->next;
+            current++;
         }
-
     }
     throw std::runtime_error("Indice nao foi encontrado");
 }
+// GETTERS
+adts::Lista<membros> scrum_team::getParticipantes()
+{
+    return _participantes;
+}
+int scrum_team::getQuantidade()
+{
+    return _quantidade;
+}
+adts::Lista<eventos_sprint> scrum_team::getEventos()
+{
+    return _eventos;
+}
+#pragma endregion

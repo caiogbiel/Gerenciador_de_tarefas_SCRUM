@@ -63,9 +63,9 @@ public:
     // membros &operator[](int indice) const;
 
     // // GETTERS
-    // adts::Lista<membros> getParticipantes();
-    // int getQuantidade();
-    // adts::Lista<eventos_sprint> getEventos();
+    adts::Lista<membros> getParticipantes();
+    int getQuantidade();
+    adts::Lista<eventos_sprint> getEventos();
 
     // // SETTERS
     // void setEquipe(membros equipe);
