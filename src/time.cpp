@@ -1,4 +1,5 @@
 #include "../include/time.hpp"
+#includde "../include/utilities.hpp"
 
 bool membros::operator==(const membros &b)
 {
@@ -49,9 +50,14 @@ bool scrum_team::removeParticipante(membros participante)
 }
 membros scrum_team::operator[](int indice)
 {
-    // if(indice >= 0 && indice < quantidade)
-    // {
+    if(indice >= 0 && indice < quantidade)
+    {
+        int current = 0;
+        if(indice == 0)
+        {
+        return participante.start;
+        }
 
-    // }
+    }
     throw std::runtime_error("Indice nao foi encontrado");
 }

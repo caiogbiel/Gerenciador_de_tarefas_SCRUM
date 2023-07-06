@@ -231,6 +231,9 @@ namespace adts
                 temp = temp->next;
             }
         }
+
+        friend membros scrum_team::operator[](int indice);
+
     };
 #pragma endregion
 
