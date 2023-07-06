@@ -68,8 +68,18 @@ public:
     adts::Lista<eventos_sprint> getEventos();
 
     // // SETTERS
-    // void setEquipe(membros equipe);
-    // void setQuantidade(int quantidade);
-    // void setEventos(eventos_sprint eventos);
+    void setEquipe(membros equipe)
+ {
+      this->equipe = equipe;
+ }
+    // void setQuantidade(int quantidade)
+ {
+      this->quantidade = quantidade;
+ }
+    // void setEventos(eventos_sprint eventos)
+ {
+      this->eventos = eventos;
+ }
+
 };
 #endif
