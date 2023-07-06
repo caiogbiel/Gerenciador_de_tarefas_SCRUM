@@ -19,6 +19,7 @@ namespace adts
         U value;
         Duo_Node<U> *previous;
         Duo_Node<U> *next;
+
         Duo_Node() : value()
         {
             previous = nullptr;
@@ -115,7 +116,7 @@ namespace adts
                         temp = temp->next;
                     }
                     new_node->previous = temp;
-                    // temp->next = new_node;
+                    temp->next = new_node;
                     new_node->previous->next = new_node;
                 }
                 else
@@ -221,6 +222,7 @@ namespace adts
         }
         void print()
         {
+            std::cout << start->value << ", " << start->next->value << ", " << start->next->next->value << "\n";
             Duo_Node<T> *temp = start;
             while (temp != nullptr)
             {
