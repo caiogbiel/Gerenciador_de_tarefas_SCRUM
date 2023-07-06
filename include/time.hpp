@@ -72,11 +72,11 @@ public:
  {
       this->equipe = equipe;
  }
-    // void setQuantidade(int quantidade)
+    void setQuantidade(int quantidade)
  {
       this->quantidade = quantidade;
  }
-    // void setEventos(eventos_sprint eventos)
+    void setEventos(eventos_sprint eventos)
  {
       this->eventos = eventos;
  }
