@@ -58,6 +58,10 @@ void p_principal()
     case 1:
         break;
     case 2:
+    //ainda em desenvolvimento
+    // //cria novo evento
+    // evento novaTarefa = criarNovaTarefa();
+    //listaTarefas.push(novaTarefa);
         break;
     case 3:
         break;
@@ -121,3 +125,31 @@ void p_time(scrum_team time)
         cout << "3 - Remover participante\n";
     }
 }
+
+//ainda em desenvolvimento de case 2
+// void evento::criarNovaTarefa(std::queue<evento> &ListaDeTarefas)
+// {
+//     std::string nome;
+//     eventos_sprint tipo;
+//     adts::Lista<membros> participantes;
+//     scrum_team time;
+
+//     std::cout<< "Digite o nome da nova tarefa: ";
+//     cin.ignore();
+//     getline(cin, nome);
+
+//     std::cout << "Digite o tipo da sprint (planning, daily_scrum, review, retrospective): ";
+//     cin.ignore();
+//     getLine(cin, tipo);
+
+//     std::cout <<"Quais os participantes?"
+//     cin.ignore();
+//     getLine(cin, participantes);
+
+//     std::cout <<"Digite o nome do team: ";
+//     cin.ignore();
+//     getLine(cin, time);
+
+//     evento tarefa(nome, tipo, participantes, time);
+
+// }
