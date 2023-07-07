@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <chrono>
 #include "./date.h"
+// #include "./time.hpp"
 
 namespace adts
 {
@@ -92,7 +93,10 @@ namespace adts
                 new_node->previous = nullptr;
                 new_node->value = value;
 
-                start->previous = new_node;
+                if (start)
+                {
+                    start->previous = new_node;
+                }
                 start = new_node;
                 return;
             }
@@ -115,9 +119,8 @@ namespace adts
                     {
                         temp = temp->next;
                     }
-                    new_node->previous = temp;
                     temp->next = new_node;
-                    new_node->previous->next = new_node;
+                    new_node->previous = temp;
                 }
                 else
                 {
@@ -141,21 +144,30 @@ namespace adts
         }
         void pop_back()
         {
-            Duo_Node<T> *aux = start;
-
             if (!start)
             {
                 return;
             }
 
-            while (aux->next != nullptr)
+            if (!start->next)
             {
-                if (aux->next->next == nullptr)
-                    break;
+                delete start;
+                start = nullptr;
+                return;
+            }
+
+            Duo_Node<T> *aux = start;
+
+            while (aux->next)
+            {
+                if (!aux->next->next)
+                {
+                    delete aux->next;
+                    aux->next = nullptr;
+                    return;
+                }
                 aux = aux->next;
             }
-            delete aux->next;
-            aux->next = nullptr;
         }
         bool remove(T value)
         {
@@ -167,6 +179,10 @@ namespace adts
                     if (aux->previous)
                     {
                         aux->previous->next = aux->next;
+                    }
+                    else
+                    {
+                        start = aux->next;
                     }
                     if (aux->next)
                     {
@@ -182,8 +198,7 @@ namespace adts
         }
         void clear()
         {
-            int count = size();
-            for (int i = 1; i <= count; i++)
+            while (start)
             {
                 pop_back();
             }
@@ -222,22 +237,37 @@ namespace adts
         }
         void print()
         {
-            std::cout << start->value << ", " << start->next->value << ", " << start->next->next->value << "\n";
             Duo_Node<T> *temp = start;
             while (temp != nullptr)
             {
                 std::cout << temp->value << "\n";
-
                 temp = temp->next;
             }
         }
 
-        Duo_Node<T> *getStart() const
-        {
-            return start;
-        }
+        // Duo_Node<T> *GetStart() const
+        // {
+        //     return start;
+        // }
 
-        friend membros scrum_team::operator[](int indice);
+        // friend membros scrum_team::operator[](int indice)
+        // {
+        //     if (indice >= 0 && indice < _quantidade)
+        //     {
+        //         int current = 0;
+        //         Duo_Node<membros> *aux = _participantes.getStart();
+        //         while (aux != nullptr)
+        //         {
+        //             if (indice == current)
+        //             {
+        //                 return aux->value;
+        //             }
+        //             aux = aux->next;
+        //             current++;
+        //         }
+        //     }
+        //     throw std::runtime_error("Indice nao foi encontrado");
+        // }
     };
 #pragma endregion
 
@@ -462,6 +492,7 @@ namespace geren_tempo
         // friend tempo operator-(tempo &t1, tempo &t2);
         tempo &operator+=(int dias);
         tempo &operator-=(int dias);
+        bool operator==(const tempo &t);
         static tempo agora(int fuso_horario = 0);
         void SetAno(int ano);
         void SetMes(int mes);

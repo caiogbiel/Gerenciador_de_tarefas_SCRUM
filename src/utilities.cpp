@@ -52,6 +52,16 @@ geren_tempo::tempo geren_tempo::operator-(geren_tempo::tempo &t, int dias)
 //     }
 //     auto temp = date::year_month_day(novo_ano, novo_mes, novo_dia);
 // }
+bool geren_tempo::tempo::operator==(const tempo &t)
+{
+    bool is_equal = true;
+    is_equal &= (this->GetAno() == t._ano_mes_dia.year());
+    is_equal &= (this->GetMes() == t._ano_mes_dia.month());
+    is_equal &= (this->GetDia() == t._ano_mes_dia.day());
+    is_equal &= (this->GetHora() == t._hora);
+    is_equal &= (this->GetMinuto() == t._minutos);
+    return is_equal;
+}
 
 geren_tempo::tempo &geren_tempo::tempo::operator+=(int dias)
 {

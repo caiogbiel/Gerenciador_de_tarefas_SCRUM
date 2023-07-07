@@ -7,9 +7,7 @@ bool membros::operator==(const membros &b)
     bool is_equal = true;
     is_equal &= this->nome == b.nome;
     is_equal &= this->email == b.email;
-    is_equal &= this->dataDeNascimento.tm_year == b.dataDeNascimento.tm_year;
-    is_equal &= this->dataDeNascimento.tm_mday == b.dataDeNascimento.tm_mday;
-    is_equal &= this->dataDeNascimento.tm_mon == b.dataDeNascimento.tm_mon;
+    is_equal &= this->data_nascimento == b.data_nascimento;
     return is_equal;
 }
 // GETTERS
@@ -50,24 +48,7 @@ bool scrum_team::removeParticipante(membros participante)
     }
     return false;
 }
-membros scrum_team::operator[](int indice)
-{
-    if (indice >= 0 && indice < _quantidade)
-    {
-        int current = 0;
-        adts::Duo_Node<membros> *aux = _participantes.getStart();
-        while (aux != nullptr)
-        {
-            if (indice == current)
-            {
-                return aux->value;
-            }
-            aux = aux->next;
-            current++;
-        }
-    }
-    throw std::runtime_error("Indice nao foi encontrado");
-}
+
 // GETTERS
 adts::Lista<membros> scrum_team::getParticipantes()
 {

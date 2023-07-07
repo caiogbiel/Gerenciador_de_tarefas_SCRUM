@@ -2,7 +2,7 @@
 #define TIME_HPP
 
 #include <iostream>
-#include <ctime>
+// #include <chrono>
 // #include "./evento.hpp"
 #include "./enums.hpp"
 #include "./utilities.hpp"
@@ -11,21 +11,21 @@ class membros
 {
 private:
     std::string nome;
-    tm dataDeNascimento;
+    geren_tempo::tempo data_nascimento;
     std::string email;
-    tm HorasTrabalhadas;
+    std::chrono::hours HorasTrabalhadas;
     permissao nivel_de_permissao;
     adts::Lista<eventos_sprint> eventos;
 
 public:
     membros() {}
-    membros(std::string _nome, permissao _per) : nome(_nome), nivel_de_permissao(_per) {}
+    membros(std::string _nome, permissao _per, geren_tempo::tempo _data_nascimento) : nome(_nome), nivel_de_permissao(_per), data_nascimento(_data_nascimento) {}
     ~membros() {}
     bool operator==(const membros &b);
 
     //     // GETTERS
     //     std::string getNome();
-    //     geren_tempo::tempo getDataDeNascimento();
+    //     geren_tempo::tempo getData_nascimento();
     //     std::string getEmail();
     //     geren_tempo::tempo getHorasTrabalhadas();
     permissao getNivelDePermissao();
@@ -33,7 +33,7 @@ public:
 
     //     // SETTERS
     void setNome(std::string nome);
-    //     void setDataDeNascimento(tm dataDeNascimento);
+    //     void setData_nascimento(tm data_nascimento);
     //     void setEmail(std::string email);
     //     void setHorasTrabalhadas(tm HorasTrabalhadas);
     void setNivelDePermissao(permissao nivel);
@@ -55,7 +55,7 @@ private:
 
 public:
     scrum_team() {}
-    scrum_team(adts::Lista<membros> participantes, adts::Lista<eventos_sprint> eventos = adts::Lista<eventos_sprint>()) : _participantes(participantes), _eventos(eventos) {}
+    scrum_team(adts::Lista<membros> participantes, adts::Lista<eventos_sprint> eventos) : _participantes(participantes), _eventos(eventos) {}
     ~scrum_team(){};
     bool addParticipante(membros novoMembro);
     bool removeParticipante(membros membros);
