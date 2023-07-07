@@ -94,16 +94,17 @@ geren_tempo::tempo geren_tempo::tempo::agora(int fuso_horario)
 
 void geren_tempo::tempo::SetAno(int ano)
 {
-
     _ano_mes_dia = date::year_month_day(date::year(ano), _ano_mes_dia.month(), _ano_mes_dia.day());
 }
 void geren_tempo::tempo::SetMes(int mes)
 {
-    _ano_mes_dia = date::year_month_day(_ano_mes_dia.year(), date::month(mes), _ano_mes_dia.day());
+    if (mes <= 12 && mes > 0)
+        _ano_mes_dia = date::year_month_day(_ano_mes_dia.year(), date::month(mes), _ano_mes_dia.day());
 }
 void geren_tempo::tempo::SetDia(int dia)
 {
-    _ano_mes_dia = date::year_month_day(_ano_mes_dia.year(), _ano_mes_dia.month(), date::day(dia));
+    if (dia <= 31 && dia > 0)
+        _ano_mes_dia = date::year_month_day(_ano_mes_dia.year(), _ano_mes_dia.month(), date::day(dia));
 }
 void geren_tempo::tempo::SetHora(int hora)
 {

@@ -26,6 +26,9 @@ void evento::encerrar()
 {
     this->status = finalizado;
     this->SetFim(geren_tempo::tempo::agora());
+    /*
+    Adicionar horas de duração do evento às horas trabalhadas de todos os participantes
+    */
 }
 bool evento::adicionarParticipantes(membros participante)
 {

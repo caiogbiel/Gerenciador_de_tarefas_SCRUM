@@ -4,7 +4,7 @@
 
 using namespace std;
 
-membros p_login()
+void p_login()
 {
 
     cout << "=====================================\n";
@@ -20,8 +20,6 @@ membros p_login()
     int p;
     cin >> p;
     usuario.setNivelDePermissao(permissao(p));
-
-    return usuario;
 }
 
 void p_principal()
