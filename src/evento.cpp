@@ -2,7 +2,7 @@
 #include "../include/time.hpp"
 #include "../include/utilities.hpp"
 
-evento::evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team _time, prioridade _prio)
+evento::evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team *_time, prioridade _prio)
 {
     this->nome = _nome;
     this->tipo = _tipo;
@@ -90,7 +90,7 @@ adts::Lista<membros> const evento::GetParticipantes()
 }
 scrum_team evento::GetTime()
 {
-    return this->time;
+    return *this->time;
 }
 
 // SETTERS
@@ -121,5 +121,5 @@ void evento::SetFim(geren_tempo::tempo fim)
 }
 void evento::SetTime(scrum_team time)
 {
-    this->time = time;
+    *this->time = time;
 }

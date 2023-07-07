@@ -42,15 +42,15 @@ void membros::setNome(std::string nome)
 
 void membros::setData_nascimento(geren_tempo::tempo data_nascimento)
 {
-    this->_data_nascimento;
+    this->_data_nascimento = data_nascimento;
 }
 void membros::setEmail(std::string email)
 {
-    this->_email;
+    this->_email = email;
 }
 void membros::setHorasTrabalhadas(std::chrono::hours HorasTrabalhadas)
 {
-    this->_horas_trabalhadas;
+    this->_horas_trabalhadas = HorasTrabalhadas;
 }
 
 void membros::setNivelDePermissao(permissao nivel_de_Permissao)

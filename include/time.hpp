@@ -2,8 +2,8 @@
 #define TIME_HPP
 
 #include <iostream>
-// #include <chrono>
-// #include "./evento.hpp"
+#include <chrono>
+#include "./evento.hpp"
 #include "./enums.hpp"
 #include "./utilities.hpp"
 
@@ -15,12 +15,12 @@ private:
     std::string _email;
     std::chrono::hours _horas_trabalhadas;
     permissao _nivel_permissao;
-    adts::Lista<eventos_sprint> _eventos;
+    adts::Lista<evento> _eventos;
 
 public:
     membros() {}
-    membros(std::string __nome, permissao __per, geren_tempo::tempo __data_nascimento) : _nome(__nome), _nivel_permissao(__per), _data_nascimento(__data_nascimento) {}
-    membros(std::string __nome, permissao __per, geren_tempo::tempo __data_nascimento, std::string __email, std::chrono::hours __horas_trabalhadas) {}
+    membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento) : _nome(nome), _nivel_permissao(per), _data_nascimento(data_nascimento) {}
+    membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento, std::string email, std::chrono::hours horas_trabalhadas, adts::Lista<evento> eventos) : _nome(nome), _nivel_permissao(per), _data_nascimento(data_nascimento), _email(email), _horas_trabalhadas(horas_trabalhadas), _eventos(eventos) {}
     ~membros() {}
     bool operator==(const membros &b);
 
@@ -30,7 +30,7 @@ public:
     std::string getEmail();
     std::chrono::hours getHorasTrabalhadas();
     permissao getNivelDePermissao();
-    //     adts::Lista<eventos_sprint> getEventos();
+    adts::Lista<evento> getEventos();
 
     // SETTERS
     void setNome(std::string _nome);
@@ -38,11 +38,11 @@ public:
     void setEmail(std::string _email);
     void setHorasTrabalhadas(std::chrono::hours _horas_trabalhadas);
     void setNivelDePermissao(permissao nivel);
-    //     void setEventos(eventos_sprint _eventos);
+    void setEventos(adts::Lista<evento> _eventos);
     friend std::ostream &
     operator<<(std::ostream &o, const membros &m)
     {
-        o << "_nome: " << m._nome << " - " << permissao_para_string(m._nivel_permissao);
+        o << "Nome: " << m._nome << " - " << permissao_para_string(m._nivel_permissao);
         return o;
     }
 };
@@ -60,7 +60,7 @@ public:
     ~scrum_team(){};
     bool addParticipante(membros novoMembro);
     bool removeParticipante(membros membros);
-    membros operator[](int indice);
+    // membros operator[](int indice);
     // membros &operator[](int indice) const;
 
     // // GETTERS

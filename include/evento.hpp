@@ -3,8 +3,10 @@
 #include <iostream>
 #include <string>
 #include "./enums.hpp"
-#include "./time.hpp"
 #include "./utilities.hpp"
+
+class membros;
+class scrum_team;
 
 class sprint
 {
@@ -20,10 +22,10 @@ private:
     geren_tempo::tempo inicio;
     geren_tempo::tempo fim;
     adts::Lista<membros> participantes;
-    scrum_team time;
+    scrum_team *time;
 
 public:
-    evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team _time, prioridade _prio);
+    evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team *_time, prioridade _prio);
     ~evento();
     void iniciar();
     void encerrar();

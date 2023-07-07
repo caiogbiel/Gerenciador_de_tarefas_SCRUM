@@ -3,6 +3,7 @@
 #include "../include/evento.hpp"
 #include "../include/enums.hpp"
 #include "../include/utilities.hpp"
+#include "./paginas.cpp"
 
 using namespace geren_tempo;
 
@@ -35,6 +36,7 @@ using namespace geren_tempo;
 
 int main()
 {
+#pragma region membro
     adts::Lista<membros> a = adts::Lista<membros>();
     membros m1 = membros("Jonas", permissao::developer, tempo(2000, 10, 21));
     membros m2 = membros("Maria", permissao::product_owner, tempo(1993, 4, 24));
@@ -42,6 +44,12 @@ int main()
     a.push_back(m1);
     a.push_back(m2);
     a.push_back(m3);
-    // a.remove(m3);
     a.print();
+#pragma endregion
+#pragma region
+    string nome = "Daily 3";
+
+    // evento daily = evento();
+
+#pragma endregion
 }

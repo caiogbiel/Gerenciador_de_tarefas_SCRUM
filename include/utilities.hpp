@@ -102,9 +102,6 @@ namespace adts
             }
             std::cerr << "Memoria insuficiente para inclusao de um novo valor\n";
         }
-        /**
-         * @bug A lista não tem referência pro novo nó
-         */
         void push_back(T value)
         {
             Duo_Node<T> *new_node = new Duo_Node<T>();
@@ -130,9 +127,6 @@ namespace adts
             }
             std::cerr << "Memoria insuficiente para inclusao de um novo valor\n";
         }
-        /**
-         * @bug Esta dando double free
-         */
         void pop_front()
         {
             if (start)
