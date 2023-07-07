@@ -63,17 +63,17 @@ adts::Lista<eventos_sprint> scrum_team::getEventos()
     return _eventos;
 }
 //SETTERS
-void setEquipe(membros equipe)
- {
-this->equipe = equipe;
- }
-void setQuantidade(int quantidade)
- {
-    this->quantidade = quantidade;
- }
-    void setEventos(eventos_sprint eventos)
- {
-    this->eventos = eventos;
- }
+void scrum_team::setEquipe(membros participantes)
+{
+    this->_participantes = participantes;
+}
+void scrum_team::setQuantidade(int quantidade)
+{
+    this->_quantidade = quantidade;
+}
+    void scrum_team::setEventos(eventos_sprint eventos)
+{
+    this->_eventos = eventos;
+}
 
 #pragma endregion
