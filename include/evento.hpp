@@ -6,6 +6,10 @@
 #include "./time.hpp"
 #include "./utilities.hpp"
 
+class sprint
+{
+};
+
 class evento
 {
 private:
