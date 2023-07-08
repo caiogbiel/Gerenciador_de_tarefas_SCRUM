@@ -27,6 +27,7 @@ private:
 
 public:
     evento();
+    evento(std::string nome, eventos_sprint tipo, adts::Lista<int> part, scrum_team *time, prioridade prio);
     evento(std::string nome, eventos_sprint tipo, geren_tempo::tempo inicio, geren_tempo::tempo fim, adts::Lista<int> part, scrum_team *time, prioridade prio);
     ~evento();
     void                        iniciar();

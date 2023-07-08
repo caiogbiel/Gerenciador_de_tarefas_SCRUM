@@ -9,6 +9,19 @@ evento::evento()
     ++eventos_global_id;
 }
 
+evento::evento(std::string nome, eventos_sprint tipo, adts::Lista<int> id_part, scrum_team *time, prioridade prio)
+{
+    this->_nome = nome;
+    this->_tipo = tipo;
+    this->_status = analise;
+    this->_id_participantes = id_part;
+    this->_time = time;
+    this->_prio = prio;
+
+    this->_id = eventos_global_id;
+    ++eventos_global_id;
+}
+
 evento::evento(std::string nome, eventos_sprint tipo, geren_tempo::tempo inicio, geren_tempo::tempo fim, adts::Lista<int> id_part, scrum_team *time, prioridade prio)
 {
     this->_nome = nome;

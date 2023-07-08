@@ -6,6 +6,12 @@
 
 using namespace std;
 
+void programa()
+{
+    p_login();
+    p_principal();
+}
+
 void p_login()
 {
 
@@ -70,11 +76,7 @@ void p_principal()
     case 4:
         break;
     case 5:
-        cout << "=====================================\n";
-        cout << "Participantes do Time:\n";
-
-        // time break;
-
+        break;
     default:
         break;
     }
@@ -132,38 +134,67 @@ void p_time(scrum_team time)
 }
 
 // ainda em desenvolvimento de case 2
-void evento::criarNovaTarefa(std::vector<evento> &_evento)
+void criarNovaTarefa()
 {
-    std::string nome;
-    eventos_sprint tipo;
-    adts::Lista<membros> participantes;
+    string buffer;
+
+    string nome;
+    int tipo;
+    adts::Lista<int> participantes;
+    adts::Lista<int> participantes_id;
+    int time_id;
     scrum_team time;
+    int prio;
 
-    std::cout << "Digite o nome da nova tarefa: ";
-    cin.ignore();
-    getline(cin, nome);
+    cout << "Digite o nome da nova tarefa: ";
+    cin >> nome;
 
-    std::cout << "Digite o tipo da sprint (planning, daily_scrum, review, retrospective): ";
-    cin.ignore();
-    getLine(cin, tipo);
+    cout << "Digite o tipo da sprint (0 - planning, 1 - daily_scrum, 2 - review, 3 - retrospective): ";
+    cin >> tipo;
 
-    std::cout << "Quais os participantes?" cin.ignore();
-    getLine(cin, participantes);
+    cout << "Digite a prioridade da tarefa (0 - Baixa, 1 - Media, 2 - Alta, 3 - Urgente): ";
+    cin >> prio;
 
-    std::cout << "Digite o nome do team: ";
-    cin.ignore();
-    getLine(cin, time);
+    cout << "Digite os ID's dos participantes (separe por espaço): ";
+    getline(cin, buffer);
 
-    evento tarefa(nome, tipo, participantes, time);
-}
+    // Armazena a entrada em um buffer para ler cada Id fornecido
+    istringstream tmp(buffer);
 
-int gerenciador::verTime(adts::Lista<scrum_team> &equipes)
-{
-    if (usuario.getNivelDePermissao() == 0)
+    // Cria uma cópia de todos os membros contendo somente o Id deles
+    for (int i = 0; i < todos_membros.size(); ++i)
     {
-        std::string nome_time;
-        cout << "Qual dos seus times deseja ver?" cin >> nome_time;
-        equipe_usuario = equipes.getEquipe_usuario(nome_time);
+        participantes_id.push_back(todos_membros[i].GetId());
     }
-    equipe_usuario.GetParticipantes();
+
+    // Faz a leitura de cada Id no buffer e verifica se existe esse Id
+    while (tmp)
+    {
+        int id;
+        tmp >> id;
+        if (participantes_id.find(id))
+        {
+            participantes.push_back(id);
+        }
+        else
+        {
+            cout << "Id: " << id << " nao encontrado na lista de membros.\n";
+        }
+    }
+
+    cout << "Digite o ID da equipe: ";
+    cin >> time_id;
+
+    evento tarefa(nome, eventos_sprint(tipo), participantes, &time, prioridade(prio));
 }
+
+// int gerenciador::verTime(adts::Lista<scrum_team> &equipes)
+// {
+//     if (usuario.getNivelDePermissao() == 0)
+//     {
+//         string nome_time;
+//         cout << "Qual dos seus times deseja ver?" cin >> nome_time;
+//         equipe_usuario = equipes.getEquipe_usuario(nome_time);
+//     }
+//     equipe_usuario.GetParticipantes();
+// }
