@@ -2,6 +2,8 @@
 #include "../include/time.hpp"
 #include "../include/utilities.hpp"
 
+evento::evento() {}
+
 evento::evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team *_time, prioridade _prio)
 {
     this->nome = _nome;

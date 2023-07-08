@@ -49,9 +49,7 @@ int main()
     eventos_sprint tipo = eventos_sprint::daily_scrum;
     tempo inicio = tempo::agora();
     tempo fim = inicio + 1;
-    scrum_team *time = new scrum_team(a, adts::Lista<eventos_sprint>());
+    scrum_team *time = new scrum_team(a, adts::Lista<evento>());
 
     evento daily = evento(nome, tipo, inicio, fim, a, time, prioridade::media);
-    daily.~evento();
-    a.clear();
 }
