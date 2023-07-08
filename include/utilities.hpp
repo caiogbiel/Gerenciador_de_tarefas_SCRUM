@@ -82,7 +82,8 @@ namespace adts
         }
         ~Lista()
         {
-            clear();
+            if (start)
+                clear();
         }
         void push_front(T value)
         {
