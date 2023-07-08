@@ -1,28 +1,116 @@
-#include <iostream>
-#include <vector>
-#include "../include/time.hpp"
-#include "../include/gerenciador.hpp"
-#include "../include/evento.hpp"
+// #include <iostream>
+// #include "../include/time.hpp"
+#include "../include/paginas.hpp"
+// #include "../include/gerenciador.hpp"
+// #include "../include/evento.hpp"
+// #include "../include/utilities.hpp"
 
-using namespace std;
+// using namespace std;
 
-void programa()
+Pagina::Pagina(int linhas, int colunas, string titulo)
 {
-    p_login();
-    p_principal();
+    //================TITULO================//
+#pragma region Titulo
+    int titulo_t = titulo.size();
+    _titulo.push_back(string());
+    _titulo.push_back(string());
+    _titulo.push_back(string());
+    // Primeira barra
+    for (int i = 1; i <= colunas; ++i)
+    {
+        _titulo[0].append("=");
+    }
+
+    if (colunas - titulo_t <= 0)
+    {
+        throw runtime_error("Tamanho não pode ser menor que o titulo");
+    }
+
+    // Barra contendo o titulo
+    _titulo[1].append("|");
+    if (colunas % 2 == 0)
+    {
+        _titulo[1].append(" ");
+    }
+    for (int i = 1; i <= (colunas - titulo_t) / 2 - 1; ++i)
+    {
+        _titulo[1].append(" ");
+    }
+
+    _titulo[1].append(titulo);
+
+    for (int i = 1; i <= (colunas - titulo_t) / 2 - 1; ++i)
+    {
+        _titulo[1].append(" ");
+    }
+    _titulo[1].append("|");
+
+    // Terceira barra
+    for (int i = 1; i <= colunas; ++i)
+    {
+        _titulo[2].append("=");
+    }
+#pragma endregion
+
+    //================CONTEUDO================//
+#pragma region Conteudo
+    string s;
+    for (int i = 1; i < linhas; ++i)
+    {
+        s.append("*");
+        while (s.size() < colunas - 1)
+        {
+            s.append(" ");
+        }
+        s.append("*");
+        _conteudo.push_front(s);
+        s.clear();
+    }
+    for (int i = 1; i <= colunas; ++i)
+    {
+        s.append("=");
+    }
+    _conteudo[_conteudo.size() - 1] = s;
+
+    for (int i = 0; i < _titulo.size(); i++)
+    {
+        cout << _titulo[i] << "\n";
+    }
+    for (int i = 0; i < _conteudo.size(); i++)
+    {
+        cout << _conteudo[i] << "\n";
+    }
+#pragma endregion
+}
+
+Pagina::~Pagina() {}
+
+void Pagina::inserir(int linha, string conteudo, int flag)
+{
+    string s = _conteudo[linha + 1];
+
+    switch (flag)
+    {
+    case 0:
+        s.replace(2, conteudo.size(), conteudo);
+        break;
+
+    default:
+        break;
+    }
 }
 
 void p_login()
 {
-
-    cout << "=====================================\n";
+    // titulo("LOGIN", t);
+    // cout << "================LOGIN================\n";
     cout << "Entre com seu usuário: ";
 
     string nome;
     cin >> nome;
     usuario.SetNome(nome);
 
-    cout << "(0 - Product Owner) (1 - Desenvolvedor) (2 - Scrum Master)\n";
+    cout << "\n(0 - Product Owner) (1 - Desenvolvedor) (2 - Scrum Master)\n";
     cout << "Entre com sua função: ";
 
     int p;
@@ -33,12 +121,22 @@ void p_login()
 void p_principal()
 {
     int opcao;
-    cout << "=====================================\n";
+    cout << "\n===============TAREFAS===============\n";
 
-    /* mostrar as tarefas do usuario aqui */
+    if (todos_eventos.size() == 0)
+    {
+        cout << "\n           Não há tarefas              \n";
+    }
+    else
+    {
+        for (int i = 0; i < todos_eventos.size(); ++i)
+        {
+            cout << todos_eventos[i] << '\n';
+        }
+    }
 
     // PERMISSAO GLOBAL
-    cout << "1 - Ver tarefas finalizadas\n";
+    cout << "\n1 - Ver tarefas finalizadas\n";
     cout << "2 - Criar nova tarefa\n";
     cout << "3 - Iniciar uma tarefa\n";
     cout << "4 - Finalizar uma tarefa\n";
@@ -46,7 +144,7 @@ void p_principal()
     // PERMISSAO PRODUCT OWNER
     if (usuario.GetNivelDePermissao() == 0)
     {
-        cout << "(escolher numero) - Finalizar Sprint\n";
+        cout << "6 - Finalizar Sprint\n";
     }
     // PERMISSAO DEVELOPER
     if (usuario.GetNivelDePermissao() == 1)
@@ -55,7 +153,7 @@ void p_principal()
     // PERMISSAO SCRUM MASTER
     if (usuario.GetNivelDePermissao() == 2)
     {
-        cout << "(escolher numero) - Atribuir tarefa\n";
+        cout << "6 - Atribuir tarefa\n";
     }
 
     cout << endl;
@@ -198,3 +296,13 @@ void criarNovaTarefa()
 //     }
 //     equipe_usuario.GetParticipantes();
 // }
+
+void programa()
+{
+    // titulo("Teste", 100);
+    // pagina(20, 100);
+    Pagina teste(20, 100, "TESTE");
+    teste.inserir(2, "Olá mundo", 0);
+    p_login();
+    p_principal();
+}

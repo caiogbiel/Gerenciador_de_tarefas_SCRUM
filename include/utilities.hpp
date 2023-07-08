@@ -260,7 +260,7 @@ namespace adts
             }
             return *this;
         }
-        T operator[](int indice)
+        T operator[](int indice) const
         {
             if (indice < size() && indice >= 0)
             {
@@ -279,25 +279,26 @@ namespace adts
             }
             throw std::runtime_error("Indice nao foi encontrado");
         }
+        T &operator[](int indice)
+        {
+            if (indice < size() && indice >= 0)
+            {
+                Duo_Node<T> *aux = start;
+                int current = 0;
 
-        // friend membros scrum_team::operator[](int indice)
-        // {
-        //     if (indice >= 0 && indice < _quantidade)
-        //     {
-        //         int current = 0;
-        //         Duo_Node<membros> *aux = _participantes.getStart();
-        //         while (aux != nullptr)
-        //         {
-        //             if (indice == current)
-        //             {
-        //                 return aux->value;
-        //             }
-        //             aux = aux->next;
-        //             current++;
-        //         }
-        //     }
-        //     throw std::runtime_error("Indice nao foi encontrado");
-        // }
+                while (aux)
+                {
+                    if (current == indice)
+                    {
+                        T &value = aux->value;
+                        return value;
+                    }
+                    aux = aux->next;
+                    ++current;
+                }
+            }
+            throw std::runtime_error("Indice nao foi encontrado");
+        }
     };
 #pragma endregion
 
