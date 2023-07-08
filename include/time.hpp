@@ -52,11 +52,11 @@ class scrum_team
 private:
     adts::Lista<membros> _participantes;
     int _quantidade;
-    adts::Lista<eventos_sprint> _eventos;
+    adts::Lista<evento> _eventos;
 
 public:
     scrum_team() {}
-    scrum_team(adts::Lista<membros> participantes, adts::Lista<eventos_sprint> _eventos) : _participantes(participantes), _eventos(_eventos) {}
+    scrum_team(adts::Lista<membros> participantes, adts::Lista<evento> _eventos) : _participantes(participantes), _eventos(_eventos) {}
     ~scrum_team(){};
     bool addParticipante(membros novoMembro);
     bool removeParticipante(membros membros);
@@ -66,11 +66,11 @@ public:
     // // GETTERS
     adts::Lista<membros> getParticipantes();
     int getQuantidade();
-    adts::Lista<eventos_sprint> getEventos();
+    adts::Lista<evento> getEventos();
 
     // // SETTERS
     void setEquipe(membros equipe);
     void setQuantidade(int quantidade);
-    void setEventos(eventos_sprint _eventos);
+    void setEventos(evento _eventos);
 };
 #endif

@@ -88,7 +88,7 @@ int scrum_team::getQuantidade()
 {
     return _quantidade;
 }
-adts::Lista<eventos_sprint> scrum_team::getEventos()
+adts::Lista<evento> scrum_team::getEventos()
 {
     return _eventos;
 }
@@ -101,7 +101,7 @@ void scrum_team::setQuantidade(int quantidade)
 {
     this->_quantidade = quantidade;
 }
-void scrum_team::setEventos(eventos_sprint eventos)
+void scrum_team::setEventos(evento eventos)
 {
     this->_eventos = eventos;
 }
