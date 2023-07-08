@@ -1,7 +1,38 @@
 #include "../include/time.hpp"
 #include "../include/utilities.hpp"
+#include "../include/gerenciador.hpp"
 
 #pragma region Membros
+membros::membros()
+{
+    this->_id = membros_global_id;
+    ++membros_global_id;
+}
+membros::membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento)
+{
+    this->_nome = nome;
+    this->_nivel_permissao = per;
+    this->_data_nascimento = data_nascimento;
+
+    this->_id = membros_global_id;
+    ++membros_global_id;
+}
+membros::membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento, std::string email, std::chrono::hours horas_trabalhadas, adts::Lista<int> eventos)
+{
+    this->_nome = nome;
+    this->_nivel_permissao = per;
+    this->_data_nascimento = data_nascimento;
+    this->_email = email;
+    this->_horas_trabalhadas = horas_trabalhadas;
+    this->_id_eventos = eventos;
+
+    this->_id = membros_global_id;
+    ++membros_global_id;
+}
+membros::~membros()
+{
+}
+
 bool membros::operator==(const membros &b)
 {
     bool is_equal = true;
@@ -11,99 +42,115 @@ bool membros::operator==(const membros &b)
     return is_equal;
 }
 // GETTERS
-
-std::string membros::getNome()
+int membros::GetId()
+{
+    return _id;
+}
+std::string membros::GetNome()
 {
     return this->_nome;
 }
-geren_tempo::tempo membros::getData_nascimento()
+geren_tempo::tempo membros::GetData_nascimento()
 {
     return this->_data_nascimento;
 }
-std::string membros::getEmail()
+std::string membros::GetEmail()
 {
     return this->_email;
 }
-std::chrono::hours membros::getHorasTrabalhadas()
+std::chrono::hours membros::GetHorasTrabalhadas()
 {
     return this->_horas_trabalhadas;
 }
-permissao membros::getNivelDePermissao()
+permissao membros::GetNivelDePermissao()
 {
     return this->_nivel_permissao;
 }
 
 // SETTERS
 
-void membros::setNome(std::string nome)
+void membros::SetNome(std::string nome)
 {
     this->_nome = nome;
 }
 
-void membros::setData_nascimento(geren_tempo::tempo data_nascimento)
+void membros::SetData_nascimento(geren_tempo::tempo data_nascimento)
 {
     this->_data_nascimento = data_nascimento;
 }
-void membros::setEmail(std::string email)
+void membros::SetEmail(std::string email)
 {
     this->_email = email;
 }
-void membros::setHorasTrabalhadas(std::chrono::hours HorasTrabalhadas)
+void membros::SetHorasTrabalhadas(std::chrono::hours HorasTrabalhadas)
 {
     this->_horas_trabalhadas = HorasTrabalhadas;
 }
 
-void membros::setNivelDePermissao(permissao nivel_de_Permissao)
+void membros::SetNivelDePermissao(permissao nivel_de_Permissao)
 {
     this->_nivel_permissao = nivel_de_Permissao;
 }
 #pragma endregion
 #pragma region SCRUM_MASTER
-bool scrum_team::addParticipante(membros novoMembro)
+
+scrum_team::scrum_team()
 {
-    if (!_participantes.find(novoMembro))
+    this->_id = equipes_global_id;
+    ++equipes_global_id;
+}
+scrum_team::scrum_team(adts::Lista<int> participantes, adts::Lista<int> eventos)
+{
+    _id_participantes = participantes;
+    _id_eventos = eventos;
+    this->_id = equipes_global_id;
+    ++equipes_global_id;
+}
+scrum_team::~scrum_team()
+{
+}
+bool scrum_team::addParticipante(int membro)
+{
+    if (!_id_participantes.find(membro))
     {
-        this->_participantes.push_front(novoMembro);
+        this->_id_participantes.push_front(membro);
         return true;
     }
     return false;
 }
 
-bool scrum_team::removeParticipante(membros participante)
+bool scrum_team::removeParticipante(int participante)
 {
-    if (_participantes.find(participante))
+    if (_id_participantes.find(participante))
     {
-        _participantes.remove(participante);
+        _id_participantes.remove(participante);
         return true;
     }
     return false;
 }
 
 // GETTERS
-adts::Lista<membros> scrum_team::getParticipantes()
+int scrum_team::GetId()
 {
-    return _participantes;
+    return _id;
 }
-int scrum_team::getQuantidade()
+adts::Lista<int> scrum_team::GetParticipantes()
 {
-    return _quantidade;
+    return _id_participantes;
 }
-adts::Lista<evento> scrum_team::getEventos()
+adts::Lista<int> scrum_team::GetEventos()
 {
-    return _eventos;
+    return _id_eventos;
 }
 // SETTERS
-void scrum_team::setEquipe(membros participantes)
+void scrum_team::SetEquipe(adts::Lista<int> participantes)
 {
-    this->_participantes = participantes;
+    this->_id_participantes = participantes;
 }
-void scrum_team::setQuantidade(int quantidade)
+
+void scrum_team::SetEventos(adts::Lista<int> eventos)
 {
-    this->_quantidade = quantidade;
-}
-void scrum_team::setEventos(evento eventos)
-{
-    this->_eventos = eventos;
+    this->_id_eventos = eventos;
 }
 
 #pragma endregion

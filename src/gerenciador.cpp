@@ -14,43 +14,55 @@ using namespace geren_tempo;
  * opções: tarefas(em ordem cronologinca), ver-tarefas finalizadas, criar tarefa, iniciar tarefa, finalizar tarefa, ver time, ver tarefas do time, sair
  */
 
-// int main()
-// {
-//     adts::Lista<membros> teste;
-
-//     membros m1 = membros("Jonas", permissao::developer);
-//     membros m2 = membros("Maria", permissao::product_owner);
-//     membros m3 = membros("Carlos", permissao::scrum_master);
-
-//     teste.push_back(m1);
-//     teste.push_back(m2);
-//     teste.push_back(m3);
-//     scrum_team time;
-
-//     evento a = evento("confraternização", eventos_sprint::daily_scrum, tempo::agora(), tempo::agora(), teste, time, prioridade::media);
-//     std::cout << "Fez o evento: \nNome: " << a.GetNome() << "\nTipo: " << a.GetTipo() << "\nData de inicio: " << a.GetInicio() << "\nData final: " << a.GetFim() << "\nPrioridade: " << a.GetPrioridade() << std::endl;
-//     std::cout << "===========================\n"
-//               << "Membros: \n";
-//     teste.print();
-// }
-
 int main()
 {
-    adts::Lista<membros> a = adts::Lista<membros>();
-    membros m1 = membros("Jonas", permissao::developer, tempo(2000, 10, 21));
-    membros m2 = membros("Maria", permissao::product_owner, tempo(1993, 4, 24));
-    membros m3 = membros("Carlos", permissao::scrum_master, tempo(1965, 7, 4));
-    a.push_back(m1);
-    a.push_back(m2);
-    a.push_back(m3);
-    a.print();
+    membros m1("Jonas", permissao::developer, tempo(2000, 10, 21));
+    membros m2("Maria", permissao::product_owner, tempo(1993, 4, 24));
+    membros m3("Carlos", permissao::scrum_master, tempo(1965, 7, 4));
+    todos_membros.push_back(m1);
+    todos_membros.push_back(m2);
+    todos_membros.push_back(m3);
+
+    cout << "TODOS OS MEMBROS\n";
+    // todos_membros.print();
+
+    for (int i = 0; i < 3; ++i)
+    {
+        cout << todos_membros[i] << "\n";
+    }
 
     string nome = "Daily 3";
     eventos_sprint tipo = eventos_sprint::daily_scrum;
     tempo inicio = tempo::agora();
     tempo fim = inicio + 1;
-    adts::Lista<evento> eventos = adts::Lista<evento>();
-    scrum_team *time = new scrum_team(a, eventos);
 
-    evento daily = evento(nome, tipo, inicio, fim, a, time, prioridade::media);
+    adts::Lista<int> membros_id;
+    adts::Lista<int> eventos_id;
+
+    // PEGANDO APENAS OS IDS DOS MEMBROS
+    for (int i = 0; i < todos_membros.size(); ++i)
+    {
+        membros_id.push_back(todos_membros[i].GetId());
+    }
+
+    // PEGANDO APENAS OS IDS DOS MEMBROS
+    for (int i = 0; i < todos_eventos.size(); ++i)
+    {
+        eventos_id.push_back(todos_eventos[i].GetId());
+    }
+
+    membros_id.print();
+    eventos_id.print();
+
+    scrum_team *time = new scrum_team(membros_id, eventos_id);
+
+    // cout << "\nTIME - EVENTOS\n";
+    // time->getEventos().print();
+    // cout << "\nTIME - PARTICIPANTES\n";
+    // time->getParticipantes().print();
+
+    // evento daily = evento(nome, tipo, inicio, fim, a, time, prioridade::media);
+
+    // cout << "EVENTO - PARTICIPANTES\n";
+    // daily.GetParticipantes();
 }

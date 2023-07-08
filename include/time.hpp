@@ -10,39 +10,41 @@
 class membros
 {
 private:
-    std::string _nome;
-    geren_tempo::tempo _data_nascimento;
-    std::string _email;
-    std::chrono::hours _horas_trabalhadas;
-    permissao _nivel_permissao;
-    adts::Lista<evento> _eventos;
+    int                         _id;
+    std::string                 _nome;
+    geren_tempo::tempo          _data_nascimento;
+    std::string                 _email;
+    std::chrono::hours          _horas_trabalhadas;
+    permissao                   _nivel_permissao;
+    adts::Lista<int>            _id_eventos;
 
 public:
-    membros() {}
-    membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento) : _nome(nome), _nivel_permissao(per), _data_nascimento(data_nascimento) {}
-    membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento, std::string email, std::chrono::hours horas_trabalhadas, adts::Lista<evento> eventos) : _nome(nome), _nivel_permissao(per), _data_nascimento(data_nascimento), _email(email), _horas_trabalhadas(horas_trabalhadas), _eventos(eventos) {}
-    ~membros() { std::cout << "deletando membro " << this << '\n'; }
+    membros();
+    membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento);
+    membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento, std::string email, std::chrono::hours horas_trabalhadas, adts::Lista<int> eventos);
+    ~membros();
     bool operator==(const membros &b);
 
     // GETTERS
-    std::string getNome();
-    geren_tempo::tempo getData_nascimento();
-    std::string getEmail();
-    std::chrono::hours getHorasTrabalhadas();
-    permissao getNivelDePermissao();
-    adts::Lista<evento> getEventos();
+    int                         GetId();
+    std::string                 GetNome();
+    geren_tempo::tempo          GetData_nascimento();
+    std::string                 GetEmail();
+    std::chrono::hours          GetHorasTrabalhadas();
+    permissao                   GetNivelDePermissao();
+    adts::Lista<evento>         GetEventos();
 
     // SETTERS
-    void setNome(std::string _nome);
-    void setData_nascimento(geren_tempo::tempo _data_nascimento);
-    void setEmail(std::string _email);
-    void setHorasTrabalhadas(std::chrono::hours _horas_trabalhadas);
-    void setNivelDePermissao(permissao nivel);
-    void setEventos(adts::Lista<evento> _eventos);
+    void                        SetNome(std::string _nome);
+    void                        SetData_nascimento(geren_tempo::tempo _data_nascimento);
+    void                        SetEmail(std::string _email);
+    void                        SetHorasTrabalhadas(std::chrono::hours _horas_trabalhadas);
+    void                        SetNivelDePermissao(permissao nivel);
+    void                        SetEventos(adts::Lista<int> _eventos);
     friend std::ostream &
     operator<<(std::ostream &o, const membros &m)
     {
-        o << "Nome: " << m._nome << " - " << permissao_para_string(m._nivel_permissao);
+        o << "ID: " << m._id << " - " << m._nome << " - " << permissao_para_string(m._nivel_permissao);
         return o;
     }
 };
@@ -50,27 +52,32 @@ public:
 class scrum_team
 {
 private:
-    adts::Lista<membros> _participantes;
-    int _quantidade;
-    adts::Lista<evento> _eventos;
+    int                         _id;
+    adts::Lista<int>            _id_participantes;
+    adts::Lista<int>            _id_eventos;
 
 public:
-    scrum_team() {}
-    scrum_team(adts::Lista<membros> participantes, adts::Lista<evento> _eventos) : _participantes(participantes), _eventos(_eventos) {}
-    ~scrum_team() { std::cout << "deletando time" << this << '\n'; };
-    bool addParticipante(membros novoMembro);
-    bool removeParticipante(membros membros);
-    // membros operator[](int indice);
-    // membros &operator[](int indice) const;
+    scrum_team();
+    scrum_team(adts::Lista<int> id_participantes, adts::Lista<int> id_eventos);
+    ~scrum_team();
+    bool                        addParticipante(int id_membro);
+    bool                        removeParticipante(int id_membro);
 
     // // GETTERS
-    adts::Lista<membros> getParticipantes();
-    int getQuantidade();
-    adts::Lista<evento> getEventos();
+    int                         GetId();
+    adts::Lista<int>            GetParticipantes();
+    adts::Lista<int>            GetEventos();
 
     // // SETTERS
-    void setEquipe(membros equipe);
-    void setQuantidade(int quantidade);
-    void setEventos(evento _eventos);
+    void                        SetEquipe(adts::Lista<int> id_equipe);
+    void                        SetEventos(adts::Lista<int> id_eventos);
+
+    friend std::ostream &
+    operator<<(std::ostream &o, const scrum_team &t)
+    {
+        o << "ID: " << t._id << ", Participantes: " << t._id_participantes.size() << ", Eventos: " << t._id_eventos.size();
+        
+        return o;
+    }
 };
 #endif

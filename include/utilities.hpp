@@ -66,12 +66,11 @@ namespace adts
     class Lista
     {
     private:
-        Duo_Node<T> *start;
+        Duo_Node<T> *start = nullptr;
 
     public:
         Lista()
         {
-            start = nullptr;
         }
         Lista(T initial)
         {
@@ -82,13 +81,13 @@ namespace adts
         }
         ~Lista()
         {
+            Duo_Node<T> *runner;
             while (start)
             {
-                Duo_Node<T> *to_delete = start;
-                start = start->next;
-                to_delete->~Duo_Node();
-                // delete to_delete;
-                to_delete = nullptr;
+                runner = start->next;
+                start->~Duo_Node();
+                start = nullptr;
+                start = runner;
             }
             // if (start)
             //     clear();
@@ -165,6 +164,7 @@ namespace adts
             {
                 if (!aux->next->next)
                 {
+
                     delete aux->next;
                     aux->next = nullptr;
                     return;
@@ -206,7 +206,7 @@ namespace adts
                 pop_back();
             }
         }
-        int size()
+        int size() const
         {
             Duo_Node<T> *aux = start;
             int count = 0;
@@ -246,6 +246,38 @@ namespace adts
                 std::cout << temp->value << "\n";
                 temp = temp->next;
             }
+        }
+        Lista<T> &operator=(const Lista<T> &other)
+        {
+            if (other.start)
+            {
+                Duo_Node<T> *aux = other.start;
+                while (aux)
+                {
+                    this->push_front(aux->value);
+                    aux = aux->next;
+                }
+            }
+            return *this;
+        }
+        T operator[](int indice)
+        {
+            if (indice < size() && indice >= 0)
+            {
+                Duo_Node<T> *aux = start;
+                int current = 0;
+
+                while (aux)
+                {
+                    if (current == indice)
+                    {
+                        return aux->value;
+                    }
+                    aux = aux->next;
+                    ++current;
+                }
+            }
+            throw std::runtime_error("Indice nao foi encontrado");
         }
 
         // friend membros scrum_team::operator[](int indice)

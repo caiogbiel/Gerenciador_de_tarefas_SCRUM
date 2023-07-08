@@ -1,51 +1,58 @@
 #include "../include/evento.hpp"
 #include "../include/time.hpp"
 #include "../include/utilities.hpp"
+#include "../include/gerenciador.hpp"
 
-evento::evento() {}
-
-evento::evento(std::string _nome, eventos_sprint _tipo, geren_tempo::tempo _inicio, geren_tempo::tempo _fim, adts::Lista<membros> _part, scrum_team *_time, prioridade _prio)
+evento::evento()
 {
-    this->nome = _nome;
-    this->tipo = _tipo;
-    this->status = analise;
-    this->inicio = _inicio;
-    this->fim = _fim;
-    this->participantes = _part;
-    this->time = _time;
-    this->prio = _prio;
+    this->_id = eventos_global_id;
+    ++eventos_global_id;
+}
+
+evento::evento(std::string nome, eventos_sprint tipo, geren_tempo::tempo inicio, geren_tempo::tempo fim, adts::Lista<int> id_part, scrum_team *time, prioridade prio)
+{
+    this->_nome = nome;
+    this->_tipo = tipo;
+    this->_status = analise;
+    this->_inicio = inicio;
+    this->_fim = fim;
+    this->_id_participantes = id_part;
+    this->_time = time;
+    this->_prio = prio;
+
+    this->_id = eventos_global_id;
+    ++eventos_global_id;
 }
 evento::~evento()
 {
-    participantes.clear();
 }
 void evento::iniciar()
 {
-    this->status = andamento;
+    this->_status = andamento;
     this->SetInicio(geren_tempo::tempo::agora());
 }
 void evento::encerrar()
 {
-    this->status = finalizado;
+    this->_status = finalizado;
     this->SetFim(geren_tempo::tempo::agora());
     /*
     Adicionar horas de duração do evento às horas trabalhadas de todos os participantes
     */
 }
-bool evento::adicionarParticipantes(membros participante)
+bool evento::adicionarParticipantes(int participante)
 {
-    if (participantes.find(participante))
+    if (_id_participantes.find(participante))
     {
-        this->participantes.push_front(participante);
+        this->_id_participantes.push_front(participante);
         return true;
     }
     return false;
 }
-bool evento::removerParticipantes(membros participante)
+bool evento::removerParticipantes(int participante)
 {
-    if (participantes.find(participante))
+    if (_id_participantes.find(participante))
     {
-        participantes.remove(participante);
+        _id_participantes.remove(participante);
         return true;
     }
     return false;
@@ -54,77 +61,81 @@ bool evento::removerParticipantes(membros participante)
 geren_tempo::tempo evento::duracao()
 {
     geren_tempo::tempo d;
-    d.SetMinuto(fim.GetMinuto().count() - inicio.GetMinuto().count());
-    d.SetHora(fim.GetHora().count() - inicio.GetHora().count());
-    d.SetDia(unsigned(fim.GetDia()) - unsigned(inicio.GetDia()));
-    d.SetMes(unsigned(fim.GetMes()) - unsigned(inicio.GetMes()));
-    d.SetAno(int(fim.GetAno()) - int(inicio.GetAno()));
+    d.SetMinuto(_fim.GetMinuto().count() - _inicio.GetMinuto().count());
+    d.SetHora(_fim.GetHora().count() - _inicio.GetHora().count());
+    d.SetDia(unsigned(_fim.GetDia()) - unsigned(_inicio.GetDia()));
+    d.SetMes(unsigned(_fim.GetMes()) - unsigned(_inicio.GetMes()));
+    d.SetAno(int(_fim.GetAno()) - int(_inicio.GetAno()));
 
     return d;
 }
 
 // GETTERS//
 
+int evento::GetId()
+{
+    return _id;
+}
 std::string evento::GetNome()
 {
-    return this->nome;
+    return this->_nome;
 }
 eventos_sprint evento::GetTipo()
 {
-    return this->tipo;
+    return this->_tipo;
 }
 status_evento evento::GetStatus()
 {
-    return this->status;
+    return this->_status;
 }
 prioridade evento::GetPrioridade()
 {
-    return this->prio;
+    return this->_prio;
 }
 geren_tempo::tempo evento::GetInicio()
 {
-    return this->inicio;
+    return this->_inicio;
 }
 geren_tempo::tempo evento::GetFim()
 {
-    return this->fim;
+    return this->_fim;
 }
-adts::Lista<membros> const evento::GetParticipantes()
+adts::Lista<int> const evento::GetParticipantes()
 {
-    return this->participantes;
+    return this->_id_participantes;
 }
 scrum_team evento::GetTime()
 {
-    return *this->time;
+    return *this->_time;
 }
 
 // SETTERS
 
 void evento::SetNome(std::string nome)
 {
-    this->nome = nome;
+    this->_nome = nome;
 }
 void evento::SetTipo(eventos_sprint tipo)
 {
-    this->tipo = tipo;
+    this->_tipo = tipo;
 }
 void evento::SetStatus(status_evento status)
 {
-    this->status = status;
+    this->_status = status;
 }
 // void evento::SetPrioridade(prioridade prio)
 // {
-//     this->prio = prio;
+//     this->_prio = prio;
 // }
 void evento::SetInicio(geren_tempo::tempo inicio)
 {
-    this->inicio = inicio;
+    this->_inicio = inicio;
 }
 void evento::SetFim(geren_tempo::tempo fim)
 {
-    this->fim = fim;
+    this->_fim = fim;
 }
 void evento::SetTime(scrum_team time)
 {
-    *this->time = time;
+    *this->_time = time;
 }

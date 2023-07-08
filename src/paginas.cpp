@@ -14,14 +14,14 @@ void p_login()
 
     string nome;
     cin >> nome;
-    usuario.setNome(nome);
+    usuario.SetNome(nome);
 
     cout << "(0 - Product Owner) (1 - Desenvolvedor) (2 - Scrum Master)\n";
     cout << "Entre com sua função: ";
 
     int p;
     cin >> p;
-    usuario.setNivelDePermissao(permissao(p));
+    usuario.SetNivelDePermissao(permissao(p));
 }
 
 void p_principal()
@@ -38,16 +38,16 @@ void p_principal()
     cout << "4 - Finalizar uma tarefa\n";
     cout << "5 - Ver meu time\n";
     // PERMISSAO PRODUCT OWNER
-    if (usuario.getNivelDePermissao() == 0)
+    if (usuario.GetNivelDePermissao() == 0)
     {
         cout << "(escolher numero) - Finalizar Sprint\n";
     }
     // PERMISSAO DEVELOPER
-    if (usuario.getNivelDePermissao() == 1)
+    if (usuario.GetNivelDePermissao() == 1)
     {
     }
     // PERMISSAO SCRUM MASTER
-    if (usuario.getNivelDePermissao() == 2)
+    if (usuario.GetNivelDePermissao() == 2)
     {
         cout << "(escolher numero) - Atribuir tarefa\n";
     }
@@ -80,7 +80,7 @@ void p_principal()
     }
 
     // PERMISSAO PRODUCT OWNER
-    if (usuario.getNivelDePermissao() == 0)
+    if (usuario.GetNivelDePermissao() == 0)
     {
         switch (opcao)
         {
@@ -92,7 +92,7 @@ void p_principal()
         }
     }
     // PERMISSAO DEVELOPER
-    if (usuario.getNivelDePermissao() == 1)
+    if (usuario.GetNivelDePermissao() == 1)
     {
         switch (opcao)
         {
@@ -104,7 +104,7 @@ void p_principal()
         }
     }
     // PERMISSAO SCRUM MASTER
-    if (usuario.getNivelDePermissao() == 2)
+    if (usuario.GetNivelDePermissao() == 2)
     {
         switch (opcao)
         {
@@ -124,7 +124,7 @@ void p_time(scrum_team time)
     cout << "1 - Ver tarefas do time\n";
 
     // PERMISSAO SCRUM MASTER
-    if (usuario.getNivelDePermissao() == 2)
+    if (usuario.GetNivelDePermissao() == 2)
     {
         cout << "2 - Adicionar participante\n";
         cout << "3 - Remover participante\n";
@@ -159,7 +159,7 @@ void p_time(scrum_team time)
 
 // void gerenciador::verTime(static adts::Lista<scrum_team> equipes)
 // {
-//     if (usuario.getNivelDePermissao() == 0)
+//     if (usuario.GetNivelDePermissao() == 0)
 //     {
 //         std::string nome_time;
 //         cout << "Qual dos seus times deseja ver?" cin(nome_time);

@@ -33,5 +33,8 @@ enum permissao
 };
 
 std::string permissao_para_string(permissao p);
+std::string prioridade_para_string(prioridade p);
+std::string status_para_string(status_evento s);
+std::string tipo_para_string(eventos_sprint e);
 
 #endif
