@@ -50,7 +50,7 @@ int main()
     tempo inicio = tempo::agora();
     tempo fim = inicio + 1;
     adts::Lista<evento> eventos = adts::Lista<evento>();
-    // scrum_team *time = new scrum_team(a, eventos);
+    scrum_team *time = new scrum_team(a, eventos);
 
-    // evento daily = evento(nome, tipo, inicio, fim, a, time, prioridade::media);
+    evento daily = evento(nome, tipo, inicio, fim, a, time, prioridade::media);
 }

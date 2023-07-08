@@ -21,7 +21,7 @@ public:
     membros() {}
     membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento) : _nome(nome), _nivel_permissao(per), _data_nascimento(data_nascimento) {}
     membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento, std::string email, std::chrono::hours horas_trabalhadas, adts::Lista<evento> eventos) : _nome(nome), _nivel_permissao(per), _data_nascimento(data_nascimento), _email(email), _horas_trabalhadas(horas_trabalhadas), _eventos(eventos) {}
-    ~membros() {}
+    ~membros() { std::cout << "deletando membro " << this << '\n'; }
     bool operator==(const membros &b);
 
     // GETTERS
@@ -57,7 +57,7 @@ private:
 public:
     scrum_team() {}
     scrum_team(adts::Lista<membros> participantes, adts::Lista<evento> _eventos) : _participantes(participantes), _eventos(_eventos) {}
-    ~scrum_team(){};
+    ~scrum_team() { std::cout << "deletando time" << this << '\n'; };
     bool addParticipante(membros novoMembro);
     bool removeParticipante(membros membros);
     // membros operator[](int indice);

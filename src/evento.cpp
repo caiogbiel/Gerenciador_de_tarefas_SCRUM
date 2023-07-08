@@ -53,11 +53,14 @@ bool evento::removerParticipantes(membros participante)
 // AGUARDANDO IMPLEMENTAÇÂO DE OPERATOR-(TEMPO, TEMPO)
 geren_tempo::tempo evento::duracao()
 {
-    // return inicio - fim;
-    // date::days temp = date::floor<date::days>(date::sys_days(date::year_month_day(inicio.GetAno(), inicio.GetMes(), inicio.GetDia())));
+    geren_tempo::tempo d;
+    d.SetMinuto(fim.GetMinuto().count() - inicio.GetMinuto().count());
+    d.SetHora(fim.GetHora().count() - inicio.GetHora().count());
+    d.SetDia(unsigned(fim.GetDia()) - unsigned(inicio.GetDia()));
+    d.SetMes(unsigned(fim.GetMes()) - unsigned(inicio.GetMes()));
+    d.SetAno(int(fim.GetAno()) - int(inicio.GetAno()));
 
-    // fim -
-    //     return inicio;
+    return d;
 }
 
 // GETTERS//

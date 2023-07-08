@@ -34,8 +34,8 @@ namespace adts
         }
         ~Duo_Node()
         {
-            previous = nullptr;
-            next = nullptr;
+            this->previous = nullptr;
+            this->next = nullptr;
         }
     };
 
@@ -82,8 +82,16 @@ namespace adts
         }
         ~Lista()
         {
-            if (start)
-                clear();
+            while (start)
+            {
+                Duo_Node<T> *to_delete = start;
+                start = start->next;
+                to_delete->~Duo_Node();
+                // delete to_delete;
+                to_delete = nullptr;
+            }
+            // if (start)
+            //     clear();
         }
         void push_front(T value)
         {
@@ -239,11 +247,6 @@ namespace adts
                 temp = temp->next;
             }
         }
-
-        // Duo_Node<T> *GetStart() const
-        // {
-        //     return start;
-        // }
 
         // friend membros scrum_team::operator[](int indice)
         // {
