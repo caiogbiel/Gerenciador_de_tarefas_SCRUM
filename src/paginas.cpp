@@ -1,6 +1,8 @@
 #include <iostream>
+#include <vector>
 #include "../include/time.hpp"
 #include "../include/gerenciador.hpp"
+#include "../include/evento.hpp"
 
 using namespace std;
 
@@ -68,6 +70,10 @@ void p_principal()
     case 4:
         break;
     case 5:
+    cout << "=====================================\n";
+    cout << "Participantes do Time:\n";
+
+        time
         break;
 
     default:
@@ -127,29 +133,41 @@ void p_time(scrum_team time)
 }
 
 //ainda em desenvolvimento de case 2
-// void evento::criarNovaTarefa(std::queue<evento> &ListaDeTarefas)
-// {
-//     std::string nome;
-//     eventos_sprint tipo;
-//     adts::Lista<membros> participantes;
-//     scrum_team time;
+void evento::criarNovaTarefa(std::vector<evento>&  _evento)
+{
+    std::string nome;
+    eventos_sprint tipo;
+    adts::Lista<membros> participantes;
+    scrum_team time;
 
-//     std::cout<< "Digite o nome da nova tarefa: ";
-//     cin.ignore();
-//     getline(cin, nome);
+    std::cout<< "Digite o nome da nova tarefa: ";
+    cin.ignore();
+    getline(cin, nome);
 
-//     std::cout << "Digite o tipo da sprint (planning, daily_scrum, review, retrospective): ";
-//     cin.ignore();
-//     getLine(cin, tipo);
+    std::cout << "Digite o tipo da sprint (planning, daily_scrum, review, retrospective): ";
+    cin.ignore();
+    getLine(cin, tipo);
 
-//     std::cout <<"Quais os participantes?"
-//     cin.ignore();
-//     getLine(cin, participantes);
+    std::cout <<"Quais os participantes?"
+    cin.ignore();
+    getLine(cin, participantes);
 
-//     std::cout <<"Digite o nome do team: ";
-//     cin.ignore();
-//     getLine(cin, time);
+    std::cout <<"Digite o nome do team: ";
+    cin.ignore();
+    getLine(cin, time);
 
-//     evento tarefa(nome, tipo, participantes, time);
+    evento tarefa(nome, tipo, participantes, time);
 
-// }
+}
+
+void gerenciador::verTime(static adts::Lista<scrum_team> equipes)
+{
+    if(usuario.getNivelDePermissao() == 0)
+    {
+        std::string nome_time;
+        cout << "Qual dos seus times deseja ver?"
+        cin(nome_time);
+        usuario.time.getEquipe_usuario(nome_time);
+    }
+    usuario.time.GetParticipantes();
+}
