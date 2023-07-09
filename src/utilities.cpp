@@ -80,7 +80,7 @@ geren_tempo::tempo geren_tempo::tempo::agora(int fuso_horario)
     // ACHAR UMA MANEIRA DE SUBTRAIR FUSO HORARIO
     geren_tempo::tempo temp;
     auto _agora = system_clock::now();
-    temp._ano_mes_dia = date::year_month_day(floor<date::days>(_agora));
+    temp._ano_mes_dia = date::year_month_day(date::floor<date::days>(_agora));
 
     // Código abaixo obtido desta thread: https://stackoverflow.com/questions/34528083/get-current-number-of-hours-and-minutes-using-chronotime-point
     auto now = date::floor<minutes>(_agora);

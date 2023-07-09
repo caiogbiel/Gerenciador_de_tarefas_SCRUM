@@ -73,12 +73,21 @@ Pagina::Pagina(int linhas, int colunas, string titulo)
 
 Pagina::~Pagina() {}
 
-void Pagina::inserir(int linha, string conteudo, int flag)
+void Pagina::inserir_em(int linha, int coluna, string conteudo)
+{
+    string s = _conteudo[linha - 1];
+    int c_t = conteudo.size();
+
+    s.replace(coluna, c_t, conteudo);
+    _conteudo[linha - 1] = s;
+}
+
+void Pagina::inserir(int linha, string conteudo, int preset)
 {
     string s = _conteudo[linha - 1];
     int s_t = s.size();
     int c_t = conteudo.size();
-    switch (flag)
+    switch (preset)
     {
     case 0:
         s.replace(2, c_t, conteudo);
@@ -97,18 +106,38 @@ void Pagina::inserir(int linha, string conteudo, int flag)
 }
 
 template <typename T>
-void Pagina::ler(string mensagem, int linha, T &saida)
+void Pagina::ler(string mensagem, int linha, T &saida, std::function<T(string)> conversor)
 {
-    // string s;
+    string s;
+    string b;
 
-    // cout >> mensagem;
-    // cin.getline(s, 256);
+    s.append(mensagem);
+    s.append(" ");
 
-    // istringstream buffer(s);
+    cout << mensagem;
+
+    if (conversor == nullptr)
+    {
+        cin >> b;
+    }
+    else
+    {
+        // EXPERIMENTAL
+        // cin.getline(s, 256);
+    }
+    istringstream buffer(b);
+
+    s.append(b);
+
+    inserir(linha, s, 0);
+
+    buffer >> saida;
 }
 
 void Pagina::imprimir()
 {
+    system("cls");
+
     for (int i = 0; i < _titulo.size(); i++)
     {
         cout << _titulo[i] << "\n";
@@ -318,12 +347,13 @@ void criarNovaTarefa()
 
 void programa()
 {
-    // titulo("Teste", 100);
-    // pagina(20, 100);
-    system("cls");
     Pagina teste(20, 100, "TESTE");
     teste.inserir(2, "Ola mundo", 1);
     teste.imprimir();
+    int x;
+    teste.ler("Insira um numero: ", 2, x);
+    teste.imprimir();
+
     p_login();
     p_principal();
 }
