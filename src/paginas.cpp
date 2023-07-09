@@ -46,10 +46,7 @@ Pagina::Pagina(int linhas, int colunas, string titulo)
     _titulo[1].append("|");
 
     // Terceira barra
-    for (int i = 1; i <= colunas; ++i)
-    {
-        _titulo[2].append("=");
-    }
+    _titulo[2] = _titulo[0];
 #pragma endregion
 
     //================CONTEUDO================//
@@ -71,15 +68,6 @@ Pagina::Pagina(int linhas, int colunas, string titulo)
         s.append("=");
     }
     _conteudo[_conteudo.size() - 1] = s;
-
-    for (int i = 0; i < _titulo.size(); i++)
-    {
-        cout << _titulo[i] << "\n";
-    }
-    for (int i = 0; i < _conteudo.size(); i++)
-    {
-        cout << _conteudo[i] << "\n";
-    }
 #pragma endregion
 }
 
@@ -87,16 +75,47 @@ Pagina::~Pagina() {}
 
 void Pagina::inserir(int linha, string conteudo, int flag)
 {
-    string s = _conteudo[linha + 1];
-
+    string s = _conteudo[linha - 1];
+    int s_t = s.size();
+    int c_t = conteudo.size();
     switch (flag)
     {
     case 0:
-        s.replace(2, conteudo.size(), conteudo);
+        s.replace(2, c_t, conteudo);
+        break;
+    case 1:
+        s.replace(s_t / 2 - c_t / 2, c_t, conteudo);
+        break;
+    case 2:
+        s.replace(s_t - c_t - 2, c_t, conteudo);
         break;
 
     default:
         break;
+    }
+    _conteudo[linha - 1] = s;
+}
+
+template <typename T>
+void Pagina::ler(string mensagem, int linha, T &saida)
+{
+    // string s;
+
+    // cout >> mensagem;
+    // cin.getline(s, 256);
+
+    // istringstream buffer(s);
+}
+
+void Pagina::imprimir()
+{
+    for (int i = 0; i < _titulo.size(); i++)
+    {
+        cout << _titulo[i] << "\n";
+    }
+    for (int i = 0; i < _conteudo.size(); i++)
+    {
+        cout << _conteudo[i] << "\n";
     }
 }
 
@@ -301,8 +320,10 @@ void programa()
 {
     // titulo("Teste", 100);
     // pagina(20, 100);
+    system("cls");
     Pagina teste(20, 100, "TESTE");
-    teste.inserir(2, "Olá mundo", 0);
+    teste.inserir(2, "Ola mundo", 1);
+    teste.imprimir();
     p_login();
     p_principal();
 }

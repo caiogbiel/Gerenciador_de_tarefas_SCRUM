@@ -4,9 +4,9 @@
 #include "../include/gerenciador.hpp"
 #include "../include/evento.hpp"
 #include "../include/utilities.hpp"
-#define ESQ 1
+#define ESQ 0
+#define CEN 1
 #define DIR 2
-#define CEN 3
 using namespace std;
 
 class Pagina
@@ -23,7 +23,8 @@ public:
     // void titulo(string titulo, int colunas);
     void inserir(int linha, string conteudo, int flag);
     template <typename T>
-    void ler(int linha, T &saida);
+    void ler(string mensagem, int linha, T &saida);
+    void imprimir();
 };
 
 // void titulo(string titulo, int colunas);
