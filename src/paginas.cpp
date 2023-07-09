@@ -1,11 +1,6 @@
-// #include <iostream>
-// #include "../include/time.hpp"
 #include "../include/paginas.hpp"
-// #include "../include/gerenciador.hpp"
-// #include "../include/evento.hpp"
-// #include "../include/utilities.hpp"
-
-// using namespace std;
+#define LINHAS 20
+#define COLUNAS 100
 
 Pagina::Pagina(int linhas, int colunas, string titulo)
 {
@@ -151,9 +146,11 @@ void Pagina::imprimir()
 
 void p_login()
 {
+    Pagina login(LINHAS, COLUNAS, "LOGIN");
     // titulo("LOGIN", t);
     // cout << "================LOGIN================\n";
-    cout << "Entre com seu usuário: ";
+    cout
+        << "Entre com seu usuário: ";
 
     string nome;
     cin >> nome;
@@ -348,7 +345,7 @@ void criarNovaTarefa()
 
 void programa()
 {
-    Pagina teste(20, 100, "TESTE");
+    Pagina teste(LINHAS, COLUNAS, "TESTE");
     teste.inserir(2, "Ola mundo", CEN);
     teste.imprimir();
 
