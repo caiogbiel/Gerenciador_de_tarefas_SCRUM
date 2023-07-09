@@ -217,6 +217,7 @@ void p_principal()
     case 3:
         break;
     case 4:
+        p_finalizarTarefa();
         break;
     case 5:
         break;
@@ -331,16 +332,17 @@ void criarNovaTarefa()
     evento tarefa(nome, eventos_sprint(tipo), participantes, &time, prioridade(prio));
 }
 
-// int gerenciador::verTime(adts::Lista<scrum_team> &equipes)
-// {
-//     if (usuario.getNivelDePermissao() == 0)
-//     {
-//         string nome_time;
-//         cout << "Qual dos seus times deseja ver?" cin >> nome_time;
-//         equipe_usuario = equipes.getEquipe_usuario(nome_time);
-//     }
-//     equipe_usuario.GetParticipantes();
-// }
+void verTime() {
+  cout << "=====================================\n";
+  cout << "Membros da equipe:\n";
+
+  for (int i = 0; i < todos_membros.size(); ++i) {
+    cout << "ID: " << todos_membros[i].GetId()
+         << ", Nome: " << todos_membros[i].GetNome() << "\n";
+  }
+
+  cout << "=====================================\n";
+}
 
 void programa()
 {
@@ -354,4 +356,35 @@ void programa()
 
     p_login();
     p_principal();
+}
+
+void p_finalizarTarefa() {
+  Pagina finalizar(LINHAS, COLUNAS, "FINALIZAR TAREFA");
+  std::string nomeTarefa;
+  finalizar.imprimir();
+  finalizar.ler("Digite o nome da tarefa que deseja finalizar: ", 1, nomeTarefa);
+  finalizar.imprimir();
+  evento *tarefa = nullptr;
+
+  for (int i = 0; i < todos_eventos.size(); ++i) {
+    if (todos_eventos[i].GetNome() == nomeTarefa) {
+      tarefa = &todos_eventos[i];
+      break;
+    }
+  }
+  int x;
+  
+  if (tarefa != nullptr) {
+    if (tarefa->GetStatus() == finalizado) {
+      finalizar.inserir(2,"A tarefa já está finalizada.\n", ESQ);
+      finalizar.imprimir();
+    } else {
+      tarefa->encerrar();
+      finalizar.inserir(2,"Tarefa finalizada com sucesso.\n", ESQ);
+      finalizar.imprimir();
+    }
+  } else {
+    finalizar.inserir(2, "Tarefa nao encontrada.\n", ESQ);
+    finalizar.imprimir();
+  }
 }
