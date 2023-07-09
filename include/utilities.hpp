@@ -1,12 +1,18 @@
 /**
  * Muitas classes aqui são templates, portanto, por praticidade, serão implementadas neste arquivo mesmo
  */
+#ifndef UTILITIES_HPP
+#define UTILITIES_HPP
+#include <iostream>
+#include <iomanip>
+#include <chrono>
+#include "./date.h"
+// #include "./time.hpp"
 
 namespace adts
 {
 #ifndef ADTS_HPP
 #define ADTS_HPP
-#include <iostream>
 #pragma region Nodes
     template <typename U>
     struct Duo_Node
@@ -14,7 +20,8 @@ namespace adts
         U value;
         Duo_Node<U> *previous;
         Duo_Node<U> *next;
-        Duo_Node()
+
+        Duo_Node() : value()
         {
             previous = nullptr;
             next = nullptr;
@@ -27,8 +34,8 @@ namespace adts
         }
         ~Duo_Node()
         {
-            previous = nullptr;
-            next = nullptr;
+            this->previous = nullptr;
+            this->next = nullptr;
         }
     };
 
@@ -55,13 +62,16 @@ namespace adts
 
 #pragma region List
     // front = inicio | back = fim
-    template <class T>
+    template <typename T>
     class Lista
     {
     private:
-        Duo_Node<T> *start;
+        Duo_Node<T> *start = nullptr;
 
     public:
+        Lista()
+        {
+        }
         Lista(T initial)
         {
             start = new Duo_Node<T>;
@@ -71,18 +81,30 @@ namespace adts
         }
         ~Lista()
         {
-            clear();
+            Duo_Node<T> *runner;
+            while (start)
+            {
+                runner = start->next;
+                start->~Duo_Node();
+                start = nullptr;
+                start = runner;
+            }
+            // if (start)
+            //     clear();
         }
         void push_front(T value)
         {
-            Duo_Node<T> *new_node = new Duo_Node<T>;
+            Duo_Node<T> *new_node = new Duo_Node<T>();
             if (new_node)
             {
                 new_node->next = start;
                 new_node->previous = nullptr;
                 new_node->value = value;
 
-                start->previous = new_node;
+                if (start)
+                {
+                    start->previous = new_node;
+                }
                 start = new_node;
                 return;
             }
@@ -90,58 +112,101 @@ namespace adts
         }
         void push_back(T value)
         {
-            Duo_Node<T> *new_node = new Duo_Node<T>;
+            Duo_Node<T> *new_node = new Duo_Node<T>();
             if (new_node)
             {
-                new_node->next = nullptr;
-                new_node->previous = nullptr;
                 new_node->value = value;
 
-                Duo_Node<T> *temp = start;
-                while (temp->next != nullptr)
+                if (start)
                 {
-                    temp = temp->next;
+                    Duo_Node<T> *temp = start;
+                    while (temp->next != nullptr)
+                    {
+                        temp = temp->next;
+                    }
+                    temp->next = new_node;
+                    new_node->previous = temp;
                 }
-
-                new_node->previous = temp;
-                temp->next = new_node;
+                else
+                {
+                    start = new_node;
+                }
                 return;
             }
             std::cerr << "Memoria insuficiente para inclusao de um novo valor\n";
         }
         void pop_front()
         {
-            Duo_Node<T> *aux = start->next;
-            delete start;
-            start = aux;
+            if (start)
+            {
+                Duo_Node<T> *aux = start->next;
+                delete start;
+                start = aux;
+            }
         }
         void pop_back()
         {
-            Duo_Node<T> *aux = start;
-
             if (!start)
             {
                 return;
             }
 
-            while (aux->next != nullptr)
+            if (!start->next)
             {
-                if (aux->next->next == nullptr)
-                    break;
+                delete start;
+                start = nullptr;
+                return;
+            }
+
+            Duo_Node<T> *aux = start;
+
+            while (aux->next)
+            {
+                if (!aux->next->next)
+                {
+
+                    delete aux->next;
+                    aux->next = nullptr;
+                    return;
+                }
                 aux = aux->next;
             }
-            delete aux->next;
-            aux->next = nullptr;
+        }
+        bool remove(T value)
+        {
+            Duo_Node<T> *aux = start;
+            while (aux)
+            {
+                if (aux->value == value)
+                {
+                    if (aux->previous)
+                    {
+                        aux->previous->next = aux->next;
+                    }
+                    else
+                    {
+                        start = aux->next;
+                    }
+                    if (aux->next)
+                    {
+                        aux->next->previous = aux->previous;
+                    }
+                    delete aux;
+                    aux = nullptr;
+                    return true;
+                }
+                aux = aux->next;
+            }
+            return false;
         }
         void clear()
         {
-            int count = size();
-            for (int i = 1; i <= count; i++)
+            while (start)
             {
-                pop_front();
+                pop_back();
             }
         }
-        int size()
+        int size() const
         {
             Duo_Node<T> *aux = start;
             int count = 0;
@@ -157,70 +222,149 @@ namespace adts
             }
             return count;
         }
+        bool find(T value)
+        {
+            Duo_Node<T> *aux = start;
+            if (aux)
+            {
+                while (aux->next)
+                {
+                    if (aux->value == value)
+                    {
+                        // store = aux->value;
+                        return true;
+                    }
+                    aux = aux->next;
+                }
+            }
+            return false;
+        }
         void print()
         {
             Duo_Node<T> *temp = start;
             while (temp != nullptr)
             {
-                std::cout << temp->value << " ";
+                std::cout << temp->value << "\n";
                 temp = temp->next;
             }
-            std::cout << std::endl;
+        }
+        Lista<T> &operator=(const Lista<T> &other)
+        {
+            if (other.start)
+            {
+                Duo_Node<T> *aux = other.start;
+                while (aux)
+                {
+                    this->push_front(aux->value);
+                    aux = aux->next;
+                }
+            }
+            return *this;
+        }
+        T operator[](int indice) const
+        {
+            if (indice < size() && indice >= 0)
+            {
+                Duo_Node<T> *aux = start;
+                int current = 0;
+
+                while (aux)
+                {
+                    if (current == indice)
+                    {
+                        return aux->value;
+                    }
+                    aux = aux->next;
+                    ++current;
+                }
+            }
+            throw std::runtime_error("Indice nao foi encontrado");
+        }
+        T &operator[](int indice)
+        {
+            if (indice < size() && indice >= 0)
+            {
+                Duo_Node<T> *aux = start;
+                int current = 0;
+
+                while (aux)
+                {
+                    if (current == indice)
+                    {
+                        T &value = aux->value;
+                        return value;
+                    }
+                    aux = aux->next;
+                    ++current;
+                }
+            }
+            throw std::runtime_error("Indice nao foi encontrado");
         }
     };
 #pragma endregion
 
 #pragma region Queue
-    template <typename T> class Queue {
+    template <typename T>
+    class Queue
+    {
     private:
         int _size = 0;
-        Uni_Node<T>* _first = nullptr;
-        Uni_Node<T>* _last = nullptr;
+        Uni_Node<T> *_first = nullptr;
+        Uni_Node<T> *_last = nullptr;
 
     public:
         Queue() {}
-        Queue(T value) {
+        Queue(T value)
+        {
             _first = new Uni_Node<T>(value);
             _last = _first;
             _size++;
         }
         int size() { return _size; }
-        void print() {
-            Uni_Node<T>* aux = _first;
-            while (aux != nullptr) {
-                cout << aux->value << " ";
+        void print()
+        {
+            Uni_Node<T> *aux = _first;
+            while (aux != nullptr)
+            {
+                std::cout << aux->value << " ";
                 aux = aux->next;
             }
-            cout << "\n";
+            std::cout << "\n";
         }
-        const T& front() const { return _first->value; }
-        const T& back() const { return _last->value; }
+        const T &front() const { return _first->value; }
+        const T &back() const { return _last->value; }
         bool empty() const { return (_first == nullptr) ? true : false; }
-        void push(T value) {
-            Uni_Node<T>* new_node = new Uni_Node<T>(value);
+        void push(T value)
+        {
+            Uni_Node<T> *new_node = new Uni_Node<T>(value);
 
-            if (empty()) {
+            if (empty())
+            {
                 _first = new_node;
                 _last = _first;
             }
-            else {
+            else
+            {
                 _last->next = new_node;
                 _last = new_node;
             }
             _size++;
         }
-        void pop() {
-            if (empty()) {
+        void pop()
+        {
+            if (empty())
+            {
                 std::cerr << "Fila ja esta vazia\n";
                 return;
             }
-            if (_first->next == nullptr) {
+            if (_first->next == nullptr)
+            {
                 delete _first;
                 _first = nullptr;
                 _size--;
                 return;
             }
-            Uni_Node<T>* aux = _first->next;
+            Uni_Node<T> *aux = _first->next;
 
             delete _first;
             _first = nullptr;
@@ -238,80 +382,92 @@ namespace sorters
 {
 #ifndef SORTERS_HPP
 #define SORTERS_HPP
-//selection sort
-template<typename T>
-void selectionSort(T arr[], int size) {
-    for (int i = 0; i < size - 1; i++) {
-        int minIndex = i;
+    // selection sort
+    template <typename T>
+    void selectionSort(T arr[], int size)
+    {
+        for (int i = 0; i < size - 1; i++)
+        {
+            int minIndex = i;
 
-        for (int j = i + 1; j < size; j++) {
-            if (arr[j] < arr[minIndex]) {
-                minIndex = j;
+            for (int j = i + 1; j < size; j++)
+            {
+                if (arr[j] < arr[minIndex])
+                {
+                    minIndex = j;
+                }
+            }
+
+            if (minIndex != i)
+            {
+                std::swap(arr[i], arr[minIndex]);
+            }
+        }
+    }
+
+    // quick sort
+    template <typename T>
+    int partition(T arr[], int low, int high)
+    {
+        T pivot = arr[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (arr[j] <= pivot)
+            {
+                i++;
+                std::swap(arr[i], arr[j]);
             }
         }
 
-        if (minIndex != i) {
-            std::swap(arr[i], arr[minIndex]);
-        }
-    }
-}
+        std::swap(arr[i + 1], arr[high]);
+        return i + 1;
+    }
 
-//quick sort
-template<typename T>
-int partition(T arr[], int low, int high) {
-    T pivot = arr[high];
-    int i = low - 1;
-
-    for (int j = low; j < high; j++) {
-        if (arr[j] <= pivot) {
-            i++;
-            std::swap(arr[i], arr[j]);
+    template <typename T>
+    void quickSort(T arr[], int low, int high)
+    {
+        if (low < high)
+        {
+            int pi = partition(arr, low, high);
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
         }
     }
 
-    std::swap(arr[i + 1], arr[high]);
-    return i + 1;
-}
+    // merge sort
+    template <typename T>
+    void mergeSort(T arr[], int start, int end)
+    {
+        if (start >= end)
+            return;
 
-template<typename T>
-void quickSort(T arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
+        int mid = start + (end - start) / 2;
+        mergeSort(arr, start, mid);
+        mergeSort(arr, mid + 1, end);
 
-//merge sort
-template<typename T>
-void mergeSort(T arr[], int start, int end) {
-    if (start >= end)
-        return;
+        int left = start, right = mid + 1;
+        T temp[end - start + 1];
+        int index = 0;
 
-    int mid = start + (end - start) / 2;
-    mergeSort(arr, start, mid);
-    mergeSort(arr, mid + 1, end);
+        while (left <= mid && right <= end)
+        {
+            if (arr[left] <= arr[right])
+                temp[index++] = arr[left++];
+            else
+                temp[index++] = arr[right++];
+        }
 
-    int left = start, right = mid + 1;
-    T temp[end - start + 1];
-    int index = 0;
-
-    while (left <= mid && right <= end) {
-        if (arr[left] <= arr[right])
+        while (left <= mid)
             temp[index++] = arr[left++];
-        else
+
+        while (right <= end)
             temp[index++] = arr[right++];
+
+        for (int i = start; i <= end; i++)
+            arr[i] = temp[i - start];
     }
-
-    while (left <= mid)
-        temp[index++] = arr[left++];
-
-    while (right <= end)
-        temp[index++] = arr[right++];
-
-    for (int i = start; i <= end; i++)
-        arr[i] = temp[i - start];
-}
 #endif
 } // namespace sorters
 
@@ -320,17 +476,21 @@ namespace searchers
 #ifndef SEARCHERS_HPP
 #define SEARCHERS_HPP
     template <typename T>
-    T* binary_search(T*& vector, int start, int end, T value) {
+    T *binary_search(T *&vector, int start, int end, T value)
+    {
         int mid = (end + start) / 2;
 
-        if (end - start == 0 && vector[end] != value) {
+        if (end - start == 0 && vector[end] != value)
+        {
             return nullptr;
         }
 
-        if (vector[mid] < value) {
+        if (vector[mid] < value)
+        {
             return binary_search(vector, mid + 1, end, value);
         }
-        if (vector[mid] > value) {
+        if (vector[mid] > value)
+        {
             return binary_search(vector, start, mid - 1, value);
         }
 
@@ -338,3 +498,51 @@ namespace searchers
     }
 #endif
 } // namespace searchers
+
+namespace geren_tempo
+{
+#ifndef GEREN_TEMPO
+#define GEREN_TEMPO
+    /**
+     * @brief Representa uma data, com ano, mes, dia, hora e minuto. Requer "date.h"
+     *
+     */
+    class tempo
+    {
+    private:
+        date::year_month_day _ano_mes_dia;
+        std::chrono::hours _hora;
+        std::chrono::minutes _minutos;
+
+    public:
+        tempo() : _ano_mes_dia(date::year(1900), date::month(1), date::day(1)), _hora(0), _minutos(0) {}
+        tempo(int ano, int mes, int dia) : _ano_mes_dia(date::year(ano), date::month(mes), date::day(dia)), _hora(0), _minutos(0) {}
+        tempo(int ano, int mes, int dia, int hora, int minuto) : _ano_mes_dia(date::year(ano), date::month(mes), date::day(dia)), _hora(hora), _minutos(minuto) {}
+        friend tempo operator+(tempo &t, int dias);
+        friend tempo operator-(tempo &t, int dias);
+        // friend tempo operator+(tempo &t1, tempo &t2);
+        // friend tempo operator-(tempo &t1, tempo &t2);
+        tempo &operator+=(int dias);
+        tempo &operator-=(int dias);
+        bool operator==(const tempo &t);
+        static tempo agora(int fuso_horario = 0);
+        void SetAno(int ano);
+        void SetMes(int mes);
+        void SetDia(int dia);
+        void SetHora(int hora);
+        void SetMinuto(int minuto);
+        date::year GetAno();
+        date::month GetMes();
+        date::day GetDia();
+        std::chrono::hours GetHora();
+        std::chrono::minutes GetMinuto();
+        friend std::ostream &
+        operator<<(std::ostream &o, const tempo &t)
+        {
+            o << t._ano_mes_dia.day() << "/" << t._ano_mes_dia.month() << "/" << t._ano_mes_dia.year() << " " << std::setw(2) << std::setfill('0') << t._hora.count() << ":" << std::setw(2) << std::setfill('0') << t._minutos.count();
+            return o;
+        }
+    };
+#endif
+}
+#endif
