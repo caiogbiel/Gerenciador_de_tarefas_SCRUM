@@ -24,16 +24,21 @@ public:
     // void titulo(string titulo, int colunas);
     void inserir(int linha, string conteudo, int alinhar);
     void inserir_em(int linha, int coluna, string conteudo);
+    void inserir_apos(int linha, string conteudo, int alinhar = -1);
     template <typename T>
-    void ler(string mensagem, int linha_dest, T &saida, int alinhar = ESQ);
+    void ler_inserir(string mensagem, int linha_dest, T &saida, int alinhar = ESQ);
+    template <typename T>
+    void ler(string mensagem, T &saida);
+    void separador(int linha);
+    void esperar(int linha, string mensagem);
     void imprimir();
 };
 
-// void titulo(string titulo, int colunas);
-// void pagina(int linhas, int colunas);
 void p_login();
-void p_principal();
-void p_time(scrum_team time);
-void criarNovaTarefa();
+void p_principal(bool &controlador);
+void p_time();
+void p_finalizadas();
 void p_finalizarTarefa();
+
+void criarNovaTarefa();
 void programa();

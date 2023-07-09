@@ -152,3 +152,22 @@ void evento::SetTime(scrum_team time)
 {
     *this->_time = time;
 }
+
+adts::Lista<evento> &transformarEventos(adts::Lista<int> eventos)
+{
+    adts::Lista<evento> *lista = new adts::Lista<evento>();
+    int ev_t = eventos.size();
+    int to_t = todos_eventos.size();
+
+    for (int i = 0; i < ev_t; ++i)
+    {
+        for (int j = 0; j < to_t; ++i)
+        {
+            if (eventos[i] == todos_eventos[j].GetId())
+            {
+                lista->push_front(todos_eventos[j]);
+            }
+        }
+    }
+    return *lista;
+}

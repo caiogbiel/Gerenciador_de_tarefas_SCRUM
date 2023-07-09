@@ -231,6 +231,7 @@ namespace adts
                 {
                     if (aux->value == value)
                     {
+                        // store = aux->value;
                         return true;
                     }
                     aux = aux->next;

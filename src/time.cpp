@@ -17,7 +17,7 @@ membros::membros(std::string nome, permissao per, geren_tempo::tempo data_nascim
     this->_id = membros_global_id;
     ++membros_global_id;
 }
-membros::membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento, std::string email, std::chrono::hours horas_trabalhadas, adts::Lista<int> eventos)
+membros::membros(std::string nome, permissao per, geren_tempo::tempo data_nascimento, std::string email, std::chrono::hours horas_trabalhadas, adts::Lista<int> eventos, adts::Lista<int> equipes)
 {
     this->_nome = nome;
     this->_nivel_permissao = per;
@@ -25,6 +25,7 @@ membros::membros(std::string nome, permissao per, geren_tempo::tempo data_nascim
     this->_email = email;
     this->_horas_trabalhadas = horas_trabalhadas;
     this->_id_eventos = eventos;
+    this->_id_equipes = equipes;
 
     this->_id = membros_global_id;
     ++membros_global_id;
@@ -66,6 +67,14 @@ permissao membros::GetNivelDePermissao()
 {
     return this->_nivel_permissao;
 }
+adts::Lista<int> membros::GetEventos()
+{
+    return this->_id_eventos;
+}
+adts::Lista<int> membros::GetEquipes()
+{
+    return this->_id_equipes;
+}
 
 // SETTERS
 
@@ -91,6 +100,14 @@ void membros::SetNivelDePermissao(permissao nivel_de_Permissao)
 {
     this->_nivel_permissao = nivel_de_Permissao;
 }
+void membros::SetEventos(adts::Lista<int> eventos)
+{
+    this->_id_eventos = eventos;
+}
+void membros::SetEquipes(adts::Lista<int> equipes)
+{
+    this->_id_equipes = equipes;
+}
 #pragma endregion
 #pragma region SCRUM_MASTER
 
@@ -99,7 +116,7 @@ scrum_team::scrum_team()
     this->_id = equipes_global_id;
     ++equipes_global_id;
 }
-scrum_team::scrum_team(adts::Lista<int> participantes, adts::Lista<int> eventos)
+scrum_team::scrum_team(std::string nome, adts::Lista<int> participantes, adts::Lista<int> eventos)
 {
     _id_participantes = participantes;
     _id_eventos = eventos;
@@ -134,6 +151,10 @@ int scrum_team::GetId()
 {
     return _id;
 }
+std::string scrum_team::GetNome()
+{
+    return this->_nome;
+}
 adts::Lista<int> scrum_team::GetParticipantes()
 {
     return _id_participantes;
@@ -143,6 +164,10 @@ adts::Lista<int> scrum_team::GetEventos()
     return _id_eventos;
 }
 // SETTERS
+void membros::SetNome(std::string nome)
+{
+    this->_nome = nome;
+}
 void scrum_team::SetEquipe(adts::Lista<int> participantes)
 {
     this->_id_participantes = participantes;
@@ -151,6 +176,43 @@ void scrum_team::SetEquipe(adts::Lista<int> participantes)
 void scrum_team::SetEventos(adts::Lista<int> eventos)
 {
     this->_id_eventos = eventos;
+}
+
+adts::Lista<scrum_team> &transformarEquipe(adts::Lista<int> equipes)
+{
+    adts::Lista<scrum_team> *lista = new adts::Lista<scrum_team>();
+    int ev_t = equipes.size();
+    int to_t = todos_equipes.size();
+
+    for (int i = 0; i < ev_t; ++i)
+    {
+        for (int j = 0; j < to_t; ++i)
+        {
+            if (equipes[i] == todos_equipes[j].GetId())
+            {
+                lista->push_front(todos_equipes[j]);
+            }
+        }
+    }
+    return *lista;
+}
+adts::Lista<membros> &transformarMembros(adts::Lista<int> membros_id)
+{
+    adts::Lista<membros> *lista = new adts::Lista<membros>();
+    int ev_t = membros_id.size();
+    int to_t = todos_membros.size();
+
+    for (int i = 0; i < ev_t; ++i)
+    {
+        for (int j = 0; j < to_t; ++i)
+        {
+            if (membros_id[i] == todos_membros[j].GetId())
+            {
+                lista->push_front(todos_membros[j]);
+            }
+        }
+    }
+    return *lista;
 }
 
 #pragma endregion

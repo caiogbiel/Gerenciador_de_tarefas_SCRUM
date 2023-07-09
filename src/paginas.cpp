@@ -4,6 +4,8 @@
 
 Pagina::Pagina(int linhas, int colunas, string titulo)
 {
+    _colunas = colunas;
+    _linhas = linhas;
     //================TITULO================//
 #pragma region Titulo
     int titulo_t = titulo.size();
@@ -101,9 +103,64 @@ void Pagina::inserir(int linha, string conteudo, int preset)
     _conteudo[linha - 1] = s;
 }
 
-template <typename T>
-void Pagina::ler(string mensagem, int linha, T &saida, int alinhar)
+void Pagina::inserir_apos(int linha, string conteudo, int alinhar)
 {
+    string s = _conteudo[linha - 1];
+    string aux(s);
+
+    aux.replace(0, 1, " ");
+    aux.replace(aux.size() - 1, 1, " ");
+
+    aux.replace(aux.find_last_not_of(' ') + 1, conteudo.size(), conteudo);
+
+    if (alinhar < 0)
+    {
+        aux.replace(0, 1, "*");
+        aux.replace(aux.size() - 1, 1, "*");
+        _conteudo[linha - 1] = aux;
+    }
+    else
+    {
+        istringstream buffer(aux);
+
+        aux.clear();
+
+        while (buffer >> s)
+            ;
+        {
+            aux.append(s);
+        }
+
+        inserir(linha, aux, alinhar);
+    }
+}
+
+template <typename T>
+void Pagina::ler(string mensagem, T &saida)
+{
+    cin.clear();
+    string b;
+    int n;
+
+    cout << mensagem;
+
+    if (typeid(T).name() == typeid(int).name() || typeid(T).name() == typeid(string).name())
+    {
+        cin >> saida;
+    }
+
+    if (typeid(T).name() == typeid(permissao).name())
+    {
+        cin >> n;
+        string b = permissao_para_string(permissao(n));
+        saida = permissao(n);
+    }
+}
+
+template <typename T>
+void Pagina::ler_inserir(string mensagem, int linha, T &saida, int alinhar)
+{
+    cin.clear();
     string s;
     string b;
     int n;
@@ -146,50 +203,92 @@ void Pagina::imprimir()
     }
 }
 
+void Pagina::separador(int linha)
+{
+    string s;
+
+    s.append("*");
+    for (int i = 1; i < _colunas - 1; ++i)
+    {
+        s.append("=");
+    }
+    s.append("*");
+
+    _conteudo[linha - 1] = s;
+}
+
+void Pagina::esperar(int linha, string mensagem)
+{
+    inserir(linha, "Pressione qualquer tecla para " + mensagem, CEN);
+    imprimir();
+    cin.ignore();
+    cin.get();
+}
+
 void p_login()
 {
     Pagina login(LINHAS, COLUNAS, "LOGIN");
     string nome;
     permissao perm;
 
+    login.inserir(2, "Usuario: ", CEN);
+    login.inserir(3, "Funcao: ", CEN);
     login.imprimir();
-    login.ler("Entre com seu usuario: ", 2, nome, CEN);
+
+    login.ler("Entre com seu usuario: ", nome);
     login.imprimir();
+
+    login.inserir_apos(2, " " + nome);
+    login.imprimir();
+
     cout << "\n(0 - Product Owner) (1 - Desenvolvedor) (2 - Scrum Master)\n";
-    login.ler("Entre com sua funcao: ", 3, perm, CEN);
-    login.imprimir();
+    login.ler("Entre com sua funcao: ", perm);
+
+    login.inserir_apos(3, " " + permissao_para_string(perm));
+
+    login.inserir(LINHAS - 6, "Bem vindo " + nome, CEN);
+    login.esperar(LINHAS - 4, "continuar");
 
     usuario.SetNome(nome);
     usuario.SetNivelDePermissao(permissao(perm));
 }
 
-void p_principal()
+void p_principal(bool &controlador)
 {
+    Pagina principal(LINHAS + 7, COLUNAS, "MENU PRINCIPAL");
+    principal.inserir(1, "-Suas tarefas-", CEN);
     int opcao;
-    cout << "\n===============TAREFAS===============\n";
+
+    /*SUBSTITUIR todos_eventos POR LISTA DO USUÁRIO*/
 
     if (todos_eventos.size() == 0)
     {
-        cout << "\n           Não há tarefas              \n";
+        principal.inserir(3, "Nao existem tarefas pendentes", CEN);
     }
     else
     {
-        for (int i = 0; i < todos_eventos.size(); ++i)
+        stringstream buffer;
+        string s;
+        for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
         {
-            cout << todos_eventos[i] << '\n';
+            buffer << todos_eventos[i];
+            buffer >> s;
+            principal.inserir(3 + i, s, ESQ);
         }
     }
 
-    // PERMISSAO GLOBAL
-    cout << "\n1 - Ver tarefas finalizadas\n";
-    cout << "2 - Criar nova tarefa\n";
-    cout << "3 - Iniciar uma tarefa\n";
-    cout << "4 - Finalizar uma tarefa\n";
-    cout << "5 - Ver meu time\n";
+    principal.separador(LINHAS - 4);
+
+    principal.inserir(18, "0 - Sair", ESQ);
+    principal.inserir(19, "1 - Ver tarefas finalizadas", ESQ);
+    principal.inserir(20, "2 - Criar nova tarefa", ESQ);
+    principal.inserir(21, "3 - Iniciar uma tarefa", ESQ);
+    principal.inserir(22, "4 - Finalizar uma tarefa", ESQ);
+    principal.inserir(23, "5 - Ver meu time", ESQ);
     // PERMISSAO PRODUCT OWNER
     if (usuario.GetNivelDePermissao() == 0)
     {
-        cout << "6 - Finalizar Sprint\n";
+        principal.inserir(23, "6 - Finalizar Sprint", ESQ);
     }
     // PERMISSAO DEVELOPER
     if (usuario.GetNivelDePermissao() == 1)
@@ -198,15 +297,20 @@ void p_principal()
     // PERMISSAO SCRUM MASTER
     if (usuario.GetNivelDePermissao() == 2)
     {
-        cout << "6 - Atribuir tarefa\n";
+        principal.inserir(23, "6 - Atribuir tarefa", ESQ);
     }
+    principal.imprimir();
 
-    cout << endl;
-    cin >> opcao;
+    principal.ler("Selecione uma opção: ", opcao);
 
     switch (opcao)
     {
+    case 0:
+        controlador = false;
+        return;
+        break;
     case 1:
+        p_finalizadas();
         break;
     case 2:
         // ainda em desenvolvimento
@@ -220,6 +324,7 @@ void p_principal()
         p_finalizarTarefa();
         break;
     case 5:
+        p_time();
         break;
     default:
         break;
@@ -228,44 +333,173 @@ void p_principal()
     // PERMISSAO PRODUCT OWNER
     if (usuario.GetNivelDePermissao() == 0)
     {
-        switch (opcao)
+        if (opcao == 6)
         {
-        case 6:
-            break;
-
-        default:
-            break;
         }
     }
     // PERMISSAO DEVELOPER
     if (usuario.GetNivelDePermissao() == 1)
     {
-        switch (opcao)
-        {
-        case 6:
-            break;
-
-        default:
-            break;
-        }
     }
     // PERMISSAO SCRUM MASTER
     if (usuario.GetNivelDePermissao() == 2)
     {
-        switch (opcao)
+        if (opcao == 6)
         {
-        case 6:
-            break;
-
-        default:
-            break;
         }
     }
 }
 
-void p_time(scrum_team time)
+void p_finalizadas()
 {
-    cout << "=====================================\n";
+    Pagina finalizadas(LINHAS + 4, COLUNAS, "FINALIZAR TAREFA");
+    std::string nomeTarefa;
+
+    finalizadas.inserir(1, "-Tarefas finalizadas-", CEN);
+    finalizadas.separador(LINHAS - 4);
+    finalizadas.imprimir();
+
+    if (todos_eventos.size() == 0)
+    {
+        string trash;
+        finalizadas.inserir(3, "Nao existem tarefas encerradas", CEN);
+        finalizadas.inserir(LINHAS, "Pressione qualquer tecla para voltar", CEN);
+        finalizadas.imprimir();
+        cin.ignore();
+        cin.get();
+        return;
+    }
+    else
+    {
+        stringstream buffer;
+        string s;
+        for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
+        {
+            if (todos_eventos[i].GetStatus() == finalizado)
+            {
+                buffer << todos_eventos[i];
+                buffer >> s;
+                finalizadas.inserir(3 + i, s, ESQ);
+            }
+        }
+    }
+
+    finalizadas.imprimir();
+}
+
+void p_finalizarTarefa()
+{
+    Pagina finalizar(LINHAS + 4, COLUNAS, "FINALIZAR TAREFA");
+    std::string nomeTarefa;
+
+    finalizar.inserir(1, "-Tarefas a finalizar-", CEN);
+    finalizar.separador(LINHAS - 4);
+    finalizar.imprimir();
+
+    if (todos_eventos.size() == 0)
+    {
+        string trash;
+        finalizar.inserir(3, "Nao existem tarefas para encerrar", CEN);
+        finalizar.esperar(LINHAS, "voltar");
+        finalizar.imprimir();
+        return;
+    }
+    else
+    {
+        stringstream buffer;
+        string s;
+        for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
+        {
+            if (todos_eventos[i].GetStatus() != finalizado)
+            {
+                buffer << todos_eventos[i];
+                buffer >> s;
+                finalizar.inserir(3 + i, s, ESQ);
+            }
+        }
+    }
+
+    finalizar.imprimir();
+
+    finalizar.inserir(18, "Tarefa selecionada: ", ESQ);
+
+    finalizar.ler("Digite o nome ou ID da tarefa que deseja finalizar: ", nomeTarefa);
+    finalizar.inserir_apos(18, " " + nomeTarefa);
+    finalizar.imprimir();
+
+    evento *tarefa = nullptr;
+
+    for (int i = 0; i < todos_eventos.size(); ++i)
+    {
+        if (todos_eventos[i].GetNome() == nomeTarefa || todos_eventos[i].GetId() == stoi(nomeTarefa))
+        {
+            tarefa = &todos_eventos[i];
+            break;
+        }
+    }
+
+    if (tarefa != nullptr)
+    {
+        if (tarefa->GetStatus() == finalizado)
+        {
+            finalizar.inserir(19, "A tarefa já está finalizada", ESQ);
+        }
+        else
+        {
+            /* pedir para confirmar */
+            tarefa->encerrar();
+            finalizar.inserir(19, "Tarefa finalizada com sucesso", ESQ);
+        }
+    }
+    else
+    {
+        finalizar.inserir(19, "Tarefa nao encontrada", ESQ);
+    }
+    finalizar.imprimir();
+}
+
+void p_time()
+{
+    Pagina equipe(LINHAS, COLUNAS, "EQUIPE");
+
+    adts::Lista<int> equipe_lista_id = usuario.GetEquipes();
+    adts::Lista<scrum_team> equipe_lista = transformarEquipe(equipe_lista_id);
+    scrum_team equipe_selec;
+
+    equipe.separador(LINHAS - 6);
+
+    if (equipe_lista.size() > 1)
+    {
+        int tam = equipe_lista.size();
+        equipe.inserir(1, "-Selecione uma equipe-", CEN);
+        stringstream buffer;
+        string s;
+
+        for (int i = 0; i < 10 && i < tam; ++i)
+        {
+            buffer << equipe_lista[i];
+            buffer >> s;
+            equipe.inserir(3 + i, s, ESQ);
+        }
+        equipe.inserir(LINHAS - 3, "Time selecionado: ", ESQ);
+        equipe.imprimir();
+        equipe.ler("Insira o nome ou ID da equipe", s);
+
+        for (int i = 0; i < equipe_lista.size(); ++i)
+        {
+            if (equipe_lista[i].GetNome() == s || equipe_lista[i].GetId() == stoi(s))
+            {
+                equipe_selec = equipe_lista[i];
+                break;
+            }
+        }
+    }
+    else if (equipe_lista.size() == 0)
+    {
+        equipe.inserir(5, "Voce nao faz parte de nenhum time", CEN);
+        equipe.esperar(LINHAS - 4, "voltar");
+    }
+
     /* Mostrar participantes do time */
     cout << "1 - Ver tarefas do time\n";
 
@@ -332,59 +566,26 @@ void criarNovaTarefa()
     evento tarefa(nome, eventos_sprint(tipo), participantes, &time, prioridade(prio));
 }
 
-void verTime() {
-  cout << "=====================================\n";
-  cout << "Membros da equipe:\n";
+void verTime()
+{
+    cout << "=====================================\n";
+    cout << "Membros da equipe:\n";
 
-  for (int i = 0; i < todos_membros.size(); ++i) {
-    cout << "ID: " << todos_membros[i].GetId()
-         << ", Nome: " << todos_membros[i].GetNome() << "\n";
-  }
+    for (int i = 0; i < todos_membros.size(); ++i)
+    {
+        cout << "ID: " << todos_membros[i].GetId()
+             << ", Nome: " << todos_membros[i].GetNome() << "\n";
+    }
 
-  cout << "=====================================\n";
+    cout << "=====================================\n";
 }
 
 void programa()
 {
-    // Pagina teste(LINHAS, COLUNAS, "TESTE");
-    // teste.inserir(2, "Ola mundo", CEN);
-    // teste.imprimir();
-
-    // int x;
-    // teste.ler("Insira um numero: ", 2, x);
-    // teste.imprimir();
-
+    bool controle = true;
     p_login();
-    p_principal();
-}
-
-void p_finalizarTarefa() {
-  Pagina finalizar(LINHAS, COLUNAS, "FINALIZAR TAREFA");
-  std::string nomeTarefa;
-  finalizar.imprimir();
-  finalizar.ler("Digite o nome da tarefa que deseja finalizar: ", 1, nomeTarefa);
-  finalizar.imprimir();
-  evento *tarefa = nullptr;
-
-  for (int i = 0; i < todos_eventos.size(); ++i) {
-    if (todos_eventos[i].GetNome() == nomeTarefa) {
-      tarefa = &todos_eventos[i];
-      break;
+    while (controle)
+    {
+        p_principal(controle);
     }
-  }
-  int x;
-  
-  if (tarefa != nullptr) {
-    if (tarefa->GetStatus() == finalizado) {
-      finalizar.inserir(2,"A tarefa já está finalizada.\n", ESQ);
-      finalizar.imprimir();
-    } else {
-      tarefa->encerrar();
-      finalizar.inserir(2,"Tarefa finalizada com sucesso.\n", ESQ);
-      finalizar.imprimir();
-    }
-  } else {
-    finalizar.inserir(2, "Tarefa nao encontrada.\n", ESQ);
-    finalizar.imprimir();
-  }
 }
