@@ -1,9 +1,9 @@
 #include <iostream>
-#include <vector>
 #include "../include/time.hpp"
 #include "../include/gerenciador.hpp"
 #include "../include/evento.hpp"
 #include "../include/utilities.hpp"
+#include "../include/enums.hpp"
 #include <functional>
 #define ESQ 0
 #define CEN 1
@@ -22,10 +22,10 @@ public:
     Pagina(int linhas, int colunas, string titulo);
     ~Pagina();
     // void titulo(string titulo, int colunas);
-    void inserir(int linha, string conteudo, int preset);
+    void inserir(int linha, string conteudo, int alinhar);
     void inserir_em(int linha, int coluna, string conteudo);
     template <typename T>
-    void ler(string mensagem, int linha_dest, T &saida, std::function<T(string)> conversor = nullptr);
+    void ler(string mensagem, int linha_dest, T &saida, int alinhar = ESQ);
     void imprimir();
 };
 

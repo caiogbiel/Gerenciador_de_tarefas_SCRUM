@@ -102,32 +102,34 @@ void Pagina::inserir(int linha, string conteudo, int preset)
 }
 
 template <typename T>
-void Pagina::ler(string mensagem, int linha, T &saida, std::function<T(string)> conversor)
+void Pagina::ler(string mensagem, int linha, T &saida, int alinhar)
 {
     string s;
     string b;
+    int n;
 
     s.append(mensagem);
     s.append(" ");
 
     cout << mensagem;
 
-    if (conversor == nullptr)
+    if (typeid(T).name() == typeid(int).name() || typeid(T).name() == typeid(string).name())
     {
-        cin >> b;
+        getline(cin, b);
+        istringstream buffer(b);
+        s.append(b);
+        buffer >> saida;
     }
-    else
+
+    if (typeid(T).name() == typeid(permissao).name())
     {
-        // EXPERIMENTAL
-        // cin.getline(s, 256);
+        cin >> n;
+        string b = permissao_para_string(permissao(n));
+        s.append(b);
+        saida = permissao(n);
     }
-    istringstream buffer(b);
 
-    s.append(b);
-
-    inserir(linha, s, 0);
-
-    buffer >> saida;
+    inserir(linha, s, alinhar);
 }
 
 void Pagina::imprimir()
@@ -147,21 +149,18 @@ void Pagina::imprimir()
 void p_login()
 {
     Pagina login(LINHAS, COLUNAS, "LOGIN");
-    // titulo("LOGIN", t);
-    // cout << "================LOGIN================\n";
-    cout
-        << "Entre com seu usuário: ";
-
     string nome;
-    cin >> nome;
-    usuario.SetNome(nome);
+    permissao perm;
 
+    login.imprimir();
+    login.ler("Entre com seu usuario: ", 2, nome, CEN);
+    login.imprimir();
     cout << "\n(0 - Product Owner) (1 - Desenvolvedor) (2 - Scrum Master)\n";
-    cout << "Entre com sua função: ";
+    login.ler("Entre com sua funcao: ", 3, perm, CEN);
+    login.imprimir();
 
-    int p;
-    cin >> p;
-    usuario.SetNivelDePermissao(permissao(p));
+    usuario.SetNome(nome);
+    usuario.SetNivelDePermissao(permissao(perm));
 }
 
 void p_principal()
@@ -345,13 +344,13 @@ void criarNovaTarefa()
 
 void programa()
 {
-    Pagina teste(LINHAS, COLUNAS, "TESTE");
-    teste.inserir(2, "Ola mundo", CEN);
-    teste.imprimir();
+    // Pagina teste(LINHAS, COLUNAS, "TESTE");
+    // teste.inserir(2, "Ola mundo", CEN);
+    // teste.imprimir();
 
-    int x;
-    teste.ler("Insira um numero: ", 2, x);
-    teste.imprimir();
+    // int x;
+    // teste.ler("Insira um numero: ", 2, x);
+    // teste.imprimir();
 
     p_login();
     p_principal();

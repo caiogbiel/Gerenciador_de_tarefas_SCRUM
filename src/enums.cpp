@@ -63,3 +63,11 @@ std::string tipo_para_string(eventos_sprint e)
         break;
     }
 }
+
+std::istream &operator>>(std::istream &i, permissao &p)
+{
+    int temp;
+    i >> temp;
+    p = permissao(temp);
+    return i;
+}
