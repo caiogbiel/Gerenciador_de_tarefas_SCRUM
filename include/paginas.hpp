@@ -35,4 +35,5 @@ void p_login();
 void p_principal();
 void p_time(scrum_team time);
 void criarNovaTarefa();
+void p_finalizarTarefa();
 void programa();
