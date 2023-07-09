@@ -82,6 +82,7 @@ void Pagina::inserir_em(int linha, int coluna, string conteudo)
     _conteudo[linha - 1] = s;
 }
 
+// Preset: ESQ = esquerda, CEN = centro, DIR = direita
 void Pagina::inserir(int linha, string conteudo, int preset)
 {
     string s = _conteudo[linha - 1];
@@ -348,8 +349,9 @@ void criarNovaTarefa()
 void programa()
 {
     Pagina teste(20, 100, "TESTE");
-    teste.inserir(2, "Ola mundo", 1);
+    teste.inserir(2, "Ola mundo", CEN);
     teste.imprimir();
+
     int x;
     teste.ler("Insira um numero: ", 2, x);
     teste.imprimir();
