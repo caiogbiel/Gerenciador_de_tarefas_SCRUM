@@ -31,7 +31,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="logo.png" alt="Logo" width="200" height="200">
+    <img src="/imagens/logo.png" alt="Logo" width="200" height="200">
   </a>
 
 <h3 align="center">Gerenciador de tarefas SCRUM</h3>
@@ -84,7 +84,7 @@
 ## Sobre o Projeto
 
   <a href="https://github.com/github_username/repo_name">
-    <img src="Capturar.PNG" alt="Logo" width="1000" height="500">
+    <img src="/imagens/Capturar.PNG" alt="Logo" width="1000" height="500">
   </a>
 
 Ao inciar o projeto é aberto a tela principal onde deve ser colocados o seu usuário e a função que vc possui que pode ser:   product_owner, developer, scrum_master. Em seguida sera exibido a tela principal onde nela irá conter suas tarefas, funções gerais e funções específicas de acordo com sua função.
@@ -94,7 +94,7 @@ Ao inciar o projeto é aberto a tela principal onde deve ser colocados o seu usu
 
 
 ### Construido com:
-[![C++](c++.png)](https://www.cplusplus.com/)
+[![C++](/imagens/c++.png)](https://www.cplusplus.com/)
 
 (Para obter mais informações, por favor clique na imagem).
 
