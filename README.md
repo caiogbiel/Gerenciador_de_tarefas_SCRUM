@@ -18,12 +18,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
+<!--[![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]-->
 
 
 
@@ -31,14 +31,14 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="logo.png" alt="Logo" width="200" height="200">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Gerenciador de tarefas SCRUM</h3>
 
   <p align="center">
-    project_description
-    <br />
+    O Scrum é um projeto de gerenciador de tarefas baseado no framework ágil Scrum. Ele foi desenvolvido para auxiliar equipes a organizarem e acompanharem suas tarefas de forma eficiente, promovendo a colaboração e a transparência durante o processo de desenvolvimento de projetos.
+    <!--<br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
     <br />
@@ -46,7 +46,7 @@
     ·
     <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>-->  
   </p>
 </div>
 
@@ -54,163 +54,176 @@
 
 <!-- TABLE OF CONTENTS -->
 <details>
-  <summary>Table of Contents</summary>
+  <summary>Sumário</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#about-the-project">Sobre o projeto</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#built-with">Construido com</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#getting-started">Começando</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#prerequisites">Prerequisitos</a></li>
+        <li><a href="#installation">Instalação</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#usage">Uso</a></li>
+    <li><a href="#roadmap">Roteiro</a></li>
+    <li><a href="#contributing">Contribuindo</a></li>
+    <li><a href="#license">Licença</a></li>
+    <li><a href="#contact">Contatos</a></li>
+    <li><a href="#acknowledgments">Agradecimentos</a></li>
   </ol>
 </details>
 
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+## Sobre o Projeto
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+  <a href="https://github.com/github_username/repo_name">
+    <img src="Capturar.PNG" alt="Logo" width="1000" height="500">
+  </a>
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Ao inciar o projeto é aberto a tela principal onde deve ser colocados o seu usuário e a função que vc possui que pode ser:   product_owner, developer, scrum_master. Em seguida sera exibido a tela principal onde nela irá conter suas tarefas, funções gerais e funções específicas de acordo com sua função.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 
 
-### Built With
+### Construido com:
+[![C++](c++.png)](https://www.cplusplus.com/)
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+(Para obter mais informações, por favor clique na imagem).
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Começando
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Segue abaixo o passo a passo de como colocar em funcionamento o projeto de SCRUM no seu computador. 
+Siga estas simples etapas de exemplo:
 
-### Prerequisites
+### Pre-requisitos
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+Para programar este gerenciador foi utilizado:
+* vscode
+  
+  [  https://code.visualstudio.com/
+](https://code.visualstudio.com/Download)
 
-### Installation
+* github(opcional)
+  
+  [https://github.com/](https://github.com/dashboard)
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+### Instalação
+* vscode:
+
+1. Baixei o arquivo .exe de acordo com o seu sistema operacional.
+2. Aceite os termos e prossiga com a instalação
+3. Após a instalação abra o vs code e instale as extensões c++:
+   
+   C++.
+   
+   C++: COMPILER RUN.
+   
+   (Caso possua maiores dúvidas, por favor consultar o tutorial em anexo: [Instalação do VSCode](https://youtu.be/uxln1hT_Ev4))
+   
+5. Após estes passos abra o terminal do vscode e coloque o seguinte comando:
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/caiogbiel/Gerenciador_de_tarefas_SCRUM.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+   
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Uso
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+A usabilidade do Scrum está centrada em promover a entrega de valor de forma colaborativa, adaptativa e transparente. Aqui estão algumas características importantes da usabilidade do Scrum:
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+* Colaboração: O Scrum incentiva a colaboração intensa entre os membros da equipe, que trabalham juntos para alcançar os objetivos do projeto. A comunicação eficaz e a troca contínua de conhecimento são fundamentais para o sucesso do Scrum.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+* Adaptabilidade: O Scrum é projetado para se adaptar a mudanças. Durante o desenvolvimento do projeto, as equipes Scrum têm flexibilidade para ajustar as prioridades, refinar o backlog do produto e responder a novos requisitos ou insights. A capacidade de adaptação é essencial para lidar com incertezas e requisitos em constante evolução.
+
+* Transparência: A transparência é uma das bases do Scrum. Todas as atividades, progresso, problemas e decisões devem ser visíveis para todos os membros da equipe. Isso promove a confiança, o compartilhamento de informações e a tomada de decisões informadas.
+
+* Entrega incremental: O Scrum busca entregar valor em incrementos frequentes e mensuráveis. Em cada sprint, a equipe trabalha em uma parte do produto que possa ser potencialmente entregue. Isso permite que os stakeholders obtenham resultados tangíveis mais rapidamente e fornece oportunidades para receber feedback valioso.
+
+* Foco no cliente: O Scrum coloca o cliente e seus requisitos no centro do processo de desenvolvimento. Através do envolvimento do Product Owner e da priorização adequada do backlog do produto, as necessidades do cliente são atendidas de maneira eficaz e o valor para o cliente é maximizado.
+
+* Melhoria contínua: O Scrum valoriza a aprendizagem e a melhoria contínua. Após cada sprint, a equipe realiza uma retrospectiva para identificar pontos fortes, oportunidades de melhoria e ações para aprimorar seu desempenho no próximo sprint. Essa abordagem permite que a equipe se adapte e se aprimore ao longo do tempo.
+
+Para mais informações, por favor verifique o [Guia oficial do SCRUM](https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-PortugueseBR-3.0.pdf)
+
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 
 
 <!-- ROADMAP -->
-## Roadmap
+## Roteiro
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Diagramas UML das classes.
+- [ ] Implementar pelo menos três algoritmos de ordenação.
+- [ ] Implementar um algoritmo de busca binária.
+- [ ] Implementar Orientação a Objetos.
+- [ ] Implementar TADs (Tipos Abstratos de Dados) usando Orientação a Objetos.
+- [ ] Manipulação de Leitura e Escrita de Arquivos.
+- [ ] Implementar testes.
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## Contribuição
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+A colaboração é o elemento fundamental que torna a comunidade de código aberto um ambiente inspirador para aprender e criar. Valorizamos imensamente qualquer contribuição que você possa fazer.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Se você tiver alguma sugestão para aprimorar o projeto, você pode criar um "fork" do repositório e enviar uma solicitação pull com suas alterações. Se preferir, você também pode abrir um problema, marcando-o como "melhoria". Além disso, seria muito apreciado se você pudesse dar uma estrela ao projeto! Agradecemos novamente pela sua participação!
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Faça um "fork" do projeto.
+2. Crie uma nova ramificação para sua funcionalidade (git checkout -b feature/IncrivelFuncionalidade).
+3. Faça os commits com suas alterações (git commit -m 'Adicionar alguma IncrivelFuncionalidade').
+4. Faça o push para a sua ramificação (git push origin feature/IncrivelFuncionalidade).
+5. Abra uma solicitação pull.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 
 
 <!-- LICENSE -->
-## License
+## Licença
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 
 
 <!-- CONTACT -->
-## Contact
+## Contatos
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Caio Gabriel - caio.cardoso.133@ufrn.edu.br
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Luis Henrique - luis.scalabrin.097@ufrn.edu.br
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Project Link: [(https://github.com/caiogbiel/Gerenciador_de_tarefas_SCRUM.git](https://github.com/caiogbiel/Gerenciador_de_tarefas_SCRUM.git))
+
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## Agradecimentos
 
-* []()
-* []()
-* []()
+* Alan Turing e Charles Babbage: Pai da computação;
+* Patrick: Professor de lp1;
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 
 
