@@ -39,6 +39,7 @@ public:
 void p_login();
 void p_principal(bool &controlador);
 void p_time();
+void p_IniciarTarefa();
 void p_finalizadas();
 void p_finalizarTarefa();
 
