@@ -198,9 +198,9 @@ Se você tiver alguma sugestão para aprimorar o projeto, você pode criar um "f
 <!-- LICENSE -->
 ## Licença
 
-<!--Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distribuído sob a Licença MIT. Veja `LICENSE` para mais informações.
 
-<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p> -->
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p> 
 
 
 
