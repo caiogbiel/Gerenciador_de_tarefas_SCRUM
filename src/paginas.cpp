@@ -401,6 +401,7 @@ void p_principal(bool &controlador)
         // listaTarefas.push(novaTarefa);
         break;
     case 3:
+        p_IniciarTarefa();
         break;
     case 4:
         p_finalizarTarefa();
@@ -469,6 +470,36 @@ void p_finalizadas()
     finalizadas.imprimir();
 }
 
+//funcao iniciar tarefa
+
+void p_IniciarTarefa() {
+  Pagina iniciar(LINHAS + 4, COLUNAS, "INICIAR TAREFA");
+  std::string nomeTarefa;
+
+  iniciar.inserir(1, "-Tarefas a iniciar-", CEN);
+  iniciar.separador(LINHAS - 4);
+  iniciar.imprimir();
+
+  adts::Lista<evento> lista = transformarEventos(usuario.GetEventos());
+
+  if (lista.size() == 0) {
+    iniciar.inserir(3, "Nao existem tarefas para iniciar", CEN);
+    iniciar.esperar(LINHAS, "voltar");
+    iniciar.imprimir();
+    return;
+  } else {
+
+    stringstream buffer;
+    for (int i = 0; i < 10 && i < lista.size(); ++i) {
+      if (lista[i].GetStatus() != andamento) {
+        buffer << lista[i];
+
+        iniciar.inserir(3 + i, buffer.str(), ESQ);
+      }
+    }
+  }
+
+//funcao finalizar tarefa
 void p_finalizarTarefa()
 {
     Pagina finalizar(LINHAS + 4, COLUNAS, "FINALIZAR TAREFA");
