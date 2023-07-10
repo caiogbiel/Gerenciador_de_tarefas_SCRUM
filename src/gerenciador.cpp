@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "../include/gerenciador.hpp"
 #include "../include/evento.hpp"
 #include "../include/enums.hpp"
 #include "../include/utilities.hpp"
@@ -16,55 +17,44 @@ using namespace geren_tempo;
 
 int main()
 {
+    membros u("Luis", permissao::product_owner, tempo(2004, 8, 24));
     membros m1("Jonas", permissao::developer, tempo(2000, 10, 21));
     membros m2("Maria", permissao::product_owner, tempo(1993, 4, 24));
     membros m3("Carlos", permissao::scrum_master, tempo(1965, 7, 4));
     todos_membros.push_back(m1);
     todos_membros.push_back(m2);
     todos_membros.push_back(m3);
+    todos_membros.push_back(u);
 
-    // cout << "TODOS OS MEMBROS\n";
-    // todos_membros.print();
+    adts::Lista<int> tm1(m1.GetId());
+    adts::Lista<int> tm2(m2.GetId());
 
-    // for (int i = 0; i < 3; ++i)
-    // {
-    //     cout << todos_membros[i] << "\n";
-    // }
+    tm2.push_back(u.GetId());
 
-    // string nome = "Daily 3";
-    // eventos_sprint tipo = eventos_sprint::daily_scrum;
-    // tempo inicio = tempo::agora();
-    // tempo fim = inicio + 1;
+    scrum_team t1("Time 1", tm1);
+    scrum_team t2("Time 2", tm2);
+    todos_equipes.push_back(t1);
+    todos_equipes.push_back(t2);
 
-    // adts::Lista<int> membros_id;
-    // adts::Lista<int> eventos_id;
+    adts::Lista<int> em1(m2.GetId());
+    em1.push_back(u.GetId());
 
-    // // PEGANDO APENAS OS IDS DOS MEMBROS
-    // for (int i = 0; i < todos_membros.size(); ++i)
-    // {
-    //     membros_id.push_back(todos_membros[i].GetId());
-    // }
+    em1.push_back(m1.GetId());
+    em1.push_back(m3.GetId());
 
-    // // PEGANDO APENAS OS IDS DOS MEMBROS
-    // for (int i = 0; i < todos_eventos.size(); ++i)
-    // {
-    //     eventos_id.push_back(todos_eventos[i].GetId());
-    // }
+    evento e1("Daily 1", eventos_sprint::daily_scrum, em1, &t1, prioridade::media);
+    todos_eventos.push_back(e1);
 
-    // membros_id.print();
-    // eventos_id.print();
+    tm1.print();
+    tm2.print();
+    em1.print();
 
-    // scrum_team *time = new scrum_team(membros_id, eventos_id);
+    todos_equipes.print();
+    todos_eventos.print();
+    todos_membros.print();
 
-    // cout << "\nTIME - EVENTOS\n";
-    // time->getEventos().print();
-    // cout << "\nTIME - PARTICIPANTES\n";
-    // time->getParticipantes().print();
-
-    // evento daily = evento(nome, tipo, inicio, fim, a, time, prioridade::media);
-
-    // cout << "EVENTO - PARTICIPANTES\n";
-    // daily.GetParticipantes();
+    // cin.ignore();
+    // cin.get();
 
     programa();
 }

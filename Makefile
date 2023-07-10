@@ -21,5 +21,7 @@ unixC:
 c:
 	del .\build\*.o .\bin\*
 
+r: $(PROGRAM) 
+	$(PROGRAM)
 run: c $(PROGRAM) 
 	$(PROGRAM)

@@ -116,8 +116,17 @@ scrum_team::scrum_team()
     this->_id = equipes_global_id;
     ++equipes_global_id;
 }
+
+scrum_team::scrum_team(std::string nome, adts::Lista<int> id_participantes)
+{
+    _nome = nome;
+    _id_participantes = id_participantes;
+    this->_id = equipes_global_id;
+    ++equipes_global_id;
+}
 scrum_team::scrum_team(std::string nome, adts::Lista<int> participantes, adts::Lista<int> eventos)
 {
+    _nome = nome;
     _id_participantes = participantes;
     _id_eventos = eventos;
     this->_id = equipes_global_id;
@@ -164,7 +173,7 @@ adts::Lista<int> scrum_team::GetEventos()
     return _id_eventos;
 }
 // SETTERS
-void membros::SetNome(std::string nome)
+void scrum_team::SetNome(std::string nome)
 {
     this->_nome = nome;
 }

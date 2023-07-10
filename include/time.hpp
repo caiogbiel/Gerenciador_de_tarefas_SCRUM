@@ -48,7 +48,7 @@ public:
     friend std::ostream &
     operator<<(std::ostream &o, const membros &m)
     {
-        o << "ID: " << m._id << " - " << m._nome << " - " << permissao_para_string(m._nivel_permissao);
+        o << "ID: " << m._id << " - Nome: " << m._nome << ", Funcao: " << permissao_para_string(m._nivel_permissao);
         return o;
     }
 };
@@ -63,6 +63,7 @@ private:
 
 public:
     scrum_team();
+    scrum_team(std::string nome, adts::Lista<int> id_participantes);
     scrum_team(std::string nome, adts::Lista<int> id_participantes, adts::Lista<int> id_eventos);
     ~scrum_team();
     bool                        addParticipante(int id_membro);
@@ -82,7 +83,7 @@ public:
     friend std::ostream &
     operator<<(std::ostream &o, const scrum_team &t)
     {
-        o << "ID: " << t._id << "Nome: " << t._nome << ", Participantes: " << t._id_participantes.size() << ", Eventos: " << t._id_eventos.size();
+        o << "ID: " << t._id << " - Nome: " << t._nome << ", Participantes: " << t._id_participantes.size() << ", Eventos: " << t._id_eventos.size();
         
         return o;
     }

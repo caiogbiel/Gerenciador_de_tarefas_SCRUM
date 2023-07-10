@@ -31,6 +31,8 @@ public:
     void ler(string mensagem, T &saida);
     void separador(int linha);
     void esperar(int linha, string mensagem);
+    void limpar_linha(int linha);
+    void caixa(int x1, int y1, int x2, int y2);
     void imprimir();
 };
 

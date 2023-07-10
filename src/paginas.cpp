@@ -1,4 +1,5 @@
 #include "../include/paginas.hpp"
+#include "../include/utilities.hpp"
 #define LINHAS 20
 #define COLUNAS 100
 
@@ -139,7 +140,6 @@ template <typename T>
 void Pagina::ler(string mensagem, T &saida)
 {
     cin.clear();
-    string b;
     int n;
 
     cout << mensagem;
@@ -149,10 +149,13 @@ void Pagina::ler(string mensagem, T &saida)
         cin >> saida;
     }
 
+    // if (typeid(T).name() == typeid(string).name())
+    // {
+    //     cin >> saida;
+    // }
     if (typeid(T).name() == typeid(permissao).name())
     {
         cin >> n;
-        string b = permissao_para_string(permissao(n));
         saida = permissao(n);
     }
 }
@@ -225,32 +228,113 @@ void Pagina::esperar(int linha, string mensagem)
     cin.get();
 }
 
+void Pagina::limpar_linha(int linha)
+{
+    string s;
+    s.append("*");
+    for (int i = 1; i < _colunas; ++i)
+    {
+        s.append("=");
+    }
+    s.append("*");
+    _conteudo[linha - 1] = s;
+}
+
+void Pagina::caixa(int x1, int y1, int x2, int y2)
+{
+    y2++;
+
+    for (int i = x1 + 1; i < x2; ++i)
+    {
+        inserir_em(y1, i, "_");
+    }
+    for (int i = y1 + 1; i < y2; i++)
+    {
+        inserir_em(i, x1, "|");
+    }
+    for (int i = x1 + 1; i < x2; ++i)
+    {
+        inserir_em(y2 - 1, i, "_");
+    }
+    for (int i = y1 + 1; i < y2; i++)
+    {
+        inserir_em(i, x2, "|");
+    }
+}
+
 void p_login()
 {
+#if 1 // temporario
+    membros u("Luis", permissao::product_owner, geren_tempo::tempo(2004, 8, 24));
+    membros m1("Jonas", permissao::developer, geren_tempo::tempo(2000, 10, 21));
+    membros m2("Maria", permissao::product_owner, geren_tempo::tempo(1993, 4, 24));
+    membros m3("Carlos", permissao::scrum_master, geren_tempo::tempo(1965, 7, 4));
+    todos_membros.push_back(m1);
+    todos_membros.push_back(m2);
+    todos_membros.push_back(m3);
+    todos_membros.push_back(u);
+
+    adts::Lista<int> tm1(m1.GetId());
+    adts::Lista<int> tm2(m2.GetId());
+
+    tm2.push_back(u.GetId());
+
+    scrum_team t1("Time 1", tm1);
+    scrum_team t2("Time 2", tm2);
+    todos_equipes.push_back(t1);
+    todos_equipes.push_back(t2);
+
+    adts::Lista<int> em1(m2.GetId());
+    em1.push_back(u.GetId());
+
+    em1.push_back(m1.GetId());
+    em1.push_back(m3.GetId());
+
+    evento e1("Daily 1", eventos_sprint::daily_scrum, em1, &t1, prioridade::media);
+    todos_eventos.push_back(e1);
+    u.SetEventos(adts::Lista<int>(e1.GetId()));
+#endif
+
     Pagina login(LINHAS, COLUNAS, "LOGIN");
     string nome;
     permissao perm;
 
-    login.inserir(2, "Usuario: ", CEN);
-    login.inserir(3, "Funcao: ", CEN);
+    login.caixa(COLUNAS / 3, 1, (COLUNAS / 3) * 2, LINHAS / 2 + 1);
+    login.inserir_em(3, COLUNAS / 3 + 1, "Usuario: ");
+    login.inserir_em(7, COLUNAS / 3 + 1, "Funcao: ");
+    login.caixa(COLUNAS / 3 + 1, 4, (COLUNAS / 3) * 2 - 1, 6);
+    login.caixa(COLUNAS / 3 + 1, 8, (COLUNAS / 3) * 2 - 1, 10);
+
     login.imprimir();
 
     login.ler("Entre com seu usuario: ", nome);
     login.imprimir();
 
-    login.inserir_apos(2, " " + nome);
+    login.inserir_em(5, COLUNAS / 3 + 2, " " + nome);
+    // login.inserir_apos(2, " " + nome);
     login.imprimir();
 
     cout << "\n(0 - Product Owner) (1 - Desenvolvedor) (2 - Scrum Master)\n";
     login.ler("Entre com sua funcao: ", perm);
 
-    login.inserir_apos(3, " " + permissao_para_string(perm));
+    login.inserir_em(9, COLUNAS / 3 + 2, " " + permissao_para_string(perm));
+
+    // login.inserir_apos(3, " " + permissao_para_string(perm));
+
+    for (int i = 0; i < todos_membros.size(); ++i)
+    {
+        if (todos_membros[i].GetNome() == nome)
+        {
+            usuario = todos_membros[i];
+            login.inserir(LINHAS - 6, "Bem vindo de volta " + nome, CEN);
+            login.esperar(LINHAS - 4, "continuar");
+
+            return;
+        }
+    }
 
     login.inserir(LINHAS - 6, "Bem vindo " + nome, CEN);
     login.esperar(LINHAS - 4, "continuar");
-
-    usuario.SetNome(nome);
-    usuario.SetNivelDePermissao(permissao(perm));
 }
 
 void p_principal(bool &controlador)
@@ -268,12 +352,10 @@ void p_principal(bool &controlador)
     else
     {
         stringstream buffer;
-        string s;
         for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
         {
             buffer << todos_eventos[i];
-            buffer >> s;
-            principal.inserir(3 + i, s, ESQ);
+            principal.inserir(3 + i, buffer.str(), ESQ);
         }
     }
 
@@ -396,9 +478,10 @@ void p_finalizarTarefa()
     finalizar.separador(LINHAS - 4);
     finalizar.imprimir();
 
-    if (todos_eventos.size() == 0)
+    adts::Lista<evento> lista = transformarEventos(usuario.GetEventos());
+
+    if (lista.size() == 0)
     {
-        string trash;
         finalizar.inserir(3, "Nao existem tarefas para encerrar", CEN);
         finalizar.esperar(LINHAS, "voltar");
         finalizar.imprimir();
@@ -407,14 +490,13 @@ void p_finalizarTarefa()
     else
     {
         stringstream buffer;
-        string s;
-        for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
+        for (int i = 0; i < 10 && i < lista.size(); ++i)
         {
-            if (todos_eventos[i].GetStatus() != finalizado)
+            if (lista[i].GetStatus() != finalizado)
             {
-                buffer << todos_eventos[i];
-                buffer >> s;
-                finalizar.inserir(3 + i, s, ESQ);
+                buffer << lista[i];
+
+                finalizar.inserir(3 + i, buffer.str(), ESQ);
             }
         }
     }
@@ -447,15 +529,26 @@ void p_finalizarTarefa()
         else
         {
             /* pedir para confirmar */
-            tarefa->encerrar();
-            finalizar.inserir(19, "Tarefa finalizada com sucesso", ESQ);
+            char conf;
+            finalizar.ler("Voce confirma?(s/n)", conf);
+            if (conf == 's' || conf == 'S')
+            {
+                tarefa->encerrar();
+                finalizar.limpar_linha(18);
+                finalizar.inserir(19, "Tarefa finalizada com sucesso", CEN);
+            }
+            else
+            {
+                p_finalizarTarefa();
+            }
         }
     }
     else
     {
-        finalizar.inserir(19, "Tarefa nao encontrada", ESQ);
+        finalizar.inserir(19, "Tarefa nao encontrada", CEN);
     }
     finalizar.imprimir();
+    finalizar.esperar(18, "voltar");
 }
 
 void p_time()
@@ -472,17 +565,16 @@ void p_time()
     {
         int tam = equipe_lista.size();
         equipe.inserir(1, "-Selecione uma equipe-", CEN);
-        stringstream buffer;
-        string s;
 
+        stringstream buffer;
         for (int i = 0; i < 10 && i < tam; ++i)
         {
             buffer << equipe_lista[i];
-            buffer >> s;
-            equipe.inserir(3 + i, s, ESQ);
+            equipe.inserir(3 + i, buffer.str(), ESQ);
         }
         equipe.inserir(LINHAS - 3, "Time selecionado: ", ESQ);
         equipe.imprimir();
+        string s;
         equipe.ler("Insira o nome ou ID da equipe", s);
 
         for (int i = 0; i < equipe_lista.size(); ++i)
