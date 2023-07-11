@@ -3,26 +3,31 @@
 #include "../include/utilities.hpp"
 #include "../include/gerenciador.hpp"
 
+evento::~evento()
+{
+}
+
 evento::evento()
 {
+    this->_id_participantes = adts::Lista<int>();
     this->_id = eventos_global_id;
     ++eventos_global_id;
 }
 
-evento::evento(std::string nome, eventos_sprint tipo, adts::Lista<int> id_part, scrum_team *time, prioridade prio)
+evento::evento(std::string nome, eventos_sprint tipo, adts::Lista<int> id_part, int id_time, prioridade prio)
 {
     this->_nome = nome;
     this->_tipo = tipo;
     this->_status = analise;
     this->_id_participantes = id_part;
-    this->_time = time;
+    this->_id_time = id_time;
     this->_prio = prio;
 
     this->_id = eventos_global_id;
     ++eventos_global_id;
 }
 
-evento::evento(std::string nome, eventos_sprint tipo, geren_tempo::tempo inicio, geren_tempo::tempo fim, adts::Lista<int> id_part, scrum_team *time, prioridade prio)
+evento::evento(std::string nome, eventos_sprint tipo, geren_tempo::tempo inicio, geren_tempo::tempo fim, adts::Lista<int> id_part, int id_time, prioridade prio)
 {
     this->_nome = nome;
     this->_tipo = tipo;
@@ -30,14 +35,11 @@ evento::evento(std::string nome, eventos_sprint tipo, geren_tempo::tempo inicio,
     this->_inicio = inicio;
     this->_fim = fim;
     this->_id_participantes = id_part;
-    this->_time = time;
+    this->_id_time = id_time;
     this->_prio = prio;
 
     this->_id = eventos_global_id;
     ++eventos_global_id;
-}
-evento::~evento()
-{
 }
 void evento::iniciar()
 {
@@ -85,41 +87,41 @@ geren_tempo::tempo evento::duracao()
 
 // GETTERS//
 
-int evento::GetId()
+int evento::GetId() const
 {
     return _id;
 }
-std::string evento::GetNome()
+std::string evento::GetNome() const
 {
     return this->_nome;
 }
-eventos_sprint evento::GetTipo()
+eventos_sprint evento::GetTipo() const
 {
     return this->_tipo;
 }
-status_evento evento::GetStatus()
+status_evento evento::GetStatus() const
 {
     return this->_status;
 }
-prioridade evento::GetPrioridade()
+prioridade evento::GetPrioridade() const
 {
     return this->_prio;
 }
-geren_tempo::tempo evento::GetInicio()
+geren_tempo::tempo evento::GetInicio() const
 {
     return this->_inicio;
 }
-geren_tempo::tempo evento::GetFim()
+geren_tempo::tempo evento::GetFim() const
 {
     return this->_fim;
 }
-adts::Lista<int> const evento::GetParticipantes()
+adts::Lista<int> const evento::GetParticipantes() const
 {
     return this->_id_participantes;
 }
-scrum_team evento::GetTime()
+int evento::GetTime() const
 {
-    return *this->_time;
+    return this->_id_time;
 }
 
 // SETTERS
@@ -148,9 +150,75 @@ void evento::SetFim(geren_tempo::tempo fim)
 {
     this->_fim = fim;
 }
-void evento::SetTime(scrum_team time)
+void evento::SetTime(int time)
 {
-    *this->_time = time;
+    this->_id_time = time;
+}
+
+std::ostream &
+operator<<(std::ostream &o, const evento &e)
+{
+    o << e._id << "," << e._nome << "," << e._tipo << "," << e._status << "," << e._prio << "," << e._inicio << "," << e._fim << "," << e._id_time << "[";
+
+    if (e._id_participantes.size() > 0)
+    {
+        for (int i = 0; i < e._id_participantes.size(); ++i)
+        {
+            o << e._id_participantes[i] << ",";
+        }
+        // o << e._id_participantes[e._id_participantes.size() - 1];
+    }
+    o << "]";
+    o << ",;";
+    return o;
+}
+
+std::istream &operator>>(std::istream &i, evento &e)
+{
+    char temp[512];
+    std::string token;
+    i.getline(temp, 512, ';');
+
+    std::stringstream buffer(temp);
+    std::stringstream auxbuffer;
+
+    std::getline(buffer, token, ',');
+    e._id = std::stoi(token);
+
+    std::getline(buffer, token, ',');
+    e._nome = token;
+
+    std::getline(buffer, token, ',');
+    e._tipo = eventos_sprint(std::stoi(token));
+
+    std::getline(buffer, token, ',');
+    e._status = status_evento(std::stoi(token));
+
+    std::getline(buffer, token, ',');
+    e._prio = prioridade(std::stoi(token));
+
+    std::getline(buffer, token, ',');
+    auxbuffer << token;
+    auxbuffer >> e._inicio;
+
+    auxbuffer.clear();
+
+    std::getline(buffer, token, ',');
+    auxbuffer << token;
+    auxbuffer >> e._fim;
+
+    std::getline(buffer, token, '[');
+    e._id_time = std::stoi(token);
+
+    while (std::getline(buffer, token, ','))
+    {
+        if (token == "]")
+        {
+            buffer.clear();
+            return i;
+        }
+        e._id_participantes.push_back(std::stoi(token));
+    }
 }
 
 adts::Lista<evento> &transformarEventos(adts::Lista<int> eventos)

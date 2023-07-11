@@ -6,7 +6,6 @@
 #include "./utilities.hpp"
 
 class membros;
-class scrum_team;
 
 class sprint
 {
@@ -23,12 +22,12 @@ private:
     geren_tempo::tempo          _inicio;
     geren_tempo::tempo          _fim;
     adts::Lista<int>            _id_participantes;
-    scrum_team                  *_time;
+    int                         _id_time;
 
 public:
     evento();
-    evento(std::string nome, eventos_sprint tipo, adts::Lista<int> part, scrum_team *time, prioridade prio);
-    evento(std::string nome, eventos_sprint tipo, geren_tempo::tempo inicio, geren_tempo::tempo fim, adts::Lista<int> part, scrum_team *time, prioridade prio);
+    evento(std::string nome, eventos_sprint tipo, adts::Lista<int> part, int id_time, prioridade prio);
+    evento(std::string nome, eventos_sprint tipo, geren_tempo::tempo inicio, geren_tempo::tempo fim, adts::Lista<int> part, int id_time, prioridade prio);
     ~evento();
     void                        iniciar();
     void                        encerrar();
@@ -36,29 +35,25 @@ public:
     bool                        removerParticipantes(int participante);
     geren_tempo::tempo          duracao();
     // GETTERS
-    int                         GetId();
-    std::string                 GetNome();
-    eventos_sprint              GetTipo();
-    status_evento               GetStatus();
-    prioridade                  GetPrioridade();
-    geren_tempo::tempo          GetInicio();
-    geren_tempo::tempo          GetFim();
-    adts::Lista<int> const      GetParticipantes();
-    scrum_team                  GetTime();
+    int                         GetId() const;
+    std::string                 GetNome() const;
+    eventos_sprint              GetTipo() const;
+    status_evento               GetStatus() const;
+    prioridade                  GetPrioridade() const;
+    geren_tempo::tempo          GetInicio() const;
+    geren_tempo::tempo          GetFim() const;
+    adts::Lista<int> const      GetParticipantes() const;
+    int                         GetTime() const;
     // SETTERS
     void                        SetNome(std::string nome);
     void                        SetTipo(eventos_sprint tipo);
     void                        SetStatus(status_evento status);
     void                        SetInicio(geren_tempo::tempo inicio);
     void                        SetFim(geren_tempo::tempo fim);
-    void                        SetTime(scrum_team time);
+    void                        SetTime(int time);
 
-    friend std::ostream &
-    operator<<(std::ostream &o, const evento &e)
-    {
-        o << "ID: " << e._id << " - Nome: " << e._nome << ", Tipo: " << tipo_para_string(e._tipo) << ", Prioridade: " << prioridade_para_string(e._prio) << ", Status: " << status_para_string(e._status);
-        return o;
-    }
+    friend std::ostream &operator<<(std::ostream &o, const evento &e);
+    friend std::istream &operator>>(std::istream &i, evento &e);
 };
 
 adts::Lista<evento> &transformarEventos(adts::Lista<int> eventos);

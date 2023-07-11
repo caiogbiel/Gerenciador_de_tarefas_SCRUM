@@ -5,6 +5,9 @@
 #pragma region Membros
 membros::membros()
 {
+    this->_id_equipes = adts::Lista<int>();
+    this->_id_eventos = adts::Lista<int>();
+    this->_horas_trabalhadas = std::chrono::hours(0);
     this->_id = membros_global_id;
     ++membros_global_id;
 }
@@ -13,6 +16,9 @@ membros::membros(std::string nome, permissao per, geren_tempo::tempo data_nascim
     this->_nome = nome;
     this->_nivel_permissao = per;
     this->_data_nascimento = data_nascimento;
+    this->_id_equipes = adts::Lista<int>();
+    this->_id_eventos = adts::Lista<int>();
+    this->_horas_trabalhadas = std::chrono::hours(0);
 
     this->_id = membros_global_id;
     ++membros_global_id;
@@ -108,32 +114,112 @@ void membros::SetEquipes(adts::Lista<int> equipes)
 {
     this->_id_equipes = equipes;
 }
+
+std::ostream &
+operator<<(std::ostream &o, const membros &m)
+{
+    o << m._id << "," << m._nome << "," << m._data_nascimento << "," << m._email << "," << m._horas_trabalhadas.count() << "," << m._nivel_permissao
+      << "[";
+    if (m._id_equipes.size() > 0)
+    {
+        for (int i = 0; i < m._id_equipes.size() - 1; ++i)
+        {
+            o << m._id_equipes[i] << ",";
+        }
+        o << m._id_equipes[m._id_equipes.size() - 1];
+    }
+    o << "],";
+    o << "[";
+    if (m._id_eventos.size() > 0)
+    {
+        for (int i = 0; i < m._id_eventos.size() - 1; ++i)
+        {
+            o << m._id_eventos[i] << ",";
+        }
+        o << m._id_eventos[m._id_eventos.size() - 1];
+    }
+    o << "],";
+    o << ";";
+    return o;
+}
+
+std::istream &
+operator>>(std::istream &i, membros &m)
+{
+    char temp[512];
+    std::string token;
+    i.getline(temp, 512, ';');
+
+    std::stringstream buffer(temp);
+    std::stringstream auxbuffer;
+
+    std::getline(buffer, token, ',');
+    m._id = std::stoi(token);
+    std::getline(buffer, token, ',');
+    m._nome = token;
+    std::getline(buffer, token, ',');
+    auxbuffer << token;
+    auxbuffer >> m._data_nascimento;
+    std::getline(buffer, token, ',');
+    m._email = token;
+    std::getline(buffer, token, ',');
+    m._horas_trabalhadas = std::chrono::hours(std::stoi(token));
+    std::getline(buffer, token, '[');
+    m._nivel_permissao = permissao(std::stoi(token));
+    // while (std::getline(buffer, token, ','))
+    // {
+    //     if (token == "]")
+    //     {
+    //         buffer.clear();
+    //         return i;
+    //     }
+    //     m._id_equipes.push_back(std::stoi(token));
+    // }
+    // o >> "]";
+    // o >> "[";
+    // if (m._id_eventos.size() > 0)
+    // {
+    //     for (int i = 0; i < m._id_eventos.size() - 1; ++i)
+    //     {
+    //         o >> m._id_eventos[i] >> ",";
+    //     }
+    //     o >> m._id_eventos[m._id_eventos.size() - 1];
+    // }
+    // o >> "]";
+    // o >> ";";
+    return i;
+}
+
 #pragma endregion
 #pragma region SCRUM_MASTER
 
+scrum_team::~scrum_team()
+{
+}
 scrum_team::scrum_team()
 {
+    this->_id_eventos = adts::Lista<int>();
+    this->_id_participantes = adts::Lista<int>();
     this->_id = equipes_global_id;
     ++equipes_global_id;
 }
 
 scrum_team::scrum_team(std::string nome, adts::Lista<int> id_participantes)
 {
-    _nome = nome;
-    _id_participantes = id_participantes;
+    this->_nome = nome;
+    this->_id_participantes = id_participantes;
+    this->_id_eventos = adts::Lista<int>();
+
     this->_id = equipes_global_id;
     ++equipes_global_id;
 }
 scrum_team::scrum_team(std::string nome, adts::Lista<int> participantes, adts::Lista<int> eventos)
 {
-    _nome = nome;
-    _id_participantes = participantes;
-    _id_eventos = eventos;
+    this->_nome = nome;
+    this->_id_participantes = participantes;
+    this->_id_eventos = eventos;
     this->_id = equipes_global_id;
     ++equipes_global_id;
-}
-scrum_team::~scrum_team()
-{
 }
 bool scrum_team::addParticipante(int membro)
 {
@@ -185,6 +271,34 @@ void scrum_team::SetEquipe(adts::Lista<int> participantes)
 void scrum_team::SetEventos(adts::Lista<int> eventos)
 {
     this->_id_eventos = eventos;
+}
+
+std::ostream &
+operator<<(std::ostream &o, const scrum_team &t)
+{
+    o << t._id << "," << t._nome << ","
+      << "[";
+    if (t._id_participantes.size() > 0)
+    {
+        for (int i = 0; i < t._id_participantes.size() - 1; ++i)
+        {
+            o << t._id_participantes[i] << ",";
+        }
+        o << t._id_participantes[t._id_participantes.size() - 1];
+    }
+    o << "]";
+    o << "[";
+    if (t._id_eventos.size() > 0)
+    {
+        for (int i = 0; i < t._id_eventos.size() - 1; ++i)
+        {
+            o << t._id_eventos[i] << ",";
+        }
+        o << t._id_eventos[t._id_eventos.size() - 1];
+    }
+    o << "]";
+    o << ";";
+    return o;
 }
 
 adts::Lista<scrum_team> &transformarEquipe(adts::Lista<int> equipes)

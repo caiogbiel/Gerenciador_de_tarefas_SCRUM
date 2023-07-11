@@ -539,7 +539,41 @@ namespace geren_tempo
         friend std::ostream &
         operator<<(std::ostream &o, const tempo &t)
         {
-            o << t._ano_mes_dia.day() << "/" << t._ano_mes_dia.month() << "/" << t._ano_mes_dia.year() << " " << std::setw(2) << std::setfill('0') << t._hora.count() << ":" << std::setw(2) << std::setfill('0') << t._minutos.count();
+            int m = unsigned(t._ano_mes_dia.month());
+            o << t._ano_mes_dia.day() << "/" << m << "/" << t._ano_mes_dia.year() << " " << std::setw(2) << std::setfill('0') << t._hora.count() << ":" << std::setw(2) << std::setfill('0') << t._minutos.count();
+            return o;
+        }
+        friend std::istream &
+        operator>>(std::istream &o, tempo &t)
+        {
+            char b[18];
+            o.getline(b, 18);
+
+            std::stringstream buffer(b);
+            std::string token;
+
+            int dia, ano, mes, hora, minuto;
+
+            std::getline(buffer, token, '/');
+            dia = stoi(token);
+
+            std::getline(buffer, token, '/');
+            mes = stoi(token);
+
+            std::getline(buffer, token, ' ');
+            ano = stoi(token);
+
+            std::getline(buffer, token, ':');
+            hora = stoi(token);
+
+            buffer >> minuto;
+
+            t.SetAno(ano);
+            t.SetMes(mes);
+            t.SetDia(dia);
+            t.SetHora(hora);
+            t.SetMinuto(minuto);
+
             return o;
         }
     };

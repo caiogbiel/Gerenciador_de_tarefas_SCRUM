@@ -46,11 +46,9 @@ public:
     void                        SetEquipes(adts::Lista<int> equipes);
 
     friend std::ostream &
-    operator<<(std::ostream &o, const membros &m)
-    {
-        o << "ID: " << m._id << " - Nome: " << m._nome << ", Funcao: " << permissao_para_string(m._nivel_permissao);
-        return o;
-    }
+    operator<<(std::ostream &o, const membros &m);
+    friend std::istream &
+    operator>>(std::istream &i, membros &m);
 };
 
 class scrum_team
@@ -81,12 +79,7 @@ public:
     void                        SetEventos(adts::Lista<int> id_eventos);
 
     friend std::ostream &
-    operator<<(std::ostream &o, const scrum_team &t)
-    {
-        o << "ID: " << t._id << " - Nome: " << t._nome << ", Participantes: " << t._id_participantes.size() << ", Eventos: " << t._id_eventos.size();
-        
-        return o;
-    }
+    operator<<(std::ostream &o, const scrum_team &t);
 };
 
 adts::Lista<scrum_team> &transformarEquipe(adts::Lista<int> equipes);

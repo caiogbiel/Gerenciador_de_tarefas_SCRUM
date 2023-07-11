@@ -1,7 +1,7 @@
 PROGRAM = ./bin/GerenciadorSCRUM.exe
 CC = clang++
 CFLAGS = -O0 -Wall -ansi -pedantic -g -I$(DEPS) -fsanitize=address
-OBJS = ./build/evento.o ./build/time.o ./build/enums.o ./build/gerenciador.o ./build/utilities.o ./build/paginas.o
+OBJS = ./build/evento.o ./build/time.o ./build/enums.o ./build/utilities.o ./build/paginas.o ./build/arquivos.o ./build/gerenciador.o
 ODIR = ./build
 CDIR = ./src
 DEPS = ./include
@@ -11,7 +11,7 @@ $(PROGRAM): $(OBJS)
 
 $(ODIR)/%.o: $(CDIR)/%.cpp $(DEPS)/%.hpp
 	$(CC) -c -o $@ $<
-	
+
 $(ODIR)/gerenciador.o: $(CDIR)/gerenciador.cpp $(DEPS)/*
 	$(CC) -c $(CDIR)/gerenciador.cpp -o $@
 

@@ -194,7 +194,7 @@ void Pagina::ler_inserir(string mensagem, int linha, T &saida, int alinhar)
 
 void Pagina::imprimir()
 {
-    system("cls");
+    cout << "\033[2J\033[1;1H";
 
     for (int i = 0; i < _titulo.size(); i++)
     {
@@ -290,7 +290,7 @@ void p_login()
     em1.push_back(m1.GetId());
     em1.push_back(m3.GetId());
 
-    evento e1("Daily 1", eventos_sprint::daily_scrum, em1, &t1, prioridade::media);
+    evento e1("Daily 1", eventos_sprint::daily_scrum, em1, t1.GetId(), prioridade::media);
     todos_eventos.push_back(e1);
     u.SetEventos(adts::Lista<int>(e1.GetId()));
 #endif
@@ -444,12 +444,8 @@ void p_finalizadas()
 
     if (todos_eventos.size() == 0)
     {
-        string trash;
         finalizadas.inserir(3, "Nao existem tarefas encerradas", CEN);
-        finalizadas.inserir(LINHAS, "Pressione qualquer tecla para voltar", CEN);
-        finalizadas.imprimir();
-        cin.ignore();
-        cin.get();
+        finalizadas.esperar(LINHAS, "voltar");
         return;
     }
     else
@@ -470,36 +466,42 @@ void p_finalizadas()
     finalizadas.imprimir();
 }
 
-//funcao iniciar tarefa
+// funcao iniciar tarefa
 
-void p_IniciarTarefa() {
-  Pagina iniciar(LINHAS + 4, COLUNAS, "INICIAR TAREFA");
-  std::string nomeTarefa;
+void p_IniciarTarefa()
+{
+    Pagina iniciar(LINHAS + 4, COLUNAS, "INICIAR TAREFA");
+    std::string nomeTarefa;
 
-  iniciar.inserir(1, "-Tarefas a iniciar-", CEN);
-  iniciar.separador(LINHAS - 4);
-  iniciar.imprimir();
-
-  adts::Lista<evento> lista = transformarEventos(usuario.GetEventos());
-
-  if (lista.size() == 0) {
-    iniciar.inserir(3, "Nao existem tarefas para iniciar", CEN);
-    iniciar.esperar(LINHAS, "voltar");
+    iniciar.inserir(1, "-Tarefas a iniciar-", CEN);
+    iniciar.separador(LINHAS - 4);
     iniciar.imprimir();
-    return;
-  } else {
 
-    stringstream buffer;
-    for (int i = 0; i < 10 && i < lista.size(); ++i) {
-      if (lista[i].GetStatus() != andamento) {
-        buffer << lista[i];
+    adts::Lista<evento> lista = transformarEventos(usuario.GetEventos());
 
-        iniciar.inserir(3 + i, buffer.str(), ESQ);
-      }
+    if (lista.size() == 0)
+    {
+        iniciar.inserir(3, "Nao existem tarefas para iniciar", CEN);
+        iniciar.esperar(LINHAS, "voltar");
+        iniciar.imprimir();
+        return;
     }
-  }
+    else
+    {
 
-//funcao finalizar tarefa
+        stringstream buffer;
+        for (int i = 0; i < 10 && i < lista.size(); ++i)
+        {
+            if (lista[i].GetStatus() != andamento)
+            {
+                buffer << lista[i];
+
+                iniciar.inserir(3 + i, buffer.str(), ESQ);
+            }
+        }
+    }
+}
+// funcao finalizar tarefa
 void p_finalizarTarefa()
 {
     Pagina finalizar(LINHAS + 4, COLUNAS, "FINALIZAR TAREFA");
@@ -644,7 +646,6 @@ void criarNovaTarefa()
     adts::Lista<int> participantes;
     adts::Lista<int> participantes_id;
     int time_id;
-    scrum_team time;
     int prio;
 
     cout << "Digite o nome da nova tarefa: ";
@@ -686,7 +687,7 @@ void criarNovaTarefa()
     cout << "Digite o ID da equipe: ";
     cin >> time_id;
 
-    evento tarefa(nome, eventos_sprint(tipo), participantes, &time, prioridade(prio));
+    evento tarefa(nome, eventos_sprint(tipo), participantes, time_id, prioridade(prio));
 }
 
 void verTime()

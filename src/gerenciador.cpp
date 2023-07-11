@@ -1,10 +1,12 @@
+#include "../include/arquivos.hpp"
+// #include "./arquivos.cpp"
+#include "../include/gerenciador.hpp"
+#include "../include/enums.hpp"
+#include "../include/evento.hpp"
+#include "../include/paginas.hpp"
+#include "../include/utilities.hpp"
 #include <iostream>
 #include <string>
-#include "../include/gerenciador.hpp"
-#include "../include/evento.hpp"
-#include "../include/enums.hpp"
-#include "../include/utilities.hpp"
-#include "../include/paginas.hpp"
 
 using namespace geren_tempo;
 
@@ -12,11 +14,28 @@ using namespace geren_tempo;
  * PRIMEIRA PAGINA(login)
  * opções: string-nome, permissao-funcao, sair
  * SEGUNDA PAGINA(gerenciador)
- * opções: tarefas(em ordem cronologinca), ver-tarefas finalizadas, criar tarefa, iniciar tarefa, finalizar tarefa, ver time, ver tarefas do time, sair
+ * opções: tarefas(em ordem cronologinca), ver-tarefas finalizadas, criar
+ * tarefa, iniciar tarefa, finalizar tarefa, ver time, ver tarefas do time, sair
  */
 
 int main()
 {
+    evento teste;
+    cout << "Entre com o evento: \n";
+    cin >> teste;
+    cout << teste;
+
+    cin.ignore();
+    cin.get();
+
+    todos_membros = adts::Lista<membros>();
+    todos_equipes = adts::Lista<scrum_team>();
+    todos_eventos = adts::Lista<evento>();
+
+    // lerLista<membros>(ARQUIVO_M, todos_membros);
+    // lerLista<scrum_team>(ARQUIVO_S, todos_equipes);
+    // lerLista<evento>(ARQUIVO_E, todos_eventos);
+
     membros u("Luis", permissao::product_owner, tempo(2004, 8, 24));
     membros m1("Jonas", permissao::developer, tempo(2000, 10, 21));
     membros m2("Maria", permissao::product_owner, tempo(1993, 4, 24));
@@ -42,7 +61,8 @@ int main()
     em1.push_back(m1.GetId());
     em1.push_back(m3.GetId());
 
-    evento e1("Daily 1", eventos_sprint::daily_scrum, em1, &t1, prioridade::media);
+    evento e1("Daily 1", eventos_sprint::daily_scrum, em1, t1.GetId(),
+              prioridade::media);
     todos_eventos.push_back(e1);
 
     tm1.print();
@@ -53,8 +73,19 @@ int main()
     todos_eventos.print();
     todos_membros.print();
 
-    // cin.ignore();
-    // cin.get();
+    cin.ignore();
+    cin.get();
 
     programa();
+
+    todos_equipes.print();
+    todos_eventos.print();
+    todos_membros.print();
+
+    cin.ignore();
+    cin.get();
+
+    guardarMembros(ARQUIVO_M, todos_membros);
+    // guardarLista(ARQUIVO_S, todos_equipes);
+    // guardarLista(ARQUIVO_E, todos_eventos);
 }
