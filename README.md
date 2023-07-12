@@ -95,28 +95,42 @@ Ao inciar o projeto é aberto a tela principal onde deve ser colocados o seu usu
 
 ## Começando
 
-Segue abaixo o passo a passo de como colocar em funcionamento o projeto de SCRUM no seu computador.
-Siga estas simples etapas de exemplo:
+Antes de começar a usar o Gerenciador, você precisará certificar-se de que tem os seguintes itens instalados:
 
 ### Pre-requisitos
 
+- Git
+
+  [Instalar Git](https://git-scm.com/downloads)
+  
 - Compilador Clang++
 
-  [https://llvm.org/builds/](https://llvm.org/builds/)
+  [Instalar o compilador](https://llvm.org/builds/)
 
 - Make
 
-  [Linux](https://www.gnu.org/software/make/#download), [Windows](gnuwin32.sourceforge.net/packages/make.htm)
+  [Instalação Linux](https://www.gnu.org/software/make/#download) <br>
+  [Instalação Windows](gnuwin32.sourceforge.net/packages/make.htm)
 
-### Instalação
+### Compilação
 
-- Terminal:
+- A instalação do gerenciador é bem simples:
 
 1. Clone o repositório.
    ```sh
    git clone https://github.com/caiogbiel/Gerenciador_de_tarefas_SCRUM.git
    ```
-2. Execute o comando `make Prod`
+2. Cria as pastas `bin` e `build`
+   ```sh
+   cd ./Gerenciador_de_tarefas_SCRUM
+   mkdir bin
+   mkdir build 
+   ```
+3. Execute o comando `make Prod`
+   ```sh
+   make Prod
+   ```
+   O arquivo executável aparecerá na pasta `bin`
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
