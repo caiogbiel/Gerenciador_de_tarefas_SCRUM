@@ -136,28 +136,54 @@ void Pagina::inserir_apos(int linha, string conteudo, int alinhar)
     }
 }
 
-template <typename T>
-void Pagina::ler(string mensagem, T &saida)
+void Pagina::ler(string mensagem, std::string &saida)
 {
-    cin.clear();
-    int n;
-
     cout << mensagem;
+    std::getline(cin, saida);
+}
 
-    if (typeid(T).name() == typeid(int).name() || typeid(T).name() == typeid(string).name())
-    {
-        cin >> saida;
-    }
+void Pagina::ler(string mensagem, int &saida)
+{
+    cout << mensagem;
+    cin >> saida;
+}
 
-    // if (typeid(T).name() == typeid(string).name())
-    // {
-    //     cin >> saida;
-    // }
-    if (typeid(T).name() == typeid(permissao).name())
-    {
-        cin >> n;
-        saida = permissao(n);
-    }
+void Pagina::ler(string mensagem, permissao &saida)
+{
+    cout << mensagem;
+    int x;
+    cin >> x;
+    saida = permissao(x);
+}
+
+void Pagina::ler(string mensagem, prioridade &saida)
+{
+    cout << mensagem;
+    int x;
+    cin >> x;
+    saida = prioridade(x);
+}
+
+void Pagina::ler(string mensagem, eventos_sprint &saida)
+{
+    cout << mensagem;
+    int x;
+    cin >> x;
+    saida = eventos_sprint(x);
+}
+
+void Pagina::ler(string mensagem, status_evento &saida)
+{
+    cout << mensagem;
+    int x;
+    cin >> x;
+    saida = status_evento(x);
+}
+
+void Pagina::ler(string mensagem, evento &saida)
+{
+    cout << mensagem;
+    cin >> saida;
 }
 
 template <typename T>
@@ -264,7 +290,7 @@ void Pagina::caixa(int x1, int y1, int x2, int y2)
 
 void p_login()
 {
-#if 1 // temporario
+#if 0 // temporario
     membros u("Luis", permissao::product_owner, geren_tempo::tempo(2004, 8, 24));
     membros m1("Jonas", permissao::developer, geren_tempo::tempo(2000, 10, 21));
     membros m2("Maria", permissao::product_owner, geren_tempo::tempo(1993, 4, 24));
@@ -337,6 +363,48 @@ void p_login()
     login.esperar(LINHAS - 4, "continuar");
 }
 
+void p_debug()
+{
+    Pagina debug(LINHAS + 5, COLUNAS, "TELA DE DEBUG");
+    int l = 1;
+    int k = 0;
+    stringstream buffer;
+
+    debug.inserir(l, "membros", CEN);
+    for (int i = 0; i < todos_membros.size(); ++i)
+    {
+        buffer << todos_membros[i];
+        cout << todos_membros[i] << '\n';
+        debug.inserir(l + k + 1, buffer.str(), CEN);
+        debug.imprimir();
+        buffer.str(std::string());
+        buffer.clear();
+        k++;
+    }
+    for (int i = 0; i < todos_equipes.size(); ++i)
+    {
+        buffer << todos_equipes[i];
+        cout << todos_equipes[i] << '\n';
+        debug.inserir(l + k + 1, buffer.str(), CEN);
+        debug.imprimir();
+        buffer.str(std::string());
+        buffer.clear();
+        k++;
+    }
+    debug.inserir(l, "eventos", CEN);
+    for (int i = 0; i < todos_eventos.size(); ++i)
+    {
+        buffer << todos_eventos[i];
+        cout << todos_equipes[i] << '\n';
+        debug.inserir(l + k + 1, buffer.str(), CEN);
+        debug.imprimir();
+        buffer.str(std::string());
+        buffer.clear();
+        k++;
+    }
+    debug.esperar(LINHAS + 4, "voltar");
+}
+
 void p_principal(bool &controlador)
 {
     Pagina principal(LINHAS + 7, COLUNAS, "MENU PRINCIPAL");
@@ -387,6 +455,9 @@ void p_principal(bool &controlador)
 
     switch (opcao)
     {
+    case -1:
+        p_debug();
+        break;
     case 0:
         controlador = false;
         return;
@@ -562,9 +633,9 @@ void p_finalizarTarefa()
         else
         {
             /* pedir para confirmar */
-            char conf;
+            std::string conf;
             finalizar.ler("Voce confirma?(s/n)", conf);
-            if (conf == 's' || conf == 'S')
+            if (conf.front() == 's' || conf.front() == 'S')
             {
                 tarefa->encerrar();
                 finalizar.limpar_linha(18);

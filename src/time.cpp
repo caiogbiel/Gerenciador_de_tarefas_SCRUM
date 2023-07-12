@@ -114,6 +114,11 @@ void membros::SetEquipes(adts::Lista<int> equipes)
 {
     this->_id_equipes = equipes;
 }
+void membros::SetEquipes(int equipe)
+{
+    adts::Lista<int> *lista = new adts::Lista<int>(equipe);
+    this->_id_equipes = *lista;
+}
 
 std::ostream &
 operator<<(std::ostream &o, const membros &m)
@@ -122,23 +127,21 @@ operator<<(std::ostream &o, const membros &m)
       << "[";
     if (m._id_equipes.size() > 0)
     {
-        for (int i = 0; i < m._id_equipes.size() - 1; ++i)
+        for (int i = 0; i < m._id_equipes.size(); ++i)
         {
             o << m._id_equipes[i] << ",";
         }
-        o << m._id_equipes[m._id_equipes.size() - 1];
     }
-    o << "],";
+    o << "]";
     o << "[";
     if (m._id_eventos.size() > 0)
     {
-        for (int i = 0; i < m._id_eventos.size() - 1; ++i)
+        for (int i = 0; i < m._id_eventos.size(); ++i)
         {
             o << m._id_eventos[i] << ",";
         }
-        o << m._id_eventos[m._id_eventos.size() - 1];
     }
-    o << "],";
+    o << "]";
     o << ";";
     return o;
 }
@@ -160,33 +163,35 @@ operator>>(std::istream &i, membros &m)
     std::getline(buffer, token, ',');
     auxbuffer << token;
     auxbuffer >> m._data_nascimento;
+
+    auxbuffer.str(std::string());
+    auxbuffer.clear();
+
     std::getline(buffer, token, ',');
     m._email = token;
     std::getline(buffer, token, ',');
     m._horas_trabalhadas = std::chrono::hours(std::stoi(token));
     std::getline(buffer, token, '[');
     m._nivel_permissao = permissao(std::stoi(token));
-    // while (std::getline(buffer, token, ','))
-    // {
-    //     if (token == "]")
-    //     {
-    //         buffer.clear();
-    //         return i;
-    //     }
-    //     m._id_equipes.push_back(std::stoi(token));
-    // }
-    // o >> "]";
-    // o >> "[";
-    // if (m._id_eventos.size() > 0)
-    // {
-    //     for (int i = 0; i < m._id_eventos.size() - 1; ++i)
-    //     {
-    //         o >> m._id_eventos[i] >> ",";
-    //     }
-    //     o >> m._id_eventos[m._id_eventos.size() - 1];
-    // }
-    // o >> "]";
-    // o >> ";";
+
+    std::getline(buffer, token, ']');
+    auxbuffer << token;
+    while (std::getline(auxbuffer, token, ',').good())
+    {
+        m._id_equipes.push_back(std::stoi(token));
+    }
+
+    auxbuffer.str(std::string());
+    auxbuffer.clear();
+
+    buffer.ignore(1);
+    std::getline(buffer, token, ']');
+    auxbuffer << token;
+    while (std::getline(auxbuffer, token, ',').good())
+    {
+        m._id_eventos.push_back(std::stoi(token));
+    }
+
     return i;
 }
 
@@ -280,25 +285,59 @@ operator<<(std::ostream &o, const scrum_team &t)
       << "[";
     if (t._id_participantes.size() > 0)
     {
-        for (int i = 0; i < t._id_participantes.size() - 1; ++i)
+        for (int i = 0; i < t._id_participantes.size(); ++i)
         {
             o << t._id_participantes[i] << ",";
         }
-        o << t._id_participantes[t._id_participantes.size() - 1];
     }
     o << "]";
     o << "[";
     if (t._id_eventos.size() > 0)
     {
-        for (int i = 0; i < t._id_eventos.size() - 1; ++i)
+        for (int i = 0; i < t._id_eventos.size(); ++i)
         {
             o << t._id_eventos[i] << ",";
         }
-        o << t._id_eventos[t._id_eventos.size() - 1];
     }
     o << "]";
     o << ";";
     return o;
+}
+
+std::istream &
+operator>>(std::istream &i, scrum_team &t)
+{
+    char temp[512];
+    std::string token;
+    i.getline(temp, 512, ';');
+
+    std::stringstream buffer(temp);
+    std::stringstream auxbuffer;
+
+    std::getline(buffer, token, ',');
+    t._id = std::stoi(token);
+    std::getline(buffer, token, ',');
+    t._nome = token;
+
+    buffer.ignore(1);
+    std::getline(buffer, token, ']');
+    auxbuffer << token;
+    while (std::getline(auxbuffer, token, ',').good())
+    {
+        t._id_participantes.push_back(std::stoi(token));
+    }
+
+    auxbuffer.str(std::string());
+    auxbuffer.clear();
+
+    buffer.ignore(1);
+    std::getline(buffer, token, ']');
+    auxbuffer << token;
+    while (std::getline(auxbuffer, token, ',').good())
+    {
+        t._id_eventos.push_back(std::stoi(token));
+    }
+    return i;
 }
 
 adts::Lista<scrum_team> &transformarEquipe(adts::Lista<int> equipes)

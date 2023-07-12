@@ -27,8 +27,15 @@ public:
     void inserir_apos(int linha, string conteudo, int alinhar = -1);
     template <typename T>
     void ler_inserir(string mensagem, int linha_dest, T &saida, int alinhar = ESQ);
-    template <typename T>
-    void ler(string mensagem, T &saida);
+
+    void ler(string mensagem, std::string &saida);
+    void ler(string mensagem, int &saida);
+    void ler(string mensagem, permissao &saida);
+    void ler(string mensagem, prioridade &saida);
+    void ler(string mensagem, status_evento &saida);
+    void ler(string mensagem, eventos_sprint &saida);
+    void ler(string mensagem, evento &saida);
+
     void separador(int linha);
     void esperar(int linha, string mensagem);
     void limpar_linha(int linha);

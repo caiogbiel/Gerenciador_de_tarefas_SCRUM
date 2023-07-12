@@ -8,16 +8,16 @@
 #define ARQUIVO_S "./files/scr.txt"
 #define ARQUIVO_E "./files/eve.txt"
 
-static membros usuario;
+extern membros usuario;
 
-static int membros_global_id;
-static int equipes_global_id;
-static int eventos_global_id;
+extern int membros_global_id;
+extern int equipes_global_id;
+extern int eventos_global_id;
 
-static adts::Lista<membros> todos_membros;
-static adts::Lista<scrum_team> todos_equipes;
-static adts::Lista<evento> todos_eventos;
+extern adts::Lista<membros> todos_membros;
+extern adts::Lista<scrum_team> todos_equipes;
+extern adts::Lista<evento> todos_eventos;
 
-// static sprint sprint_atual;
+// sprint sprint_atual;
 
 #endif

@@ -166,10 +166,9 @@ operator<<(std::ostream &o, const evento &e)
         {
             o << e._id_participantes[i] << ",";
         }
-        // o << e._id_participantes[e._id_participantes.size() - 1];
     }
     o << "]";
-    o << ",;";
+    o << ";";
     return o;
 }
 
@@ -201,24 +200,27 @@ std::istream &operator>>(std::istream &i, evento &e)
     auxbuffer << token;
     auxbuffer >> e._inicio;
 
+    auxbuffer.str(std::string());
     auxbuffer.clear();
 
     std::getline(buffer, token, ',');
     auxbuffer << token;
     auxbuffer >> e._fim;
 
+    auxbuffer.str(std::string());
+    auxbuffer.clear();
+
     std::getline(buffer, token, '[');
     e._id_time = std::stoi(token);
 
-    while (std::getline(buffer, token, ','))
+    std::getline(buffer, token, ']');
+    auxbuffer << token;
+
+    while (std::getline(auxbuffer, token, ',').good())
     {
-        if (token == "]")
-        {
-            buffer.clear();
-            return i;
-        }
         e._id_participantes.push_back(std::stoi(token));
     }
+    return i;
 }
 
 adts::Lista<evento> &transformarEventos(adts::Lista<int> eventos)

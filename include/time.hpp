@@ -44,6 +44,7 @@ public:
     void                        SetNivelDePermissao(permissao nivel);
     void                        SetEventos(adts::Lista<int> eventos);
     void                        SetEquipes(adts::Lista<int> equipes);
+    void                        SetEquipes(int equipe);
 
     friend std::ostream &
     operator<<(std::ostream &o, const membros &m);
@@ -80,6 +81,8 @@ public:
 
     friend std::ostream &
     operator<<(std::ostream &o, const scrum_team &t);
+    friend std::istream &
+    operator>>(std::istream &i, scrum_team &m);
 };
 
 adts::Lista<scrum_team> &transformarEquipe(adts::Lista<int> equipes);

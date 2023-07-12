@@ -32,29 +32,35 @@ void lerScrum(std::string nome_arquivo, adts::Lista<scrum_team> &lista)
 }
 
 // Leitura de scrum_team e membros apenas
-void lerMembros(std::string nome_arquivo, adts::Lista<membros> &lista)
+template <typename T>
+void lerLista(std::string nome_arquivo, adts::Lista<T> &lista)
 {
-    std::ifstream arquivo(nome_arquivo, std::ios::binary | std::ios::out);
+    std::ifstream arquivo(nome_arquivo);
     std::cerr << "ABRINDO ARQUIVO " << nome_arquivo;
     if (arquivo)
     {
-        int n_objetos;
-        arquivo.seekg(0, std::ios::end);
-        n_objetos = arquivo.tellg() / sizeof(membros);
-        arquivo.seekg(0, std::ios::beg);
-
-        for (int i = 0; i < n_objetos; ++i)
+        T aux;
+        while (arquivo.good())
         {
-            membros aux;
-            arquivo.read((char *)&aux, sizeof(membros));
+
+            std::cerr << "entrou\n";
+            // std::cerr << arquivo.tellg() << "\n";
+            if (arquivo.eof())
+                break;
+            // std::cerr << arquivo.tellg() << "\n";
+            arquivo >> aux;
+            std::cout << aux << "\n";
             lista.push_back(aux);
+            std::cerr << "cabou\n";
         }
     }
     else
     {
         std::cerr << "Houve um problema ao abrir o arquivo para leitura\n";
     }
+    std::cerr << "Saiu\n";
     arquivo.close();
+    std::cerr << "Fechou";
 }
 
 // Leitura de eventos apenas
@@ -83,7 +89,8 @@ void lerEventos(std::string nome_arquivo, adts::Lista<evento> &lista)
     arquivo.close();
 }
 
-void guardarMembros(std::string nome_arquivo, adts::Lista<membros> lista)
+template <typename T>
+void guardarLista(std::string nome_arquivo, adts::Lista<T> lista)
 {
     std::ofstream arquivo(nome_arquivo, std::ios::in | std::ios::trunc);
     std::cerr << "ABRINDO ARQUIVO " << nome_arquivo;
