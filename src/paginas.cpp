@@ -438,7 +438,7 @@ void p_principal(bool &controlador)
     // PERMISSAO PRODUCT OWNER
     if (usuario.GetNivelDePermissao() == 0)
     {
-        principal.inserir(23, "6 - Finalizar Sprint", ESQ);
+        principal.inserir(24, "6 - Finalizar Sprint", ESQ);
     }
     // PERMISSAO DEVELOPER
     if (usuario.GetNivelDePermissao() == 1)
@@ -447,7 +447,7 @@ void p_principal(bool &controlador)
     // PERMISSAO SCRUM MASTER
     if (usuario.GetNivelDePermissao() == 2)
     {
-        principal.inserir(23, "6 - Atribuir tarefa", ESQ);
+        principal.inserir(24, "6 - Atribuir tarefa", ESQ);
     }
     principal.imprimir();
 
@@ -538,7 +538,6 @@ void p_finalizadas()
 }
 
 // funcao iniciar tarefa
-
 void p_IniciarTarefa()
 {
     Pagina iniciar(LINHAS + 4, COLUNAS, "INICIAR TAREFA");

@@ -218,7 +218,7 @@ std::istream &operator>>(std::istream &i, evento &e)
 
     while (std::getline(auxbuffer, token, ',').good())
     {
-        e._id_participantes.push_back(std::stoi(token));
+        e._id_participantes.push_front(std::stoi(token));
     }
     return i;
 }

@@ -178,7 +178,7 @@ operator>>(std::istream &i, membros &m)
     auxbuffer << token;
     while (std::getline(auxbuffer, token, ',').good())
     {
-        m._id_equipes.push_back(std::stoi(token));
+        m._id_equipes.push_front(std::stoi(token));
     }
 
     auxbuffer.str(std::string());
@@ -189,7 +189,7 @@ operator>>(std::istream &i, membros &m)
     auxbuffer << token;
     while (std::getline(auxbuffer, token, ',').good())
     {
-        m._id_eventos.push_back(std::stoi(token));
+        m._id_eventos.push_front(std::stoi(token));
     }
 
     return i;
@@ -324,7 +324,7 @@ operator>>(std::istream &i, scrum_team &t)
     auxbuffer << token;
     while (std::getline(auxbuffer, token, ',').good())
     {
-        t._id_participantes.push_back(std::stoi(token));
+        t._id_participantes.push_front(std::stoi(token));
     }
 
     auxbuffer.str(std::string());
@@ -335,7 +335,7 @@ operator>>(std::istream &i, scrum_team &t)
     auxbuffer << token;
     while (std::getline(auxbuffer, token, ',').good())
     {
-        t._id_eventos.push_back(std::stoi(token));
+        t._id_eventos.push_front(std::stoi(token));
     }
     return i;
 }
