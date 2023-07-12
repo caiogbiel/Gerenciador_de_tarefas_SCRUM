@@ -10,13 +10,6 @@
 
 using namespace geren_tempo;
 
-/**
- * PRIMEIRA PAGINA(login)
- * opções: string-nome, permissao-funcao, sair
- * SEGUNDA PAGINA(gerenciador)
- * opções: tarefas(em ordem cronologinca), ver-tarefas finalizadas, criar
- * tarefa, iniciar tarefa, finalizar tarefa, ver time, ver tarefas do time, sair
- */
 membros usuario = membros();
 
 int membros_global_id = 0;
@@ -26,6 +19,9 @@ int eventos_global_id = 0;
 adts::Lista<membros> todos_membros = adts::Lista<membros>();
 adts::Lista<scrum_team> todos_equipes = adts::Lista<scrum_team>();
 adts::Lista<evento> todos_eventos = adts::Lista<evento>();
+
+// Sempre que adicionar uma entidade, deve adicionar as relações dela (as listas de ID);
+// Por tanto, prefira utilizar os construtores completos;
 
 int main()
 {

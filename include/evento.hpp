@@ -49,13 +49,14 @@ public:
     void                        SetTipo(eventos_sprint tipo);
     void                        SetStatus(status_evento status);
     void                        SetInicio(geren_tempo::tempo inicio);
+    void                        SetPrioridade(prioridade prio);
     void                        SetFim(geren_tempo::tempo fim);
     void                        SetTime(int time);
 
-    friend std::ostream &operator<<(std::ostream &o, const evento &e);
-    friend std::istream &operator>>(std::istream &i, evento &e);
+    friend std::ostream         &operator<<(std::ostream &o, const evento &e);
+    friend std::istream         &operator>>(std::istream &i, evento &e);
 };
 
-adts::Lista<evento> &transformarEventos(adts::Lista<int> eventos);
+adts::Lista<evento>         &transformarEventos(adts::Lista<int> eventos);
 
 #endif

@@ -1,8 +1,6 @@
 <!-- Template pego de: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
 <a name="readme-top"></a>
-
-
-
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -18,8 +16,6 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]-->
-
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -43,8 +39,6 @@
     <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>-->  
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -72,81 +66,79 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## Sobre o Projeto
 
   <a href="https://github.com/github_username/repo_name">
     <img src="/imagens/Capturar.PNG" alt="Logo" width="1000" height="500">
   </a>
 
-Ao inciar o projeto é aberto a tela principal onde deve ser colocados o seu usuário e a função que vc possui que pode ser:   product_owner, developer, scrum_master. Em seguida sera exibido a tela principal onde nela irá conter suas tarefas, funções gerais e funções específicas de acordo com sua função.
+Ao inciar o projeto é aberto a tela principal onde deve ser colocados o seu usuário e a função que vc possui que pode ser: product_owner, developer, scrum_master. Em seguida sera exibido a tela principal onde nela irá conter suas tarefas, funções gerais e funções específicas de acordo com sua função.
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
-
-
 ### Construido com:
-[![C++](/imagens/c++.png)](https://www.cplusplus.com/)
+
+[![c++](/imagens/c++.png)](https://www.cplusplus.com/)
 
 (Para obter mais informações, por favor clique na imagem).
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
+
 ## Começando
 
-Segue abaixo o passo a passo de como colocar em funcionamento o projeto de SCRUM no seu computador. 
+Segue abaixo o passo a passo de como colocar em funcionamento o projeto de SCRUM no seu computador.
 Siga estas simples etapas de exemplo:
 
 ### Pre-requisitos
 
-* Compilador Clang++ 
-  
+- Compilador Clang++
+
   [https://llvm.org/builds/](https://llvm.org/builds/)
 
-* Make
-  
+- Make
+
   [Linux](https://www.gnu.org/software/make/#download), [Windows](gnuwin32.sourceforge.net/packages/make.htm)
 
 ### Instalação
-* Terminal:
+
+- Terminal:
 
 1. Clone o repositório.
    ```sh
    git clone https://github.com/caiogbiel/Gerenciador_de_tarefas_SCRUM.git
    ```
-2. Execute o comando ```make Prod```
-   
+2. Execute o comando `make Prod`
+
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 <!-- USAGE EXAMPLES -->
+
 ## Uso
 
 A usabilidade do Scrum está centrada em promover a entrega de valor de forma colaborativa, adaptativa e transparente. Aqui estão algumas características importantes da usabilidade do Scrum:
 
-* Colaboração: O Scrum incentiva a colaboração intensa entre os membros da equipe, que trabalham juntos para alcançar os objetivos do projeto. A comunicação eficaz e a troca contínua de conhecimento são fundamentais para o sucesso do Scrum.
+- Colaboração: O Scrum incentiva a colaboração intensa entre os membros da equipe, que trabalham juntos para alcançar os objetivos do projeto. A comunicação eficaz e a troca contínua de conhecimento são fundamentais para o sucesso do Scrum.
 
-* Adaptabilidade: O Scrum é projetado para se adaptar a mudanças. Durante o desenvolvimento do projeto, as equipes Scrum têm flexibilidade para ajustar as prioridades, refinar o backlog do produto e responder a novos requisitos ou insights. A capacidade de adaptação é essencial para lidar com incertezas e requisitos em constante evolução.
+- Adaptabilidade: O Scrum é projetado para se adaptar a mudanças. Durante o desenvolvimento do projeto, as equipes Scrum têm flexibilidade para ajustar as prioridades, refinar o backlog do produto e responder a novos requisitos ou insights. A capacidade de adaptação é essencial para lidar com incertezas e requisitos em constante evolução.
 
-* Transparência: A transparência é uma das bases do Scrum. Todas as atividades, progresso, problemas e decisões devem ser visíveis para todos os membros da equipe. Isso promove a confiança, o compartilhamento de informações e a tomada de decisões informadas.
+- Transparência: A transparência é uma das bases do Scrum. Todas as atividades, progresso, problemas e decisões devem ser visíveis para todos os membros da equipe. Isso promove a confiança, o compartilhamento de informações e a tomada de decisões informadas.
 
-* Entrega incremental: O Scrum busca entregar valor em incrementos frequentes e mensuráveis. Em cada sprint, a equipe trabalha em uma parte do produto que possa ser potencialmente entregue. Isso permite que os stakeholders obtenham resultados tangíveis mais rapidamente e fornece oportunidades para receber feedback valioso.
+- Entrega incremental: O Scrum busca entregar valor em incrementos frequentes e mensuráveis. Em cada sprint, a equipe trabalha em uma parte do produto que possa ser potencialmente entregue. Isso permite que os stakeholders obtenham resultados tangíveis mais rapidamente e fornece oportunidades para receber feedback valioso.
 
-* Foco no cliente: O Scrum coloca o cliente e seus requisitos no centro do processo de desenvolvimento. Através do envolvimento do Product Owner e da priorização adequada do backlog do produto, as necessidades do cliente são atendidas de maneira eficaz e o valor para o cliente é maximizado.
+- Foco no cliente: O Scrum coloca o cliente e seus requisitos no centro do processo de desenvolvimento. Através do envolvimento do Product Owner e da priorização adequada do backlog do produto, as necessidades do cliente são atendidas de maneira eficaz e o valor para o cliente é maximizado.
 
-* Melhoria contínua: O Scrum valoriza a aprendizagem e a melhoria contínua. Após cada sprint, a equipe realiza uma retrospectiva para identificar pontos fortes, oportunidades de melhoria e ações para aprimorar seu desempenho no próximo sprint. Essa abordagem permite que a equipe se adapte e se aprimore ao longo do tempo.
+- Melhoria contínua: O Scrum valoriza a aprendizagem e a melhoria contínua. Após cada sprint, a equipe realiza uma retrospectiva para identificar pontos fortes, oportunidades de melhoria e ações para aprimorar seu desempenho no próximo sprint. Essa abordagem permite que a equipe se adapte e se aprimore ao longo do tempo.
 
 Para mais informações, por favor verifique o [Guia oficial do SCRUM](https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-PortugueseBR-3.0.pdf)
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
-
-
 <!-- ROADMAP -->
+
 ## Roteiro
 
 - [ ] Diagramas UML das classes.
@@ -159,9 +151,8 @@ Para mais informações, por favor verifique o [Guia oficial do SCRUM](https://s
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
-
-
 <!-- CONTRIBUTING -->
+
 ## Contribuição
 
 A colaboração é o elemento fundamental que torna a comunidade de código aberto um ambiente inspirador para aprender e criar. Valorizamos imensamente qualquer contribuição que você possa fazer.
@@ -176,18 +167,16 @@ Se você tiver alguma sugestão para aprimorar o projeto, você pode criar um "f
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
-
-
 <!-- LICENSE -->
+
 ## Licença
 
 Distribuído sob a Licença MIT. Veja `LICENSE` para mais informações.
 
-<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p> 
-
-
+<p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
 <!-- CONTACT -->
+
 ## Contatos
 
 Caio Gabriel - caio.cardoso.133@ufrn.edu.br
@@ -198,20 +187,18 @@ Project Link: [(https://github.com/caiogbiel/Gerenciador_de_tarefas_SCRUM.git](h
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
-
-
 <!-- ACKNOWLEDGMENTS -->
+
 ## Agradecimentos
 
-* Alan Turing e Charles Babbage: Pai da computação;
-* Patrick: Professor de lp1;
+- Alan Turing e Charles Babbage: Pai da computação;
+- Patrick: Professor de lp1;
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
 [contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge

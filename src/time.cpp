@@ -214,10 +214,10 @@ scrum_team::scrum_team(std::string nome, adts::Lista<int> id_participantes)
     this->_nome = nome;
     this->_id_participantes = id_participantes;
     this->_id_eventos = adts::Lista<int>();
-
     this->_id = equipes_global_id;
     ++equipes_global_id;
 }
+
 scrum_team::scrum_team(std::string nome, adts::Lista<int> participantes, adts::Lista<int> eventos)
 {
     this->_nome = nome;

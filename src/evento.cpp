@@ -138,10 +138,10 @@ void evento::SetStatus(status_evento status)
 {
     this->_status = status;
 }
-// void evento::SetPrioridade(prioridade prio)
-// {
-//     this->_prio = prio;
-// }
+void evento::SetPrioridade(prioridade prio)
+{
+    this->_prio = prio;
+}
 void evento::SetInicio(geren_tempo::tempo inicio)
 {
     this->_inicio = inicio;

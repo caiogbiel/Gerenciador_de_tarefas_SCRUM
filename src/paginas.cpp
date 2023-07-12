@@ -319,6 +319,14 @@ void p_login()
     evento e1("Daily 1", eventos_sprint::daily_scrum, em1, t1.GetId(), prioridade::media);
     todos_eventos.push_back(e1);
     u.SetEventos(adts::Lista<int>(e1.GetId()));
+    /*
+      Situação:
+      Existem 4 membros,
+      Jonas faz parte do time 1
+      Maria faz parte do time 2
+      Todos menos Jonas fazem parte do evento daily
+    */
+
 #endif
 
     Pagina login(LINHAS, COLUNAS, "LOGIN");
@@ -358,6 +366,8 @@ void p_login()
             return;
         }
     }
+
+    // FAZER CADASTRO//
 
     login.inserir(LINHAS - 6, "Bem vindo " + nome, CEN);
     login.esperar(LINHAS - 4, "continuar");
@@ -413,17 +423,35 @@ void p_principal(bool &controlador)
 
     /*SUBSTITUIR todos_eventos POR LISTA DO USUÁRIO*/
 
-    if (todos_eventos.size() == 0)
+    if (usuario.GetEventos().size() == 0)
     {
+        // stringstream buffer;
+        // buffer << usuario;
         principal.inserir(3, "Nao existem tarefas pendentes", CEN);
+
+        /*
+                         _____
+                             /
+                            /
+                           /
+                          /____
+                    ___
+                      /
+              _      /__
+              /_
+        z
+        Colocar isso aqui depois
+        */
     }
     else
     {
         stringstream buffer;
         for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
         {
-            buffer << todos_eventos[i];
+            buffer << usuario.GetEventos()[i];
             principal.inserir(3 + i, buffer.str(), ESQ);
+            buffer.str(std::string());
+            buffer.clear();
         }
     }
 
@@ -467,12 +495,10 @@ void p_principal(bool &controlador)
         break;
     case 2:
         // ainda em desenvolvimento
-        //  //cria novo evento
-        //  evento novaTarefa = criarNovaTarefa();
-        // listaTarefas.push(novaTarefa);
+        p_criarNovaTarefa();
         break;
     case 3:
-        p_IniciarTarefa();
+        p_iniciarTarefa();
         break;
     case 4:
         p_finalizarTarefa();
@@ -500,6 +526,7 @@ void p_principal(bool &controlador)
     {
         if (opcao == 6)
         {
+            atribuirTarefa();
         }
     }
 }
@@ -513,6 +540,7 @@ void p_finalizadas()
     finalizadas.separador(LINHAS - 4);
     finalizadas.imprimir();
 
+    // Fazer checar apenas as tarefas finalizadas
     if (todos_eventos.size() == 0)
     {
         finalizadas.inserir(3, "Nao existem tarefas encerradas", CEN);
@@ -522,34 +550,117 @@ void p_finalizadas()
     else
     {
         stringstream buffer;
-        string s;
+        // string s;
         for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
         {
             if (todos_eventos[i].GetStatus() == finalizado)
             {
                 buffer << todos_eventos[i];
-                buffer >> s;
-                finalizadas.inserir(3 + i, s, ESQ);
+                finalizadas.inserir(3 + i, buffer.str(), ESQ);
+                buffer.str(std::string());
+                buffer.clear();
             }
         }
     }
-
+    finalizadas.esperar(LINHAS, "voltar");
     finalizadas.imprimir();
 }
 
-// funcao iniciar tarefa
-void p_IniciarTarefa()
+// ainda em desenvolvimento de case 2
+void p_criarNovaTarefa()
+{
+    Pagina criarNovaTarefa(LINHAS + 4, COLUNAS, "CRIAR NOVA TAREFA");
+    evento novaTarefa;
+    int n = 0;
+
+    int aux;
+    std::string nome;
+    int id_participantes;
+    membros *participante = nullptr;
+    scrum_team *time = nullptr;
+    int id_time;
+
+    criarNovaTarefa.ler("Digite o nome da tarefa: ", nome);
+    novaTarefa.SetNome(nome);
+    criarNovaTarefa.ler(
+        "Digite a prioridade da tarefa 0: Baixa, 1 Media, 2: Alta, 3: Urgente: ",
+        aux);
+    novaTarefa.SetPrioridade(prioridade(aux));
+    criarNovaTarefa.ler("Digite o tipo da tarefa 0: Planning, 1 Daily Scrum, 2: "
+                        "Review, 3: Retrospective: ",
+                        aux);
+    novaTarefa.SetTipo(eventos_sprint(aux));
+    criarNovaTarefa.ler("Digite o id do time da tarefa: ", id_time);
+
+    for (int i = 0; i < todos_equipes.size(); ++i)
+    {
+        if (todos_equipes[i].GetId() == id_time)
+        {
+            time = &todos_equipes[i];
+            break;
+        }
+    }
+    if (time == nullptr)
+    {
+        criarNovaTarefa.inserir(3, "Time nao existe", CEN);
+        criarNovaTarefa.esperar(LINHAS, "voltar");
+    }
+    else
+    {
+        novaTarefa.SetTime(time->GetId());
+    }
+    while (n != -1)
+    {
+        criarNovaTarefa.ler("Digite o id dos participantes da tarefa: ",
+                            id_participantes);
+        for (int i = 0; i < todos_membros.size(); ++i)
+        {
+            if (todos_membros[i].GetId() == id_participantes)
+            {
+                participante = &todos_membros[i];
+                break;
+            }
+        }
+        if (participante == nullptr)
+        {
+            criarNovaTarefa.inserir(3, "Participante nao existe", CEN);
+            criarNovaTarefa.esperar(LINHAS, "voltar");
+        }
+        else
+        {
+            novaTarefa.adicionarParticipantes(participante->GetId());
+        }
+        criarNovaTarefa.ler("Se nao deseja adicionar outro participante aperte -1: ", n);
+        criarNovaTarefa.esperar(LINHAS, "voltar");
+    }
+    criarNovaTarefa.esperar(10, "confirmar");
+    /* pedir para confirmar */
+    std::string conf;
+    criarNovaTarefa.ler("Criar tarefa?(s/n)", conf);
+    if (conf.front() == 's' || conf.front() == 'S')
+    {
+        todos_eventos.push_back(novaTarefa);
+        criarNovaTarefa.limpar_linha(18);
+        criarNovaTarefa.inserir(19, "Tarefa criada com sucesso", CEN);
+    }
+    else
+    {
+        criarNovaTarefa.esperar(10, "nao confirmou");
+        p_finalizarTarefa();
+    }
+}
+
+// TROCAR PARA TAREFAS DO USUÁRIO
+void p_iniciarTarefa()
 {
     Pagina iniciar(LINHAS + 4, COLUNAS, "INICIAR TAREFA");
-    std::string nomeTarefa;
+    int id_tarefa;
 
     iniciar.inserir(1, "-Tarefas a iniciar-", CEN);
     iniciar.separador(LINHAS - 4);
     iniciar.imprimir();
 
-    adts::Lista<evento> lista = transformarEventos(usuario.GetEventos());
-
-    if (lista.size() == 0)
+    if (todos_eventos.size() == 0)
     {
         iniciar.inserir(3, "Nao existem tarefas para iniciar", CEN);
         iniciar.esperar(LINHAS, "voltar");
@@ -558,32 +669,83 @@ void p_IniciarTarefa()
     }
     else
     {
-
         stringstream buffer;
-        for (int i = 0; i < 10 && i < lista.size(); ++i)
+        for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
         {
-            if (lista[i].GetStatus() != andamento)
+            if (todos_eventos[i].GetStatus() == analise)
             {
-                buffer << lista[i];
-
+                buffer << todos_eventos[i];
                 iniciar.inserir(3 + i, buffer.str(), ESQ);
+                buffer.str(std::string());
+                buffer.clear();
             }
         }
     }
+
+    iniciar.imprimir();
+
+    iniciar.inserir(18, "Tarefa selecionada: ", ESQ);
+
+    iniciar.ler("Digite o ID da tarefa que deseja iniciar: ", id_tarefa);
+    iniciar.inserir_apos(18, " " + std::to_string(id_tarefa));
+    iniciar.imprimir();
+
+    evento *tarefa = nullptr;
+
+    for (int i = 0; i < todos_eventos.size(); ++i)
+    {
+        if (todos_eventos[i].GetId() == id_tarefa)
+        {
+            tarefa = &todos_eventos[i];
+            break;
+        }
+    }
+
+    if (tarefa != nullptr)
+    {
+        if (tarefa->GetStatus() == andamento)
+        {
+            iniciar.inserir(19, "A tarefa já está em andamento", ESQ);
+            iniciar.esperar(18, "voltar");
+            return;
+        }
+        else
+        {
+            std::string conf;
+            iniciar.ler("Deseja iniciar a tarefa?(s/n)", conf);
+            if (conf.front() == 's' || conf.front() == 'S')
+            {
+                tarefa->iniciar();
+                // iniciar.limpar_linha(18);
+                iniciar.inserir(19, "Tarefa inicializada com sucesso", CEN);
+                iniciar.esperar(18, "voltar");
+            }
+            else
+            {
+                iniciar.esperar(18, "voltar");
+                return;
+            }
+        }
+    }
+    else
+    {
+        iniciar.inserir(19, "Tarefa nao encontrada", CEN);
+    }
+    iniciar.esperar(18, "voltar");
 }
-// funcao finalizar tarefa
+// case 4
 void p_finalizarTarefa()
 {
     Pagina finalizar(LINHAS + 4, COLUNAS, "FINALIZAR TAREFA");
-    std::string nomeTarefa;
+    int id_tarefa;
 
     finalizar.inserir(1, "-Tarefas a finalizar-", CEN);
     finalizar.separador(LINHAS - 4);
     finalizar.imprimir();
 
-    adts::Lista<evento> lista = transformarEventos(usuario.GetEventos());
+    // adts::Lista<evento> lista = transformarEventos(usuario.GetEventos());
 
-    if (lista.size() == 0)
+    if (todos_eventos.size() == 0)
     {
         finalizar.inserir(3, "Nao existem tarefas para encerrar", CEN);
         finalizar.esperar(LINHAS, "voltar");
@@ -593,13 +755,13 @@ void p_finalizarTarefa()
     else
     {
         stringstream buffer;
-        for (int i = 0; i < 10 && i < lista.size(); ++i)
+        for (int i = 0; i < 10 && i < todos_eventos.size(); ++i)
         {
-            if (lista[i].GetStatus() != finalizado)
+            if (todos_eventos[i].GetStatus() == andamento)
             {
-                buffer << lista[i];
-
+                buffer << todos_eventos[i];
                 finalizar.inserir(3 + i, buffer.str(), ESQ);
+                buffer.clear();
             }
         }
     }
@@ -608,15 +770,16 @@ void p_finalizarTarefa()
 
     finalizar.inserir(18, "Tarefa selecionada: ", ESQ);
 
-    finalizar.ler("Digite o nome ou ID da tarefa que deseja finalizar: ", nomeTarefa);
-    finalizar.inserir_apos(18, " " + nomeTarefa);
+    finalizar.ler("Digite o ID da tarefa que deseja finalizar: ",
+                  id_tarefa);
+    finalizar.inserir_apos(18, " " + std::to_string(id_tarefa));
     finalizar.imprimir();
 
     evento *tarefa = nullptr;
 
     for (int i = 0; i < todos_eventos.size(); ++i)
     {
-        if (todos_eventos[i].GetNome() == nomeTarefa || todos_eventos[i].GetId() == stoi(nomeTarefa))
+        if (todos_eventos[i].GetId() == id_tarefa)
         {
             tarefa = &todos_eventos[i];
             break;
@@ -625,15 +788,18 @@ void p_finalizarTarefa()
 
     if (tarefa != nullptr)
     {
+        finalizar.esperar(10, "Entrou");
         if (tarefa->GetStatus() == finalizado)
         {
+            finalizar.esperar(10, "finalizado");
             finalizar.inserir(19, "A tarefa já está finalizada", ESQ);
         }
         else
         {
+            finalizar.esperar(10, "confirmar");
             /* pedir para confirmar */
             std::string conf;
-            finalizar.ler("Voce confirma?(s/n)", conf);
+            finalizar.ler("Deseja finalizar a tarefa?(s/n)", conf);
             if (conf.front() == 's' || conf.front() == 'S')
             {
                 tarefa->encerrar();
@@ -642,6 +808,7 @@ void p_finalizarTarefa()
             }
             else
             {
+                finalizar.esperar(10, "nao confirmou");
                 p_finalizarTarefa();
             }
         }
@@ -682,7 +849,8 @@ void p_time()
 
         for (int i = 0; i < equipe_lista.size(); ++i)
         {
-            if (equipe_lista[i].GetNome() == s || equipe_lista[i].GetId() == stoi(s))
+            if (equipe_lista[i].GetNome() == s ||
+                equipe_lista[i].GetId() == stoi(s))
             {
                 equipe_selec = equipe_lista[i];
                 break;
@@ -706,60 +874,6 @@ void p_time()
     }
 }
 
-// ainda em desenvolvimento de case 2
-void criarNovaTarefa()
-{
-    string buffer;
-
-    string nome;
-    int tipo;
-    adts::Lista<int> participantes;
-    adts::Lista<int> participantes_id;
-    int time_id;
-    int prio;
-
-    cout << "Digite o nome da nova tarefa: ";
-    cin >> nome;
-
-    cout << "Digite o tipo da sprint (0 - planning, 1 - daily_scrum, 2 - review, 3 - retrospective): ";
-    cin >> tipo;
-
-    cout << "Digite a prioridade da tarefa (0 - Baixa, 1 - Media, 2 - Alta, 3 - Urgente): ";
-    cin >> prio;
-
-    cout << "Digite os ID's dos participantes (separe por espaço): ";
-    getline(cin, buffer);
-
-    // Armazena a entrada em um buffer para ler cada Id fornecido
-    istringstream tmp(buffer);
-
-    // Cria uma cópia de todos os membros contendo somente o Id deles
-    for (int i = 0; i < todos_membros.size(); ++i)
-    {
-        participantes_id.push_back(todos_membros[i].GetId());
-    }
-
-    // Faz a leitura de cada Id no buffer e verifica se existe esse Id
-    while (tmp)
-    {
-        int id;
-        tmp >> id;
-        if (participantes_id.find(id))
-        {
-            participantes.push_back(id);
-        }
-        else
-        {
-            cout << "Id: " << id << " nao encontrado na lista de membros.\n";
-        }
-    }
-
-    cout << "Digite o ID da equipe: ";
-    cin >> time_id;
-
-    evento tarefa(nome, eventos_sprint(tipo), participantes, time_id, prioridade(prio));
-}
-
 void verTime()
 {
     cout << "=====================================\n";
@@ -772,6 +886,60 @@ void verTime()
     }
 
     cout << "=====================================\n";
+}
+
+// case 6 scrum_master
+void atribuirTarefa()
+{
+    Pagina atribuir(LINHAS + 4, COLUNAS, "ATRIBUIR TAREFA");
+    int id_tarefa;
+    int id_participante;
+
+    atribuir.inserir(1, "-Atribuir Tarefa-", CEN);
+    atribuir.separador(LINHAS - 4);
+    atribuir.imprimir();
+
+    atribuir.ler("Digite o ID da tarefa que deseja atribuir: ", id_tarefa);
+    atribuir.ler("Digite o ID do participante a quem deseja atribuir a tarefa: ", id_participante);
+
+    // Verificar se a tarefa existe
+    bool tarefaEncontrada = false;
+    evento *tarefa = nullptr;
+    for (int i = 0; i < todos_eventos.size(); ++i)
+    {
+        if (todos_eventos[i].GetId() == id_tarefa)
+        {
+            tarefa = &todos_eventos[i];
+            tarefaEncontrada = true;
+            break;
+        }
+    }
+
+    // Verificar se o participante existe
+    bool participanteEncontrado = false;
+    membros *participante = nullptr;
+    for (int i = 0; i < todos_membros.size(); ++i)
+    {
+        if (todos_membros[i].GetId() == id_participante)
+        {
+            participante = &todos_membros[i];
+            participanteEncontrado = true;
+            break;
+        }
+    }
+
+    // Atribuir a tarefa ao participante
+    if (tarefaEncontrada && participanteEncontrado)
+    {
+        tarefa->adicionarParticipantes(participante->GetId());
+        atribuir.inserir(3, "Tarefa atribuída com sucesso!", CEN);
+    }
+    else
+    {
+        atribuir.inserir(3, "Tarefa ou participante não encontrado.", CEN);
+    }
+    atribuir.esperar(LINHAS, "voltar");
+    atribuir.imprimir();
 }
 
 void programa()
