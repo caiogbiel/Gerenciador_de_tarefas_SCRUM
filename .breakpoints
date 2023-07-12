@@ -1,0 +1,20 @@
+{
+  "files": {
+    "Gerenciador_de_tarefas_SCRUM/src/gerenciador.cpp": [
+      {
+        "id": "d949b837-c34d-44a2-a800-a2bff459400c",
+        "line": 27,
+        "version": 79,
+        "index": 921
+      }
+    ],
+    "Gerenciador_de_tarefas_SCRUM/src/paginas.cpp": [
+      {
+        "id": "b48d1114-2449-4a63-8eeb-bb4ee65784fe",
+        "line": 644,
+        "version": 3701,
+        "index": 16120
+      }
+    ]
+  }
+}
