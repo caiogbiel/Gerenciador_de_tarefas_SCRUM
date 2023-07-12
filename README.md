@@ -21,7 +21,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="/imagens/logo.png" alt="Logo" width="200" height="200">
+    <img src="/imagens/logo.png" alt="Logo" width="400" height="200">
   </a>
 
 <h3 align="center">Gerenciador de tarefas SCRUM</h3>
@@ -80,9 +80,14 @@ Ao inciar o projeto é aberto a tela principal onde deve ser colocados o seu usu
 
 ### Construido com:
 
-[![c++](/imagens/c++.png)](https://www.cplusplus.com/)
-
-(Para obter mais informações, por favor clique na imagem).
+<a href="https://www.cplusplus.com/">
+  <img src="/imagens/c++.png" alt="c++" width="200" height="200" align="center">
+</a>
+<p>
+  (Para obter mais informações, por favor clique na imagem).
+</p>
+  <!-- [![c++](/imagens/c++.png)](https://www.cplusplus.com/)
+ -->
 
 <p align="right">(<a href="#readme-top">Voltar ao início</a>)</p>
 
