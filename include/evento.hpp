@@ -11,6 +11,15 @@ class sprint
 {
 };
 
+/**
+*  @class evento evento.hpp include/evento.hpp
+*  @brief Representa um evento scrum
+*  Guarda informações de um evento da metodologia SCRUM:
+*  \li \c Nome
+*  \li \c Tipo
+*  \li \c Datas de início e fim
+*  \li \c Id's dos participantes e Id do time
+*/
 class evento
 {
 private:
