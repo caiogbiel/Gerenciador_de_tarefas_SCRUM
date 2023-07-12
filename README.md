@@ -124,7 +124,7 @@ Siga estas simples etapas de exemplo:
 
 ## Uso
 
-A usabilidade do Scrum está centrada em promover a entrega de valor de forma colaborativa, adaptativa e transparente. Aqui estão algumas características importantes da usabilidade do Scrum:
+A usabilidade do Scrum está centrada em promover a entrega de valor de forma colaborativa, adaptativa e transparente:
 
 - Colaboração: O Scrum incentiva a colaboração intensa entre os membros da equipe, que trabalham juntos para alcançar os objetivos do projeto. A comunicação eficaz e a troca contínua de conhecimento são fundamentais para o sucesso do Scrum.
 
